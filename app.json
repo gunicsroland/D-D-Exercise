@@ -24,6 +24,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "expo": {
+      "plugins": [
+        "expo-router"
+      ]
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
