@@ -1,11 +1,29 @@
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from database import get_db
-from models import User
-from schemas import UserRequest
-from functions import *
+from backend.database import get_db
+from backend.models import User
+from backend.schemas import UserRequest, LoginRequest
+from backend.functions import *
 
 app = FastAPI()
+
+origins = [
+    "http://127.0.0.1:5500",
+    "http://localhost",
+    "http://localhost:19006",
+    "http://localhost:8081",
+    "http://127.0.0.1:8081",
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],         
+)
 
 @app.post("/register")
 def register(user: UserRequest, db: Session = Depends(get_db)):
@@ -24,7 +42,7 @@ def register(user: UserRequest, db: Session = Depends(get_db)):
     return {"message": "User created successfully"}
 
 @app.post("/login")
-def login(user: UserRequest, db: Session = Depends(get_db)):
+def login(user: LoginRequest, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == user.username).first()
     
     if not db_user or not verify_password(user.password, db_user.password_hash):
