@@ -1,3 +1,4 @@
+import base64
 import bcrypt
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
@@ -13,7 +14,11 @@ def create_access_token(data: dict):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 def hash_password(password: str):
-    return bcrypt.hashpw(password, bcrypt.gensalt())
+    password_bytes = password.encode('utf-8')
+    hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+    return base64.b64encode(hashed).decode('utf-8')
 
 def verify_password(entered_pw: str, hash_pw : str):
-    return bcrypt.checkpw(entered_pw, hash_pw)
+    entered_pw_bytes = entered_pw.encode('utf-8')
+    hashed_bytes = base64.b64decode(hash_pw.encode('utf-8'))
+    return bcrypt.checkpw(entered_pw_bytes, hashed_bytes)
