@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Enum, TIMESTAMP
 from sqlalchemy.orm import relationship
-from database import Base
+from backend.database import Base
 import enum
 
 class CharacterClass(enum.Enum):
@@ -24,7 +24,7 @@ class User(Base):
 
     characters = relationship("Character", back_populates="user")
     
-class Charachter(Base):
+class Character(Base):
     __tablename__ = "characters"
     
     id = Column(Integer, primary_key=True, index=True)
@@ -33,6 +33,8 @@ class Charachter(Base):
     class_ = Column("class", Enum(CharacterClass))
     level = Column(Integer)
     xp = Column(Integer)
+    
+    user = relationship("User", back_populates="characters")
     
 class Exercises(Base):
     __tablename__ = "exercises"
