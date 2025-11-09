@@ -1,2 +1,16 @@
 # D-D-Exercise
 A mobile app developed in React Native for gamification of exercising. It is fo university degree
+
+# Starting it
+
+```bash
+git clone https://gunicsroland/d-d-exercise
+
+#start frontend
+cd frontend
+npx expo start
+
+#start backend
+cd backend
+source .venv/bin/activate
+uvicorn backend.main:app --reload --port 8000
