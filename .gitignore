@@ -37,4 +37,9 @@ yarn-error.*
 *.tsbuildinfo
 
 #pyton virtual env
-/backend/.venv/*
+/backend/.venv/
+
+#python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
