@@ -21,7 +21,7 @@ export default function Register(){
 
             if (res.ok){
                 Alert.alert("Siker!", "Sikeres regisztráció!");
-                router.replace("/login")
+                router.replace("login")
             }
             else{
                 const data = await res.json();
@@ -40,7 +40,7 @@ export default function Register(){
       <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
       <TextInput placeholder="Jelszó" value={password} onChangeText={setPassword} secureTextEntry />
             <Button title="Regisztráció" onPress={handleRegister} />
-            <Button title="Már van fiókom" onPress={() => router.push("/login")} />
+            <Button title="Már van fiókom" onPress={() => router.push("login")} />
         </ScrollView>
     )
 }

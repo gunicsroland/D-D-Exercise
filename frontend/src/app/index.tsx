@@ -12,20 +12,60 @@ export default function Home() {
     const checkLogin = async () => {
       const token = await AsyncStorage.getItem("token");
       if(!token){
-         router.replace("/login")
+         router.replace("login")
+         return;
       }
-      else{
-        setUsername("test");
+
+      try {
+        const res = await fetch("http://localhost:8000/has_character/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (!data.has_character) {
+            router.replace("character/create");
+            return;
+          }
+        }
       }
-      
+      catch (err) {
+        console.error(err);
+      }
+
+      try {
+        const res = await fetch("http://localhost:8000/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          setUsername(data.username);
+        }
+        else {
+          await AsyncStorage.removeItem("token");
+          router.replace("login");
+        }
+      }
+      catch (err) {
+        console.error(err);
+        await AsyncStorage.removeItem("token");
+        router.replace("login");
+      }
     };
 
     checkLogin();
-  })
+  }, []);
 
   const handleLogout = async () => {
     await AsyncStorage.removeItem("token");
-    router.replace("/login");
+    router.replace("login");
   };
 
   return (

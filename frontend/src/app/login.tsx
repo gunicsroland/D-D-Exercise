@@ -15,7 +15,7 @@ export default function Login () {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem("token")
       if (token){
-        router.replace("/index")
+        router.replace("/")
       }
     }
     checkToken();
@@ -32,7 +32,7 @@ export default function Login () {
       if (res.ok) {
         const data = await res.json();
         await AsyncStorage.setItem("token", data.access_token);
-        router.replace("/index")
+        router.replace("/")
       }
       else {
         const data = await res.json();
@@ -50,7 +50,7 @@ export default function Login () {
       <TextInput placeholder="Felhasználónév" value={username} onChangeText={setUsername} />
       <TextInput placeholder="Jelszó" value={password} onChangeText={setPassword} secureTextEntry />
       <Button title="Bejelentkezés" onPress={handleLogin} />
-      <Button title="Regisztráció" onPress={() => router.push("/register")} />
+      <Button title="Regisztráció" onPress={() => router.push("register")} />
     </ScrollView>
   );
 };

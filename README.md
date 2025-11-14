@@ -11,6 +11,5 @@ cd frontend
 npx expo start
 
 #start backend
-cd backend
-source .venv/bin/activate
+source backend/.venv/bin/activate
 uvicorn backend.main:app --reload --port 8000

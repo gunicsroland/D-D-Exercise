@@ -1,10 +1,13 @@
 from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+
 from backend.database import get_db
-from backend.models import User
+from backend.models import *
 from backend.schemas import UserRequest, LoginRequest
 from backend.functions import *
+from backend.dependencies import get_current_user
+
 
 app = FastAPI()
 
@@ -48,5 +51,21 @@ def login(user: LoginRequest, db: Session = Depends(get_db)):
     if not db_user or not verify_password(user.password, db_user.password_hash):
         raise HTTPException(status_code = 400, detail='Wrong username or wrong password')
     
-    token = create_access_token({"sub": db_user.username})
+    token = create_access_token({"sub": str(db_user.id)})
     return {"access_token": token, "token_type": "bearer"}
+
+@app.get("/me")
+def get_current_user(current_user: User = Depends(get_current_user)):
+    return {"id": current_user.id, "username": current_user.username, "email": current_user.email}
+
+@app.get("/has_character/me")
+def get_current_user_character(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    character = db.query(Character).filter(Character.user_id == current_user.id).first()
+    if not character:
+        return {"has_character": False}
+    return {
+        "has_character": True
+    }
