@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { checkCharacter } from "../hooks/check_char";
 
 
 export default function Home() {
@@ -16,25 +17,7 @@ export default function Home() {
          return;
       }
 
-      try {
-        const res = await fetch("http://localhost:8000/has_character/me", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          if (!data.has_character) {
-            router.replace("character/create");
-            return;
-          }
-        }
-      }
-      catch (err) {
-        console.error(err);
-      }
+      checkCharacter(token, router);
 
       try {
         const res = await fetch("http://localhost:8000/me", {

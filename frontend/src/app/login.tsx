@@ -4,6 +4,7 @@ import {ScrollView, Button, Text, TextInput, Alert} from 'react-native';
 import FormBox from '../components/form_box';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { handleLogin } from '../hooks/handle_login';
 
 
 export default function Login () {
@@ -21,48 +22,13 @@ export default function Login () {
     checkToken();
   });
 
-  const handleLogin = async () => {
-    try {
-      const res = await fetch("http://localhost:8000/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({username, password})
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        await AsyncStorage.setItem("token", data.access_token);
-        router.replace("/")
-      }
-      else {
-        const data = await res.json();
-        Alert.alert("Hiba", data.detail || "Hibás adatok");
-      }
-    }
-    catch(err){
-      Alert.alert("Hiba", "Nem sikerült kapcsolódni a szerverhez. Próbáld újra később");
-    }
-  }
-
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView>
       <Text>Bejelentkezés</Text>
       <TextInput placeholder="Felhasználónév" value={username} onChangeText={setUsername} />
       <TextInput placeholder="Jelszó" value={password} onChangeText={setPassword} secureTextEntry />
-      <Button title="Bejelentkezés" onPress={handleLogin} />
+      <Button title="Bejelentkezés" onPress={() => handleLogin(username, password, router)} />
       <Button title="Regisztráció" onPress={() => router.push("register")} />
     </ScrollView>
   );
-};
-
-const styles = {
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  textInput: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-  },
 };
