@@ -47,6 +47,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             raise credentials_exception
         
         logging.warning(f"5. SUCCESS: User '{user.username}' found.")
+        logging.warning(f"User info: username={user.username}, email={user.email}, id={user.id}")
         return user
     except Exception as e: 
         logging.error(f"5. ERROR: Database query failed. {e}")

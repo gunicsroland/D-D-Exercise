@@ -63,7 +63,7 @@ def get_current_user_character(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    character = db.query(Character).filter(Character.user_id == current_user.id).first()
+    character = db.query(Character).filter(Character.user_id == current_user["id"]).first()
     if not character:
         return {"has_character": False}
     return {
