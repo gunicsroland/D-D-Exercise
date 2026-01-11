@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18
 
 WORKDIR /app
 
@@ -12,4 +12,4 @@ EXPOSE 19000
 EXPOSE 19001
 EXPOSE 19002
 
-CMD ["npm", "start"]
+CMD ["npx", "expo", "start", "--tunnel"]
