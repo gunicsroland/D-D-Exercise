@@ -2,11 +2,11 @@ from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from backend.database import get_db
-from backend.models import *
-from backend.schemas import UserRequest, LoginRequest
-from backend.functions import *
-from backend.dependencies import get_current_user
+from database import get_db
+from models import *
+from schemas import UserRequest, LoginRequest
+from functions import *
+from dependencies import get_current_user
 
 
 app = FastAPI()

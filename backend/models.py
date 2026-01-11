@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Enum, TIMESTAMP
 from sqlalchemy.orm import relationship
-from backend.database import Base
+from database import Base
 import enum
 
 class CharacterClass(enum.Enum):

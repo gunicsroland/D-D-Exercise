@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 from jose import JWTError
 import logging
 
-from backend.database import get_db
-from backend.models import User
-from backend.functions import decode_access_token
+from database import get_db
+from models import User
+from functions import decode_access_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
