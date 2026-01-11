@@ -2,11 +2,9 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-RUN pip install uv
+COPY pyproject.toml requirements.txt ./
 
-COPY pyproject.toml .
-COPY uv.lock .
-RUN uv sync --frozen
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY . .
 EXPOSE 8000
