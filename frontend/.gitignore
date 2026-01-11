@@ -1,0 +1,33 @@
+# Node modules (never commit)
+node_modules/
+
+# Expo / React Native build artifacts
+.expo/
+.expo-shared/
+android/
+ios/
+web-build/
+dist/
+build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files (never commit secrets)
+.env
+.env.*
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Lock files are okay to commit
+# package-lock.json or yarn.lock should stay
+
+# Misc
+*.DS_Store
