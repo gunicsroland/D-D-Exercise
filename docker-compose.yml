@@ -5,21 +5,21 @@ services:
     image: postgres:15
     container_name: dndne_db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./db:/docker-entrypoint-initdb.d
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT}:5432"
   backend:
     build: ./backend
     container_name: dndne_backend
     env_file:
       - ./backend/.env
     ports:
-      - "8000:8000"
+      - "${BACKEND_PORT}:8000"
     depends_on:
       - db
     volumes:
@@ -32,9 +32,9 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - "19000:19000"
-      - "19001:19001"
-      - "19002:19002"
+      - "${EXPO_PORT}:19000"
+      - "${EXPO_DEVTOOLS_PORT}:19001"
+      - "${EXPO_TUNNEL_PORT}:19002"
     stdin_open: true
     tty: true
 
