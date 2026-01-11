@@ -5,11 +5,10 @@ WORKDIR /app
 COPY package.json .
 COPY package-lock.json .
 RUN npm install
+RUN npm i baseline-browser-mapping@latest -D
 
 COPY . .
 
-EXPOSE 19000
-EXPOSE 19001
-EXPOSE 19002
+EXPOSE 8081
 
-CMD ["npx", "expo", "start", "--tunnel"]
+CMD ["npx", "expo", "start", "--web", "--host", "lan", "--port", "8081"]
