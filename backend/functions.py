@@ -1,11 +1,12 @@
 import base64
+import os
 import bcrypt
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 
-SECRET_KEY = "1fdf6ee430a52f970927d5e817510af2f83101581aa9a1c51165e2bb20b93d10"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60*24*7 # 7 nap
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 def create_access_token(data: dict):
     to_encode = data.copy()
