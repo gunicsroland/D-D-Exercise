@@ -13,6 +13,14 @@ class ItemType(enum.Enum):
     Weapon = 'weapon'
     Potion = 'potion'
     
+class AbilityType(enum.Enum):
+    STR = "strength"
+    DEX = "dexterity"
+    CON = "constitution"
+    INT = "intelligence"
+    WIS = "wisdom"
+    CHA = "charisma"
+    
 class User(Base):
     __tablename__ = "users"
 
@@ -33,6 +41,7 @@ class Character(Base):
     class_ = Column("class", Enum(CharacterClass))
     level = Column(Integer)
     xp = Column(Integer)
+    abilities = relationship("CharacterAbility", back_populates="character", cascade="all, delete")
     
     user = relationship("User", back_populates="characters")
     
@@ -44,6 +53,16 @@ class Exercises(Base):
     category = Column(String)
     difficulty = Column(Integer)
     xp_reward = Column(Integer)
+    
+class CharacterAbility(Base):
+    __tablename__ = "character_abilities"
+    
+    id = Column(Integer, primary_key=True)
+    character_id = Column(Integer, ForeignKey("characters.id"))
+    ability = Column(Enum(AbilityType))
+    score = Column(Integer, default=10)
+
+    character = relationship("Character", back_populates="abilities")    
     
 class Quests(Base):
     __tablename__ = "quests"

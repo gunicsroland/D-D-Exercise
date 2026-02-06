@@ -2,22 +2,24 @@ from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
-from database import get_db
+from database import get_db, Base, engine
 from models import *
-from schemas import UserRequest, LoginRequest
+import schemas
 from functions import *
 from dependencies import get_current_user
 
 
 app = FastAPI()
 
+Base.metadata.create_all(bind=engine)
+
 origins = [
     "http://127.0.0.1:5500",
     "http://localhost",
     "http://localhost:19006",
     "http://localhost:8081",
+    "http://localhost:8000",
     "http://127.0.0.1:8081",
-    "*",
 ]
 
 app.add_middleware(
@@ -29,7 +31,7 @@ app.add_middleware(
 )
 
 @app.post("/register")
-def register(user: UserRequest, db: Session = Depends(get_db)):
+def register(user: schemas.UserRequest, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.username == user.username).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="This Username is used")
@@ -45,7 +47,7 @@ def register(user: UserRequest, db: Session = Depends(get_db)):
     return {"message": "User created successfully"}
 
 @app.post("/login")
-def login(user: LoginRequest, db: Session = Depends(get_db)):
+def login(user: schemas.LoginRequest, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.username == user.username).first()
     
     if not db_user or not verify_password(user.password, db_user.password_hash):
@@ -69,3 +71,29 @@ def get_current_user_character(
     return {
         "has_character": True
     }
+    
+    
+@app.post("/create")
+def create_character(
+    character_data: schemas.CharacterCreateRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    character = Character(
+        name = character_data.name,
+        class_ = character_data.class_,
+        level = 1,
+        xp = 0,
+        user_id = current_user["id"]
+    )
+    
+    character.abilities = [
+        CharacterAbility(ability=ability,
+                         score = score) for ability, score in character_data.abilities.items()
+    ]
+    
+    db.add(character)
+    db.commit()
+    db.refresh(character)
+    
+    return {"message": "Character created successfully", "character_id": character.id}

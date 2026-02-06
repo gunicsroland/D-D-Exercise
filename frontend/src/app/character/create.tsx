@@ -36,6 +36,7 @@ export default function CreateCharacter() {
             setStep(step + 1);
         }
         else {
+            console.log("Final stats:", finalStats);
             createChar(name, selectedClass, finalStats, router);
         }
     }

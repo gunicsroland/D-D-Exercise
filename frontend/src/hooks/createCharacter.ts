@@ -5,12 +5,15 @@ export async function createChar(name: string, selectedClass: string, finalStats
         const token = await AsyncStorage.getItem("token");
         const res = await fetch("http://localhost:8000/create", {
             method: "POST",
-            headers: { "Content-Type": "application/json"},
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
             body: JSON.stringify({
                 name: name,
-                char_class: selectedClass,
-                stats: finalStats
-            })
+                class_: selectedClass,
+                abilities: finalStats 
+            }),
         });
 
         if (res.ok) {
