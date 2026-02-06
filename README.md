@@ -13,3 +13,13 @@ npx expo start
 #start backend
 source backend/.venv/bin/activate
 uvicorn backend.main:app --reload --port 8000
+```
+
+# Using with docker
+
+```bash
+docker compose up
+```
+
+go to `localhost:8081`
+
