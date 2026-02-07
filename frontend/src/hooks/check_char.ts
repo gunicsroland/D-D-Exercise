@@ -9,9 +9,11 @@ export async function checkCharacter(token: string, router: any){
 
         if (res.ok) {
           const data = await res.json();
-          if (!data.has_character) {
-            router.replace("character/create");
-            return;
+          if (data.has_character) {
+            return true;
+          }
+          else {
+            return false;
           }
         }
       }

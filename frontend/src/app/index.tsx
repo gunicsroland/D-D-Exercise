@@ -6,16 +6,36 @@ import { checkCharacter } from "../hooks/check_char";
 
 
 export default function Home() {
-  const router = useRouter();
+    const router = useRouter();
 
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem("token");
-    router.replace("login");
-  };
+    useEffect(() => {
+        const checkLogin = async () => {
+            const token = await AsyncStorage.getItem("token");
+            if (!token) {
+                router.replace("/login");
+            }
+            else {
+                const hasChar = await checkCharacter(token, router);
+                if (!hasChar) {
+                    router.replace("/character/create");
+                }
+                else {
+                    router.replace("/tabs/character");
+                }
+            }
+        };
 
-  return (
-    <View>
-      <Button title="Kijelentkezés" onPress={handleLogout} />
-    </View>
-  );
+        checkLogin();
+    }, []);
+
+    const handleLogout = async () => {
+        await AsyncStorage.removeItem("token");
+        router.replace("login");
+    };
+
+    return (
+        <View>
+            <Button title="Kijelentkezés" onPress={handleLogout} />
+        </View>
+    );
 }
