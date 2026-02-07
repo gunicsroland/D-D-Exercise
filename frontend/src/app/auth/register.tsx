@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ScrollView, TextInput, Button, Text } from "react-native";
 import { useRouter } from "expo-router";
-import FormBox from '../components/form_box';
-import { handleRegister } from "../hooks/handle_register";
+import FormBox from '../../components/form_box';
+import { handleRegister } from "../../hooks/handle_register";
 
 export default function Register(){
     const [username, setUsername] = useState("");
