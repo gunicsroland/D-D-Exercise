@@ -21,7 +21,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user_id = None
     try:
         logging.warning("--- NEW get_current_user ---")
-        logging.warning(f"1. Received Token: {token[:10]}...") # Log first 10 chars
+        logging.warning(f"1. Received Token: {token[:10]}...")
         
         payload = decode_access_token(token)
         logging.warning(f"2. Token Decoded. Payload: {payload}")

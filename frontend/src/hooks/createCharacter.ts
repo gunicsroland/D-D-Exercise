@@ -17,7 +17,7 @@ export async function createChar(name: string, selectedClass: string, finalStats
         });
 
         if (res.ok) {
-            router.replace("/character/list");
+            router.replace("/character");
         }
         else {
             const data = await res.json();
