@@ -7,6 +7,7 @@ from models import *
 import schemas
 from functions import *
 from dependencies import get_current_user
+import logging
 
 
 app = FastAPI()
@@ -72,7 +73,33 @@ def get_current_user_character(
         "has_character": True
     }
     
+@app.get("/character/me", response_model=schemas.CharacterSchema)
+def get_current_user_character(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    logging.warning("--- GET /character/me ---")
+    logging.warning(f"Current user ID: {current_user['id']})")
     
+    character = db.query(Character).filter(Character.user_id == current_user["id"]).first()
+    if not character:
+        raise HTTPException(status_code=404, detail="Character not found")
+    
+    logging.warning(
+    "Character found: %s", {
+        "id": character.id,
+        "name": character.name,
+        "level": character.level,
+        "class": character.class_,
+        "xp": character.xp,
+        "abilities": [{"type": a.ability, "value": a.score} for a in character.abilities]
+    }
+)
+    
+    
+    
+    return character
+
 @app.post("/create")
 def create_character(
     character_data: schemas.CharacterCreateRequest,

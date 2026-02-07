@@ -4,6 +4,7 @@ export default function ExerciseScreen() {
   return (
     <View>
       <Text>Edzés oldal</Text>
+      <Text>Edzés oldal</Text>
     </View>
   );
 }

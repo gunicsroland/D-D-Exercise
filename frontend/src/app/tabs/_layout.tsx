@@ -18,7 +18,7 @@ export default function TabsLayout() {
                 options={{
                     title: "Eszköztár",
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="bag-outline" size={size} color={color} />
+                        <Ionicons name="briefcase-outline" size={size} color={color} />
                     ),
                 }}
             />

@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel, model_validator
 from models import AbilityType 
   
@@ -29,3 +30,20 @@ class CharacterCreateRequest(BaseModel):
                 raise ValueError(f"{ability.value} score must be between 1 and 20")
 
         return self
+    
+class AbilitySchema(BaseModel):
+    ability: AbilityType
+    score: int
+
+    class Config:
+        orm_mode = True
+
+class CharacterSchema(BaseModel):
+    name: str
+    class_: str
+    level: int
+    xp: int
+    abilities: List[AbilitySchema]
+
+    class Config:
+        orm_mode = True
