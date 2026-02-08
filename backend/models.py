@@ -41,6 +41,7 @@ class Character(Base):
     class_ = Column("class", Enum(CharacterClass))
     level = Column(Integer)
     xp = Column(Integer)
+    ability_points = Column(Integer, default=0)
     abilities = relationship("CharacterAbility", back_populates="character", cascade="all, delete")
     
     user = relationship("User", back_populates="characters")

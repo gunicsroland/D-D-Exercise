@@ -3,6 +3,7 @@ import os
 import bcrypt
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
+import constants
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
@@ -30,3 +31,14 @@ def verify_password(entered_pw: str, hash_pw : str):
     entered_pw_bytes = entered_pw.encode('utf-8')
     hashed_bytes = hash_pw.encode('utf-8')
     return bcrypt.checkpw(entered_pw_bytes, hashed_bytes)
+
+def calculate_level(xp: int) -> int:
+    level = 1
+    
+    for lvl, required_xp in constants.XP_LEVELS.items():
+        if xp >= required_xp:
+            level = lvl
+        else:
+            break
+        
+    return min(level, constants.MAX_LEVEL)

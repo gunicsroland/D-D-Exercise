@@ -43,6 +43,7 @@ class CharacterSchema(BaseModel):
     class_: str
     level: int
     xp: int
+    ability_points: int
     abilities: List[AbilitySchema]
 
     class Config:
