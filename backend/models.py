@@ -1,3 +1,4 @@
+from xmlrpc.client import Boolean
 from sqlalchemy import Column, Integer, String, ForeignKey, Enum, TIMESTAMP
 from sqlalchemy.orm import relationship
 from database import Base
@@ -28,7 +29,8 @@ class User(Base):
     username = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
-    created_at = Column(TIMESTAMP)
+    created_at = Column(TIMESTAMP, default="CURRENT_TIMESTAMP")
+    is_admin = Column(Boolean, default=False)
 
     characters = relationship("Character", back_populates="user")
     

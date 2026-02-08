@@ -30,13 +30,7 @@ def get_inventory(
 
     logging.info(f"Found {len(inventory_items)} items in inventory for user_id={user_id}")
 
-    return [
-        schemas.InventoryItemSchema(
-            quantity=item.quantity,
-            item=schemas.ItemSchema.from_orm(item.item)
-        )
-        for item in inventory_items
-    ]
+    inventory_items
 
 @app.post("/{user_id}/add")
 def add_item(

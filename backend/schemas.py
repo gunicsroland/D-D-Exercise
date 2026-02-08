@@ -75,3 +75,16 @@ class InventoryItemSchema(BaseModel):
 
     class Config:
         orm_mode = True
+        
+class ItemEffectCreate(BaseModel):
+    attribute: str
+    operation: str  # "add", "multiply", "set"
+    value: int
+    duration: int
+    
+class ItemCreate(BaseModel):
+    name: str
+    description: str
+    image_url: str | None = None
+    type: str  # "weapon", "armor", "potion"
+    

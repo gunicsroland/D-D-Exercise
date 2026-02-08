@@ -52,3 +52,8 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     except Exception as e: 
         logging.error(f"5. ERROR: Database query failed. {e}")
         raise credentials_exception
+    
+def ged_admin_user(current_user: User = Depends(get_current_user)):
+    if not current_user.is_admin:
+        raise HTTPException(status_code=403, detail="Not authorized")
+    return current_user
