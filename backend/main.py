@@ -9,8 +9,13 @@ from functions import *
 from dependencies import get_current_user
 import logging
 
+from routes import auth
+from routes import character
 
 app = FastAPI()
+
+app.include_router(auth.app)
+app.include_router(character.app)
 
 Base.metadata.create_all(bind=engine)
 
@@ -31,96 +36,7 @@ app.add_middleware(
     allow_headers=["*"],         
 )
 
-@app.post("/register")
-def register(user: schemas.UserRequest, db: Session = Depends(get_db)):
-    existing_user = db.query(User).filter(User.username == user.username).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="This Username is used")
-    
-    db_user = User(
-        username = user.username,
-        email = user.email,
-        password_hash = hash_password(user.password)
-    )
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return {"message": "User created successfully"}
-
-@app.post("/login")
-def login(user: schemas.LoginRequest, db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.username == user.username).first()
-    
-    if not db_user or not verify_password(user.password, db_user.password_hash):
-        raise HTTPException(status_code = 400, detail='Wrong username or wrong password')
-    
-    token = create_access_token({"sub": str(db_user.id)})
-    return {"access_token": token, "token_type": "bearer"}
 
 @app.get("/me")
 def get_current_user(current_user: User = Depends(get_current_user)):
     return {"id": current_user.id, "username": current_user.username, "email": current_user.email}
-
-@app.get("/has_character/me")
-def get_current_user_character(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    character = db.query(Character).filter(Character.user_id == current_user["id"]).first()
-    if not character:
-        return {"has_character": False}
-    return {
-        "has_character": True
-    }
-    
-@app.get("/character/me", response_model=schemas.CharacterSchema)
-def get_current_user_character(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    logging.warning("--- GET /character/me ---")
-    logging.warning(f"Current user ID: {current_user['id']})")
-    
-    character = db.query(Character).filter(Character.user_id == current_user["id"]).first()
-    if not character:
-        raise HTTPException(status_code=404, detail="Character not found")
-    
-    logging.warning(
-    "Character found: %s", {
-        "id": character.id,
-        "name": character.name,
-        "level": character.level,
-        "class": character.class_,
-        "xp": character.xp,
-        "abilities": [{"type": a.ability, "value": a.score} for a in character.abilities]
-    }
-)
-    
-    
-    
-    return character
-
-@app.post("/create")
-def create_character(
-    character_data: schemas.CharacterCreateRequest,
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db),
-):
-    character = Character(
-        name = character_data.name,
-        class_ = character_data.class_,
-        level = 1,
-        xp = 0,
-        user_id = current_user["id"]
-    )
-    
-    character.abilities = [
-        CharacterAbility(ability=ability,
-                         score = score) for ability, score in character_data.abilities.items()
-    ]
-    
-    db.add(character)
-    db.commit()
-    db.refresh(character)
-    
-    return {"message": "Character created successfully", "character_id": character.id}
