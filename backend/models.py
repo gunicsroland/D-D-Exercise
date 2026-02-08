@@ -92,6 +92,9 @@ class Items(Base):
     name = Column(String)
     description = Column(String)
     type = Column("item_type", Enum(ItemType))
+    image_url = Column(String, nullable=True)
+    
+    effects = relationship("ItemEffect", back_populates="item")
     
 class ItemEffect(Base):
     __tablename__ = "item_effect"
@@ -111,3 +114,4 @@ class Inventory(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     quantity = Column(Integer)
     
+    item = relationship("Items")

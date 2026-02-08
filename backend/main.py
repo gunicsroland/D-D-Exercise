@@ -9,13 +9,13 @@ from functions import *
 from dependencies import get_current_user
 import logging
 
-from routes import auth
-from routes import character
+from routes import auth, character, inventory
 
 app = FastAPI()
 
 app.include_router(auth.app)
 app.include_router(character.app)
+app.include_router(inventory.app)
 
 Base.metadata.create_all(bind=engine)
 

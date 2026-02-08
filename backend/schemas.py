@@ -48,3 +48,30 @@ class CharacterSchema(BaseModel):
 
     class Config:
         orm_mode = True
+        
+class ItemEffectSchema(BaseModel):
+    attribute: str
+    operation: str
+    value: int
+    duration: int
+
+    class Config:
+        orm_mode = True
+        
+class ItemSchema(BaseModel):
+    id: int
+    name: str
+    description: str
+    image_url: str | None
+    type: str
+    effects: list[ItemEffectSchema] = []
+
+    class Config:
+        orm_mode = True
+        
+class InventoryItemSchema(BaseModel):
+    quantity: int
+    item: ItemSchema
+
+    class Config:
+        orm_mode = True
