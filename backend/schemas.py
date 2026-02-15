@@ -1,7 +1,12 @@
 from typing import List
 from pydantic import BaseModel, model_validator
 from models import AbilityType 
-  
+
+class UserSchema(BaseModel):
+    id: int
+    username: str
+    email: str
+
 class UserRequest(BaseModel):
     username: str
     email: str

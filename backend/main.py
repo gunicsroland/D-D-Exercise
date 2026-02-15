@@ -9,11 +9,12 @@ from functions import *
 from dependencies import get_current_user
 import logging
 
-from routes import auth, character, inventory, items
+from routes import auth, users, character, inventory, items
 
 app = FastAPI()
 
 app.include_router(auth.app)
+app.include_router(users.app)
 app.include_router(character.app)
 app.include_router(inventory.app)
 app.include_router(items.app)
