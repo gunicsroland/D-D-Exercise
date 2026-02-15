@@ -1,5 +1,7 @@
-from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
+import os
+from fastapi import Depends, HTTPException, Security
+import secrets
+from fastapi.security import OAuth2PasswordBearer, APIKeyHeader
 from sqlalchemy.orm import Session
 from jose import JWTError
 import logging
@@ -8,7 +10,13 @@ from database import get_db
 from models import User
 from functions import decode_access_token
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+api_key_header = APIKeyHeader(name="X-Admin-Key")
+
+
+def require_admin_key(api_key: str = Security(api_key_header)):
+    if not secrets.compare_digest(api_key, os.environ["ADMIN_API_KEY"]):
+        raise HTTPException(status_code=403)
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
@@ -53,7 +61,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         logging.error(f"5. ERROR: Database query failed. {e}")
         raise credentials_exception
     
-def ged_admin_user(current_user: User = Depends(get_current_user)):
+def get_admin_user(current_user: User = Depends(get_current_user)):
     if not current_user.is_admin:
         raise HTTPException(status_code=403, detail="Not authorized")
     return current_user
