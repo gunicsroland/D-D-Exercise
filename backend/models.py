@@ -21,6 +21,20 @@ class AbilityType(enum.Enum):
     WIS = "wisdom"
     CHA = "charisma"
     
+class ExerciseCategory(enum.Enum):
+    Strength = "strength"
+    Cardio = "cardio"
+    Flexibility = "flexibility"
+    Core = "core"
+    
+class ExerciseDifficulty(enum.Enum):
+    VeryEasy = "very_easy"
+    Easy = "easy"
+    Medium = "medium"
+    Hard = "hard"
+    VeryHard = "very_hard"
+    NearlyImpossible = "nearly_impossible"
+    
 class User(Base):
     __tablename__ = "users"
 
@@ -46,17 +60,7 @@ class Character(Base):
     abilities = relationship("CharacterAbility", back_populates="character", cascade="all, delete")
     
     user = relationship("User", back_populates="characters")
-    
-class Exercise(Base):
-    __tablename__ = "exercises"
-    
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String)
-    category = Column(String)
-    difficulty = Column(Integer)
-    xp_reward = Column(Integer)
-    media_url = Column(String, nullable=True)
-    
+
 class CharacterAbility(Base):
     __tablename__ = "character_abilities"
     
@@ -65,7 +69,18 @@ class CharacterAbility(Base):
     ability = Column(Enum(AbilityType))
     score = Column(Integer, default=10)
 
-    character = relationship("Character", back_populates="abilities")    
+    character = relationship("Character", back_populates="abilities")        
+    
+class Exercise(Base):
+    __tablename__ = "exercises"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String)
+    category = Column(Enum(ExerciseCategory))
+    difficulty = Column(Enum(ExerciseDifficulty))
+    quantity = Column(Integer, default=1)
+    xp_reward = Column(Integer)
+    media_url = Column(String, nullable=True)
     
 class Quest(Base):
     __tablename__ = "quests"

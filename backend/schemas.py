@@ -1,6 +1,6 @@
 from typing import List, Optional
 from pydantic import BaseModel, model_validator
-from models import AbilityType 
+from models import AbilityType, ExerciseCategory, ExerciseDifficulty
 
 class BaseSchema(BaseModel):
     class Config:
@@ -97,8 +97,9 @@ class InventoryRead(InventoryBase):
     
 class ExerciseBase(BaseSchema):
     name: str
-    category: str
-    difficulty: str
+    category: ExerciseCategory
+    difficulty: ExerciseDifficulty
+    quantity: int = 1
     xp_reward: int
     media_url: Optional[str] = None
     
