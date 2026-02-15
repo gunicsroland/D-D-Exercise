@@ -21,7 +21,7 @@ def user_has_character(
 ):
     logging.info(f"Checking character existence for user_id={user_id}")
 
-    if current_user["id"] != user_id:
+    if current_user.id != user_id:
         logging.warning(f"Unauthorized access attempt by user {current_user['id']} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
 
@@ -39,8 +39,8 @@ def get_user_character(
 ):
     logging.info(f"Fetching character for user_id={user_id}")
 
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized character fetch attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized character fetch attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
 
     character = db.query(Character).filter(Character.user_id == user_id).first()
@@ -78,8 +78,8 @@ def create_character(
 ):
     logging.info(f"Creating character for user_id={user_id}")
 
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized character creation attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized character creation attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
 
     existing_character = db.query(Character).filter(Character.user_id == user_id).first()
@@ -119,8 +119,8 @@ def delete_character(
 ):
     logging.info(f"Deleting character for user_id={user_id}")
 
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized character deletion attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized character deletion attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
 
     character = db.query(Character).filter(Character.user_id == user_id).first()
@@ -145,8 +145,8 @@ def add_xp(
 ):
     logging.info(f"Adding XP for user={user_id}, xp_gain={xp_gain}")
     
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized XP addition attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized XP addition attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
     character = db.query(Character).filter(Character.user_id == user_id).first()
@@ -163,7 +163,7 @@ def add_xp(
     if levels_gained > 0:
         logging.info(f"Character leveled up from {old_level} to {new_level} for user_id={user_id}")
         character.level = new_level
-        character.ability_point += levels_gained * 2
+        character.ability_points += levels_gained * 2
         
     db.commit()
     db.refresh(character)
@@ -186,8 +186,8 @@ def upgrade_ability(
     db: Session = Depends(get_db)
 ):
     logging.info(f"Upgrading ability for user_id={user_id}, ability={ability.value}")
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized ability upgrade attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized ability upgrade attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
     character = db.query(Character).filter(Character.user_id == user_id).first()

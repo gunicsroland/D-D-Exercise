@@ -22,15 +22,15 @@ def get_inventory(
 ):
     logging.info(f"Fetching inventory for user_id={user_id}")
 
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized inventory fetch attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized inventory fetch attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
 
     inventory_items = (db.query(Inventory).filter(Inventory.user_id == user_id).all())
 
     logging.info(f"Found {len(inventory_items)} items in inventory for user_id={user_id}")
 
-    inventory_items
+    return inventory_items
 
 @app.post("/{user_id}/add")
 def add_item(
@@ -42,8 +42,8 @@ def add_item(
 ):
     logging.info(f"Adding item_id={item_id} (quantity={quantity}) to inventory for user_id={user_id}")
     
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized inventory modification attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized inventory modification attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
     item = db.query(Item).filter(Item.id == item_id).first()
@@ -79,8 +79,8 @@ def remove_item(
 ):
     logging.info(f"Removing item_id={item_id} (quantity={quantity}) from inventory for user_id={user_id}")
     
-    if current_user["id"] != user_id:
-        logging.warning(f"Unauthorized inventory modification attempt by user {current_user['id']} for user_id={user_id}")
+    if current_user.id != user_id:
+        logging.warning(f"Unauthorized inventory modification attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
     inventory_item = db.query(Inventory).filter(
