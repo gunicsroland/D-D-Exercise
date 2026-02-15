@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 import logging
 
 from database import get_db
-from models import Items, ItemEffect, User, ItemType
+from models import Item, ItemEffect, User, ItemType
 import schemas
-from functions import get_admin_user
+from dependencies import get_admin_user
 
 app = APIRouter(
     prefix="/items",
@@ -19,7 +19,7 @@ def get_item(
 ):
     logging.info(f"Fetching item with id={item_id}")
 
-    item = db.query(Items).filter(Items.id == item_id).first()
+    item = db.query(Item).filter(Item.id == item_id).first()
 
     if not item:
         logging.warning(f"Item with id={item_id} not found")
@@ -32,7 +32,7 @@ def get_item(
 @app.get("/", response_model=list[schemas.ItemSchema])
 def get_all_items(db: Session = Depends(get_db)):
     logging.info("Fetching all items")
-    return db.query(Items).all()
+    return db.query(Item).all()
 
 @app.post("/", response_model=schemas.ItemSchema)
 def create_item(
@@ -42,7 +42,7 @@ def create_item(
 ):
     logging.info(f"Admin {admin_user.id} creating new item {item_data.name}")
 
-    item = Items(
+    item = Item(
         name=item_data.name,
         description=item_data.description,
         image_url=item_data.image_url,
@@ -55,7 +55,29 @@ def create_item(
 
     return item
 
-@app.post("/{item_id}/effects", response_model=schemas.ItemEffectSchema)
+@app.get("/effects/{effect_id}", response_model=schemas.ItemEffectSchema)
+def get_item_effect(
+    effect_id: int,
+    db: Session = Depends(get_db)
+):
+    logging.info(f"Fetching item effect with id={effect_id}")
+
+    effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
+
+    if not effect:
+        logging.warning(f"Item effect with id={effect_id} not found")
+        raise HTTPException(status_code=404, detail="Item effect not found")
+
+    logging.info(f"Item effect found: {effect.attribute}")
+
+    return effect
+
+@app.get("/effects", response_model=list[schemas.ItemEffectSchema])
+def get_all_item_effects(db: Session = Depends(get_db)):
+    logging.info("Fetching all item effects")
+    return db.query(ItemEffect).all()
+
+@app.post("/effects", response_model=schemas.ItemEffectSchema)
 def add_item_effect(
     item_id: int,
     effect_data: schemas.ItemEffectCreate,
@@ -64,12 +86,11 @@ def add_item_effect(
 ):
     logging.info(f"Admin {admin_user.id} adding effect to item id={item_id}")
 
-    item = db.query(Items).filter(Items.id == item_id).first()
+    item = db.query(Item).filter(Item.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
 
     effect = ItemEffect(
-        item_id=item_id,
         attribute=effect_data.attribute,
         operation=effect_data.operation,
         value=effect_data.value,
@@ -90,7 +111,7 @@ def create_item(
 ):
     logging.info(f"Admin {admin_user.id} creating new item {item_data.name}")
 
-    item = Items(
+    item = Item(
         name=item_data.name,
         description=item_data.description,
         image_url=item_data.image_url,
@@ -103,29 +124,64 @@ def create_item(
 
     return item
 
-@app.post("/{item_id}/effects", response_model=schemas.ItemEffectSchema)
-def add_item_effect(
+@app.delete("/{item_id}")
+def delete_item(
     item_id: int,
-    effect_data: schemas.ItemEffectCreate,
     db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user)  # ✅ Admin check
+    admin_user: User = Depends(get_admin_user)
 ):
-    logging.info(f"Admin {admin_user.id} adding effect to item id={item_id}")
+    logging.info(f"Admin {admin_user.id} deleting item id={item_id}")
 
-    item = db.query(Items).filter(Items.id == item_id).first()
+    item = db.query(Item).filter(Item.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
 
-    effect = ItemEffect(
-        item_id=item_id,
-        attribute=effect_data.attribute,
-        operation=effect_data.operation,
-        value=effect_data.value,
-        duration=effect_data.duration,
-    )
-
-    db.add(effect)
+    db.delete(item)
     db.commit()
-    db.refresh(effect)
 
-    return effect
+    logging.info(f"Item id={item_id} deleted successfully")
+
+    return {"detail": "Item deleted successfully"}
+
+@app.delete("/effects/{effect_id}")
+def delete_item_effect(
+    effect_id: int,
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    logging.info(f"Admin {admin_user.id} deleting effect id={effect_id}")
+
+    effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
+    if not effect:
+        raise HTTPException(status_code=404, detail="Item effect not found")
+
+    db.delete(effect)
+    db.commit()
+
+    logging.info(f"Effect id={effect_id} deleted successfully")
+
+    return {"detail": "Item effect deleted successfully"}
+
+@app.post("/{item_id}/effects/{effect_id}")
+def link_effect_to_item(
+    item_id: int,
+    effect_id: int,
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    logging.info(f"Admin {admin_user.id} linking effect id={effect_id} to item id={item_id}")
+
+    item = db.query(Item).filter(Item.id == item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
+    if not effect:
+        raise HTTPException(status_code=404, detail="Item effect not found")
+
+    item.effects.append(effect)
+    db.commit()
+
+    logging.info(f"Effect id={effect_id} linked to item id={item_id} successfully")
+
+    return {"detail": "Effect linked to item successfully"}

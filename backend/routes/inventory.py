@@ -46,7 +46,7 @@ def add_item(
         logging.warning(f"Unauthorized inventory modification attempt by user {current_user['id']} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    item = db.query(Items).filter(Items.id == item_id).first()
+    item = db.query(Item).filter(Item.id == item_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
 
@@ -69,7 +69,7 @@ def add_item(
     logging.info(f"Item added successfully to inventory for user_id={user_id}")
     return {"message": "Item added to inventory"}
 
-@app.post("/{user_id}/remove")
+@app.delete("/{user_id}/{item_id}/remove")
 def remove_item(
     user_id: int,
     item_id: int,

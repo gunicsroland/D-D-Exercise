@@ -63,6 +63,11 @@ def get_user_character(
 
     return character
 
+@app.get("/")
+def get_all_characters(db: Session = Depends(get_db)):
+    logging.info("Fetching all characters")
+    return db.query(Character).all()
+
 
 @app.post("/{user_id}")
 def create_character(

@@ -59,7 +59,7 @@ class ItemSchema(BaseModel):
     name: str
     description: str
     image_url: str | None
-    type: str
+    item_type: str
     effects: list[ItemEffectSchema] = []
 
     class Config:
