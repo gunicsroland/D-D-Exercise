@@ -14,7 +14,7 @@ app = APIRouter(
 )
 
 @app.post("/register")
-def register(user: schemas.UserRequest, db: Session = Depends(get_db)):
+def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.username == user.username).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="This Username is used")
@@ -30,7 +30,7 @@ def register(user: schemas.UserRequest, db: Session = Depends(get_db)):
     return {"message": "User created successfully"}
 
 @app.post("/admin/create")
-def create_admin(user: schemas.UserRequest, db: Session = Depends(get_db),
+def create_admin(user: schemas.UserCreate, db: Session = Depends(get_db),
                  _: None = Depends(require_admin_key)):
     existing_user = db.query(User).filter(User.username == user.username).first()
     if existing_user:

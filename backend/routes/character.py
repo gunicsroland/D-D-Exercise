@@ -1,6 +1,7 @@
 from fastapi import HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 import logging
+from typing import List
 
 from database import get_db
 from models import *
@@ -31,7 +32,7 @@ def user_has_character(
     return {"has_character": bool(character)}
 
     
-@app.get("/{user_id}", response_model=schemas.CharacterSchema)
+@app.get("/{user_id}", response_model=schemas.CharacterRead)
 def get_user_character(
     user_id: int,
     current_user: User = Depends(get_current_user),
@@ -63,7 +64,7 @@ def get_user_character(
 
     return character
 
-@app.get("/")
+@app.get("/", response_model=List[schemas.CharacterRead])
 def get_all_characters(db: Session = Depends(get_db)):
     logging.info("Fetching all characters")
     return db.query(Character).all()
@@ -72,7 +73,7 @@ def get_all_characters(db: Session = Depends(get_db)):
 @app.post("/{user_id}")
 def create_character(
     user_id: int,
-    character_data: schemas.CharacterCreateRequest,
+    character_data: schemas.CharacterCreate,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):

@@ -13,7 +13,7 @@ app = APIRouter(
     tags=["users"]
 )
 
-@app.get("/", response_model=List[schemas.UserSchema])
+@app.get("/", response_model=List[schemas.UserRead])
 def get_users(
     db: Session = Depends(get_db),
     admin_user: User = Depends(get_admin_user)

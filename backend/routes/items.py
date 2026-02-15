@@ -12,7 +12,7 @@ app = APIRouter(
     tags=["items"]
 )
 
-@app.get("/{item_id}", response_model=schemas.ItemSchema)
+@app.get("/{item_id}", response_model=schemas.ItemRead)
 def get_item(
     item_id: int,
     db: Session = Depends(get_db)
@@ -29,12 +29,12 @@ def get_item(
 
     return item
 
-@app.get("/", response_model=list[schemas.ItemSchema])
+@app.get("/", response_model=list[schemas.ItemRead])
 def get_all_items(db: Session = Depends(get_db)):
     logging.info("Fetching all items")
     return db.query(Item).all()
 
-@app.post("/", response_model=schemas.ItemSchema)
+@app.post("/", response_model=schemas.ItemRead)
 def create_item(
     item_data: schemas.ItemCreate,
     db: Session = Depends(get_db),
@@ -55,7 +55,7 @@ def create_item(
 
     return item
 
-@app.get("/effects/{effect_id}", response_model=schemas.ItemEffectSchema)
+@app.get("/effects/{effect_id}", response_model=schemas.ItemEffectRead)
 def get_item_effect(
     effect_id: int,
     db: Session = Depends(get_db)
@@ -72,12 +72,12 @@ def get_item_effect(
 
     return effect
 
-@app.get("/effects", response_model=list[schemas.ItemEffectSchema])
+@app.get("/effects", response_model=list[schemas.ItemEffectRead])
 def get_all_item_effects(db: Session = Depends(get_db)):
     logging.info("Fetching all item effects")
     return db.query(ItemEffect).all()
 
-@app.post("/effects", response_model=schemas.ItemEffectSchema)
+@app.post("/effects", response_model=schemas.ItemEffectRead)
 def add_item_effect(
     item_id: int,
     effect_data: schemas.ItemEffectCreate,
@@ -103,7 +103,7 @@ def add_item_effect(
 
     return effect
 
-@app.post("/", response_model=schemas.ItemSchema)
+@app.post("/", response_model=schemas.ItemRead)
 def create_item(
     item_data: schemas.ItemCreate,
     db: Session = Depends(get_db),

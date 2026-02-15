@@ -14,7 +14,7 @@ app = APIRouter(
     tags=["inventory"]
 )
 
-@app.get("/{user_id}", response_model=List[schemas.InventoryItemSchema])
+@app.get("/{user_id}", response_model=List[schemas.InventoryRead])
 def get_inventory(
     user_id: int,
     current_user: User = Depends(get_current_user),
