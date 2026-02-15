@@ -1,18 +1,41 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, model_validator
 from models import AbilityType 
 
-class UserSchema(BaseModel):
-    id: int
+class BaseSchema(BaseModel):
+    class Config:
+        orm_mode = True
+
+class UserBase(BaseSchema):
     username: str
     email: str
 
-class UserRequest(BaseModel):
-    username: str
-    email: str
+class UserCreate(UserBase):
     password: str
+
+class UserRead(UserBase):
+    id: int
+    is_admin: bool
     
-class CharacterCreateRequest(BaseModel):
+class AbilityBase(BaseSchema):
+    ability: AbilityType
+    score: int
+
+class AbilityCreate(BaseSchema):
+    ability: AbilityType
+    score: int
+
+class AbilityRead(AbilityBase):
+    pass
+    
+class CharacterBase(BaseSchema):
+    name: str
+    class_: str
+    level: int
+    xp: int
+    ability_points: int    
+    
+class CharacterCreate(CharacterBase):
     name: str
     class_: str
     abilities: dict[AbilityType, int]
@@ -31,61 +54,43 @@ class CharacterCreateRequest(BaseModel):
                 raise ValueError(f"{ability.value} score must be between 1 and 20")
 
         return self
+
+class CharacterRead(CharacterBase):
+    id: int
+    abilities: List[AbilityRead]
     
-class AbilitySchema(BaseModel):
-    ability: AbilityType
-    score: int
-
-    class Config:
-        orm_mode = True
-
-class CharacterSchema(BaseModel):
-    name: str
-    class_: str
-    level: int
-    xp: int
-    ability_points: int
-    abilities: List[AbilitySchema]
-
-    class Config:
-        orm_mode = True
-        
-class ItemEffectSchema(BaseModel):
+class ItemEffectBase(BaseSchema):
     attribute: str
     operation: str
     value: int
     duration: int
-
-    class Config:
-        orm_mode = True
+    
+class ItemEffectCreate(ItemEffectBase):
+    pass
         
-class ItemSchema(BaseModel):
+class ItemEffectRead(ItemEffectBase):
     id: int
+    
+class ItemBase(BaseSchema):
     name: str
     description: str
-    image_url: str | None
     item_type: str
-    effects: list[ItemEffectSchema] = []
+    image_url: Optional[str] = None
 
-    class Config:
-        orm_mode = True
+class ItemCreate(ItemBase):
+    pass
         
-class InventoryItemSchema(BaseModel):
+class ItemRead(ItemBase):
+    id: int
+    effects: List[ItemEffectRead] = []
+        
+class InventoryBase(BaseSchema):
     quantity: int
-    item: ItemSchema
-
-    class Config:
-        orm_mode = True
-        
-class ItemEffectCreate(BaseModel):
-    attribute: str
-    operation: str  # "add", "multiply", "set"
-    value: int
-    duration: int
     
-class ItemCreate(BaseModel):
-    name: str
-    description: str
-    image_url: str | None = None
-    type: str  # "weapon", "armor", "potion"
+class InventoryCreate(InventoryBase):
+    item_id: int
+    user_id: int
     
+class InventoryRead(InventoryBase):
+    id: int
+    item: ItemRead
