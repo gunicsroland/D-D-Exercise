@@ -1,5 +1,4 @@
-from xmlrpc.client import Boolean
-from sqlalchemy import Column, Integer, String, ForeignKey, Enum, TIMESTAMP
+from sqlalchemy import Column, Integer, Boolean, String, ForeignKey, Enum, TIMESTAMP, func, Table
 from sqlalchemy.orm import relationship
 from database import Base
 import enum
@@ -29,7 +28,7 @@ class User(Base):
     username = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
-    created_at = Column(TIMESTAMP, default="CURRENT_TIMESTAMP")
+    created_at = Column(TIMESTAMP, server_default=func.now())
     is_admin = Column(Boolean, default=False)
 
     characters = relationship("Character", back_populates="user")
@@ -48,7 +47,7 @@ class Character(Base):
     
     user = relationship("User", back_populates="characters")
     
-class Exercises(Base):
+class Exercise(Base):
     __tablename__ = "exercises"
     
     id = Column(Integer, primary_key=True, index=True)
@@ -67,7 +66,7 @@ class CharacterAbility(Base):
 
     character = relationship("Character", back_populates="abilities")    
     
-class Quests(Base):
+class Quest(Base):
     __tablename__ = "quests"
     
     id = Column(Integer, primary_key=True, index=True)
@@ -78,7 +77,7 @@ class Quests(Base):
     xp_reward = Column(Integer)
     item_reward = Column(Integer, ForeignKey("items.id"))
     
-class WorkoutLogs(Base):
+class WorkoutLog(Base):
     __tablename__ = "workout_logs"
     
     id = Column(Integer, primary_key=True, index=True)
@@ -87,26 +86,38 @@ class WorkoutLogs(Base):
     amount = Column(Integer)
     date = Column(TIMESTAMP)
     
-class Items(Base):
+item_effect_link = Table(
+    "item_effect_link",
+    Base.metadata,
+    Column("item_id", ForeignKey("items.id"), primary_key=True),
+    Column("effect_id", ForeignKey("item_effects.id"), primary_key=True),
+)
+    
+class Item(Base):
     __tablename__ = "items"
     
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
     description = Column(String)
-    type = Column("item_type", Enum(ItemType))
+    item_type = Column("item_type", Enum(ItemType))
     image_url = Column(String, nullable=True)
     
-    effects = relationship("ItemEffect", back_populates="item")
+    effects = relationship("ItemEffect",
+                           secondary=item_effect_link,
+                           back_populates="items")
     
 class ItemEffect(Base):
-    __tablename__ = "item_effect"
+    __tablename__ = "item_effects"
     
     id = Column(Integer, primary_key=True, index=True)
-    item_id = Column(Integer, ForeignKey("items.id"))
     attribute = Column(String)
     operation = Column(String)
     value = Column(Integer)
     duration = Column(Integer)
+    
+    items = relationship("Item",
+                         secondary=item_effect_link,
+                         back_populates="effects")
     
 class Inventory(Base):
     __tablename__ = "inventory"
@@ -116,4 +127,4 @@ class Inventory(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     quantity = Column(Integer)
     
-    item = relationship("Items")
+    item = relationship("Item")
