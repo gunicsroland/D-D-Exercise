@@ -55,6 +55,7 @@ class Exercise(Base):
     category = Column(String)
     difficulty = Column(Integer)
     xp_reward = Column(Integer)
+    media_url = Column(String, nullable=True)
     
 class CharacterAbility(Base):
     __tablename__ = "character_abilities"

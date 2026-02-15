@@ -94,3 +94,30 @@ class InventoryCreate(InventoryBase):
 class InventoryRead(InventoryBase):
     id: int
     item: ItemRead
+    
+class ExerciseBase(BaseSchema):
+    name: str
+    category: str
+    difficulty: str
+    xp_reward: int
+    media_url: Optional[str] = None
+    
+class ExerciseCreate(ExerciseBase):
+    pass
+
+class ExerciseRead(ExerciseBase):
+    id: int
+    
+class QuestBase(BaseSchema):
+    name: str
+    description: str
+    exercise_id: int
+    amount: int
+    xp_reward: int
+    item_reward: Optional[int] = None
+    
+class QuestCreate(QuestBase):
+    pass
+
+class QuestRead(QuestBase):
+    id: int
