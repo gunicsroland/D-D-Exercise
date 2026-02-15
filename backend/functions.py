@@ -32,13 +32,3 @@ def verify_password(entered_pw: str, hash_pw : str):
     hashed_bytes = hash_pw.encode('utf-8')
     return bcrypt.checkpw(entered_pw_bytes, hashed_bytes)
 
-def calculate_level(xp: int) -> int:
-    level = 1
-    
-    for lvl, required_xp in constants.XP_LEVELS.items():
-        if xp >= required_xp:
-            level = lvl
-        else:
-            break
-        
-    return min(level, constants.MAX_LEVEL)

@@ -8,6 +8,7 @@ from models import *
 import schemas
 from functions import *
 from dependencies import get_current_user
+from services import character as character_service
 
 app = APIRouter(
     prefix="/character",
@@ -150,34 +151,9 @@ def add_xp(
         logging.warning(f"Unauthorized XP addition attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    character = db.query(Character).filter(Character.user_id == user_id).first()
-    if not character:
-        logging.warning(f"No character found for user_id={user_id} when trying to add XP")
-        raise HTTPException(status_code=404, detail="Character not found")
-    
-    old_level = character.level
-    character.xp += xp_gain
-    
-    new_level = calculate_level(character.xp)
-    levels_gained = new_level - old_level
-    
-    if levels_gained > 0:
-        logging.info(f"Character leveled up from {old_level} to {new_level} for user_id={user_id}")
-        character.level = new_level
-        character.ability_points += levels_gained * 2
-        
-    db.commit()
-    db.refresh(character)
-    
-    return {
-        "message": "XP added",
-        "xp_gained": xp_gain,
-        "total_xp": character.xp,
-        "old_level": old_level,
-        "new_level": character.level,
-        "levels_gained": levels_gained,
-        "ability_points": character.ability_points,
-    }
+    message = character_service.award_xp(user_id, xp_gain, db)
+    logging.info(f"XP added successfully for user_id={user_id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}")
+    return message
     
 @app.post("/{user_id}/ability_points")
 def upgrade_ability(

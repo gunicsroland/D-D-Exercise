@@ -8,6 +8,7 @@ from models import *
 import schemas
 from functions import *
 from dependencies import get_current_user
+from services import inventory as inventory_service
 
 app = APIRouter(
     prefix="/inventory",
@@ -46,27 +47,8 @@ def add_item(
         logging.warning(f"Unauthorized inventory modification attempt by user {current_user.id} for user_id={user_id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    item = db.query(Item).filter(Item.id == item_id).first()
-    if not item:
-        raise HTTPException(status_code=404, detail="Item not found")
-
-    existing_inventory_item = db.query(Inventory).filter(
-        Inventory.user_id == user_id,
-        Inventory.item_id == item_id
-    ).first()
-
-    if existing_inventory_item:
-        existing_inventory_item.quantity += quantity
-    else:
-        new_inventory_item = Inventory(
-            user_id=user_id,
-            item_id=item_id,
-            quantity=quantity
-        )
-        db.add(new_inventory_item)
-
-    db.commit()
-    logging.info(f"Item added successfully to inventory for user_id={user_id}")
+    inventory_service.add_item(user_id, item_id, quantity, db)
+    
     return {"message": "Item added to inventory"}
 
 @app.delete("/{user_id}/{item_id}/remove")
