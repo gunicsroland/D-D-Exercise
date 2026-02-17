@@ -6,7 +6,6 @@ from typing import List
 from database import get_db
 from models import *
 import schemas
-from functions import *
 from dependencies import get_current_user
 from services import inventory as inventory_service
 
@@ -14,6 +13,14 @@ app = APIRouter(
     prefix="/inventory",
     tags=["inventory"]
 )
+
+@app.get("/", response_model=List[schemas.InventoryRead])
+def get_all_inventories(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    logging.info(f"Fetching all inventories for user_id={current_user.id}")
+    return db.query(Inventory).all()
 
 @app.get("/{user_id}", response_model=List[schemas.InventoryRead])
 def get_inventory(
@@ -33,7 +40,7 @@ def get_inventory(
 
     return inventory_items
 
-@app.post("/{user_id}/add")
+@app.post("/{user_id}/{item_id}/")
 def add_item(
     user_id: int,
     item_id: int,
@@ -51,7 +58,7 @@ def add_item(
     
     return {"message": "Item added to inventory"}
 
-@app.delete("/{user_id}/{item_id}/remove")
+@app.delete("/{user_id}/{item_id}/")
 def remove_item(
     user_id: int,
     item_id: int,

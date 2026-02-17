@@ -34,7 +34,7 @@ def get_exercise(
         raise HTTPException(status_code=404, detail="Exercise not found")
     return exercise
 
-@app.get("/category/{category}", response_model=list[schemas.ExerciseRead])
+@app.get("/{category}", response_model=list[schemas.ExerciseRead])
 def get_exercises_by_category(
     category: ExerciseCategory,
     db: Session = Depends(get_db)
@@ -42,7 +42,7 @@ def get_exercises_by_category(
     logging.info(f"Fetching exercises in category '{category}'")
     return db.query(Exercise).filter(Exercise.category == category).all()
 
-@app.get("/difficulty/{difficulty}", response_model=list[schemas.ExerciseRead])
+@app.get("/{difficulty}", response_model=list[schemas.ExerciseRead])
 def get_exercises_by_difficulty(
     difficulty: ExerciseDifficulty,
     db: Session = Depends(get_db)
@@ -50,7 +50,7 @@ def get_exercises_by_difficulty(
     logging.info(f"Fetching exercises with difficulty '{difficulty}'")
     return db.query(Exercise).filter(Exercise.difficulty == difficulty).all()
 
-@app.get("/category/{category}/difficulty/{difficulty}", response_model=list[schemas.ExerciseRead])
+@app.get("/{category}/{difficulty}", response_model=list[schemas.ExerciseRead])
 def get_exercises_by_category_and_difficulty(
     category: ExerciseCategory,
     difficulty: ExerciseDifficulty,
@@ -62,7 +62,7 @@ def get_exercises_by_category_and_difficulty(
         Exercise.difficulty == difficulty
     ).all()
 
-@app.post("/add")
+@app.post("/")
 def add_exercise(
     exercise: schemas.ExerciseCreate,
     db: Session = Depends(get_db),
@@ -85,7 +85,7 @@ def add_exercise(
     
     return {"message": "Exercise added successfully", "exercise": new_exercise}
 
-@app.put("/update/{exercise_id}")
+@app.put("/{exercise_id}")
 def update_exercise(
     exercise_id: int,
     exercise_data: schemas.ExerciseUpdate,

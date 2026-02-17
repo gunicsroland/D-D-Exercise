@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database import Base, engine
 from models import *
-from functions import *
 from dependencies import get_current_user
 
 from routes import auth, users, items, effects, exercises, quests

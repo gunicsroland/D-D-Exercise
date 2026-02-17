@@ -12,7 +12,7 @@ app = APIRouter(
     tags=["effects"]
 )
 
-@app.get("/effects/{effect_id}", response_model=schemas.ItemEffectRead)
+@app.get("/{effect_id}", response_model=schemas.ItemEffectRead)
 def get_item_effect(
     effect_id: int,
     db: Session = Depends(get_db)
@@ -29,12 +29,12 @@ def get_item_effect(
 
     return effect
 
-@app.get("/effects", response_model=list[schemas.ItemEffectRead])
+@app.get("/", response_model=list[schemas.ItemEffectRead])
 def get_all_item_effects(db: Session = Depends(get_db)):
     logging.info("Fetching all item effects")
     return db.query(ItemEffect).all()
 
-@app.post("/effects", response_model=schemas.ItemEffectRead)
+@app.post("/", response_model=schemas.ItemEffectRead)
 def add_item_effect(
     item_id: int,
     effect_data: schemas.ItemEffectCreate,
@@ -60,7 +60,7 @@ def add_item_effect(
 
     return effect
 
-@app.put("/effects/{effect_id}")
+@app.put("/{effect_id}")
 def update_item_effect(
     effect_id: int,
     effect_data: schemas.ItemEffectUpdate,
@@ -84,7 +84,7 @@ def update_item_effect(
 
     return effect
 
-@app.delete("/effects/{effect_id}")
+@app.delete("/{effect_id}")
 def delete_item_effect(
     effect_id: int,
     db: Session = Depends(get_db),

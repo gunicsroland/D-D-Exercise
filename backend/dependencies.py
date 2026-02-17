@@ -8,7 +8,7 @@ import logging
 
 from database import get_db
 from models import User
-from functions import decode_access_token
+from services.auth import decode_access_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 api_key_header = APIKeyHeader(name="X-Admin-Key")

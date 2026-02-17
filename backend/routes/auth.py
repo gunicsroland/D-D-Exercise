@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import *
 import schemas
-from functions import *
-from dependencies import get_current_user, require_admin_key
+from dependencies import require_admin_key
+from services.auth import hash_password, verify_password, create_access_token
 
 app = APIRouter(
     prefix="/auth",

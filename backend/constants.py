@@ -26,11 +26,11 @@ XP_LEVELS = {
 MAX_LEVEL = 20
 
 DAY_CATEGORY_MAP = {
-    0: ExerciseCategory.Strength,
-    1: ExerciseCategory.Strength,
-    2: ExerciseCategory.Flexibility,
-    3: ExerciseCategory.Flexibility,
-    4: ExerciseCategory.Core,       
-    5: ExerciseCategory.Core,
-    6: ExerciseCategory.Cardio    
+    0: ExerciseCategory.Strength,       #Monday
+    1: ExerciseCategory.Strength,       #Tuesday
+    2: ExerciseCategory.Flexibility,    #Wednesday
+    3: ExerciseCategory.Flexibility,    #Thursday
+    4: ExerciseCategory.Core,           #Friday
+    5: ExerciseCategory.Core,           #Saturday
+    6: ExerciseCategory.Cardio          #Sunday
 }
