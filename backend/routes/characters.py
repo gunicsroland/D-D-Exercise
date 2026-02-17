@@ -138,7 +138,7 @@ def delete_character(
 
     return {"message": "Character deleted successfully"}
 
-@app.post("/{user_id}/xp")
+@app.put("/{user_id}/xp")
 def add_xp(
     user_id: int,
     xp_gain: int,
@@ -155,7 +155,7 @@ def add_xp(
     logging.info(f"XP added successfully for user_id={user_id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}")
     return message
     
-@app.post("/{user_id}/ability_points")
+@app.put("/{user_id}/ability_points")
 def upgrade_ability(
     user_id: int,
     ability: AbilityType,

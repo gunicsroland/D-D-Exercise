@@ -1,4 +1,4 @@
-from backend.routes import characters, inventories
+from routes import characters, inventories
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 

@@ -71,6 +71,12 @@ class ItemEffectCreate(ItemEffectBase):
 class ItemEffectRead(ItemEffectBase):
     id: int
     
+class ItemEffectUpdate(BaseSchema):
+    attribute: Optional[str] = None
+    operation: Optional[str] = None
+    value: Optional[int] = None
+    duration: Optional[int] = None
+    
 class ItemBase(BaseSchema):
     name: str
     description: str

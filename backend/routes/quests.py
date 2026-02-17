@@ -1,5 +1,5 @@
 from datetime import date
-from backend.constants import DAY_CATEGORY_MAP
+from constants import DAY_CATEGORY_MAP
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import logging
