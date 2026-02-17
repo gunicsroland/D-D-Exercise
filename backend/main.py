@@ -6,7 +6,7 @@ from database import Base, engine
 from models import *
 from dependencies import get_current_user
 
-from routes import auth, users, items, effects, exercises, quests
+from routes import auth, users, items, effects, exercises, quests, adventures, messages
 
 app = FastAPI()
 
@@ -18,6 +18,8 @@ app.include_router(items.app)
 app.include_router(effects.app)
 app.include_router(exercises.app)
 app.include_router(quests.app)
+app.include_router(adventures.app)
+app.include_router(messages.app)
 
 Base.metadata.create_all(bind=engine)
 
