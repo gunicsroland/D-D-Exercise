@@ -38,7 +38,7 @@ def get_all_items(db: Session = Depends(get_db)):
 def create_item(
     item_data: schemas.ItemCreate,
     db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user)
+    admin_user: User = Depends(get_admin_user) 
 ):
     logging.info(f"Admin {admin_user.id} creating new item {item_data.name}")
 
@@ -55,72 +55,27 @@ def create_item(
 
     return item
 
-@app.get("/effects/{effect_id}", response_model=schemas.ItemEffectRead)
-def get_item_effect(
-    effect_id: int,
-    db: Session = Depends(get_db)
-):
-    logging.info(f"Fetching item effect with id={effect_id}")
-
-    effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
-
-    if not effect:
-        logging.warning(f"Item effect with id={effect_id} not found")
-        raise HTTPException(status_code=404, detail="Item effect not found")
-
-    logging.info(f"Item effect found: {effect.attribute}")
-
-    return effect
-
-@app.get("/effects", response_model=list[schemas.ItemEffectRead])
-def get_all_item_effects(db: Session = Depends(get_db)):
-    logging.info("Fetching all item effects")
-    return db.query(ItemEffect).all()
-
-@app.post("/effects", response_model=schemas.ItemEffectRead)
-def add_item_effect(
+@app.put("/{item_id}")
+def update_item(
     item_id: int,
-    effect_data: schemas.ItemEffectCreate,
+    item_data: schemas.ItemUpdate,
     db: Session = Depends(get_db),
     admin_user: User = Depends(get_admin_user)
 ):
-    logging.info(f"Admin {admin_user.id} adding effect to item id={item_id}")
+    logging.info(f"Admin {admin_user.id} updating item id={item_id}")
 
     item = db.query(Item).filter(Item.id == item_id).first()
     if not item:
+        logging.warning(f"Item with id={item_id} not found for update")
         raise HTTPException(status_code=404, detail="Item not found")
 
-    effect = ItemEffect(
-        attribute=effect_data.attribute,
-        operation=effect_data.operation,
-        value=effect_data.value,
-        duration=effect_data.duration,
-    )
+    for field, value in item_data.dict(exclude_unset=True).items():
+        setattr(item, field, value)
 
-    db.add(effect)
-    db.commit()
-    db.refresh(effect)
-
-    return effect
-
-@app.post("/", response_model=schemas.ItemRead)
-def create_item(
-    item_data: schemas.ItemCreate,
-    db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user) 
-):
-    logging.info(f"Admin {admin_user.id} creating new item {item_data.name}")
-
-    item = Item(
-        name=item_data.name,
-        description=item_data.description,
-        image_url=item_data.image_url,
-        type=ItemType(item_data.type)
-    )
-
-    db.add(item)
     db.commit()
     db.refresh(item)
+
+    logging.info(f"Item id={item_id} updated successfully")
 
     return item
 
@@ -142,25 +97,6 @@ def delete_item(
     logging.info(f"Item id={item_id} deleted successfully")
 
     return {"detail": "Item deleted successfully"}
-
-@app.delete("/effects/{effect_id}")
-def delete_item_effect(
-    effect_id: int,
-    db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user)
-):
-    logging.info(f"Admin {admin_user.id} deleting effect id={effect_id}")
-
-    effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
-    if not effect:
-        raise HTTPException(status_code=404, detail="Item effect not found")
-
-    db.delete(effect)
-    db.commit()
-
-    logging.info(f"Effect id={effect_id} deleted successfully")
-
-    return {"detail": "Item effect deleted successfully"}
 
 @app.post("/{item_id}/effects/{effect_id}")
 def link_effect_to_item(
@@ -185,3 +121,29 @@ def link_effect_to_item(
     logging.info(f"Effect id={effect_id} linked to item id={item_id} successfully")
 
     return {"detail": "Effect linked to item successfully"}
+
+@app.delete("/{item_id}/effects/{effect_id}")
+def unlink_effect_from_item(
+    item_id: int,
+    effect_id: int,
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    logging.info(f"Admin {admin_user.id} unlinking effect id={effect_id} from item id={item_id}")
+
+    item = db.query(Item).filter(Item.id == item_id).first()
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
+    if not effect:
+        raise HTTPException(status_code=404, detail="Item effect not found")
+
+    if effect in item.effects:
+        item.effects.remove(effect)
+        db.commit()
+        logging.info(f"Effect id={effect_id} unlinked from item id={item_id} successfully")
+        return {"detail": "Effect unlinked from item successfully"}
+    else:
+        logging.warning(f"Effect id={effect_id} is not linked to item id={item_id}")
+        raise HTTPException(status_code=400, detail="Effect is not linked to this item")
