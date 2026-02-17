@@ -7,7 +7,7 @@ from models import Exercise, User, ExerciseCategory, ExerciseDifficulty
 import schemas
 from dependencies import get_admin_user, get_current_user
 from services import character as character_service
-from services import inventory as inventory_service
+from services import log as log_service
 from services import quests as quest_service
 
 app = APIRouter(
@@ -147,11 +147,15 @@ def finish_exercise(
         raise HTTPException(status_code=403, detail="Not authorized")
     
     logging.info(f"User {user_id} completed exercise with id={exercise_id}, awarding {exercise.xp_reward} XP")
-    
     character_service.add_xp(user_id, exercise.xp_reward, db)
-    quest_service.update_quest_progress(user_id, exercise_id, db)
+    
+    daily_quests = quest_service.get_daily_quests(db, user_id)
+    if exercise_id in [quest.exercise_id for quest in daily_quests]:
+        quest_service.update_quest_progress(user_id, exercise_id, db)
     
     logging.info(f"Rewards for exercise completion processed successfully for user {user_id}")
+    
+    log_service.log_exercise_completion(user_id, exercise_id, exercise.xp_reward, exercise.quantity, db)
     
     return {"message": "Exercise completed successfully, rewards processed"}
     

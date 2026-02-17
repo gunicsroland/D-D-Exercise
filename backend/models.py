@@ -109,8 +109,12 @@ class WorkoutLog(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     exercise_id = Column(Integer, ForeignKey("exercises.id"))
-    amount = Column(Integer)
-    date = Column(TIMESTAMP)
+    quantity = Column(Integer)
+    xp_gained = Column(Integer)
+    created_at = Column(TIMESTAMP, server_default=func.now())
+
+    user = relationship("User")
+    exercise = relationship("Exercise")
     
 item_effect_link = Table(
     "item_effect_link",

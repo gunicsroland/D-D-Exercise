@@ -2,11 +2,10 @@ import logging
 from datetime import date
 from random import random
 from constants import DAY_CATEGORY_MAP
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-import schemas
-from models import ExerciseCategory, User, Quest, UserQuestProgress
+from models import ExerciseCategory, Quest, UserQuestProgress
 from services import character as character_service
 from services import inventory as inventory_service
 
@@ -36,14 +35,14 @@ def get_or_create_progress(user_id: int, quest_id: int, db: Session):
     return progress
 
 def update_quest_progress(user_id: int, quest_id: int, db: Session):
+    quest = db.query(Quest).filter(Quest.id == quest_id).first()
+    if not quest:
+        raise HTTPException(status_code=404, detail="Quest not found")
+    
     progress = get_or_create_progress(user_id, quest_id, db)
     
     if progress.completed:
         return progress
-    
-    quest = db.query(Quest).filter(Quest.id == quest_id).first()
-    if not quest:
-        raise HTTPException(status_code=404, detail="Quest not found")
     
     progress.progress += 1
     if progress.progress >= quest.amount:
@@ -70,6 +69,8 @@ def generate_daily_quests(db: Session, user_id: int, num_quests: int = 3):
     random.shuffle(quests)
 
     selected_quests = quests[:num_quests]
+    for quest in selected_quests:
+        get_or_create_progress(user_id, quest.id, db)
 
     return selected_quests
 
@@ -92,6 +93,9 @@ def get_daily_quests(db: Session, user_id: int):
             quest = db.query(Quest).filter(Quest.id == progress.quest_id).first()
             if quest:
                 daily_quests.append(quest)
+    else:
+        logging.info(f"Generating new daily quests for user {user_id}")
+        daily_quests = generate_daily_quests(db, user_id)
             
     return daily_quests
 
