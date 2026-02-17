@@ -4,6 +4,11 @@ import logging
 
 from models import AdventureMessage, AdventureSession
 import services.character as character_service
+from constants import MODEL_NAME
+from google import genai
+from google.genai import types
+
+client = genai.Client()
 
 def generate_dm_response(
     session: AdventureSession,
@@ -30,17 +35,43 @@ def generate_dm_response(
         .order_by(AdventureMessage.created_at)
         .all()
     )
+    contents = []
     
-    messages = [{"role": "system", "content": system_prompt}]
-    messages += [{"role": m.role, "content": m.content} for m in history]
-    messages.append({"role": "user", "content": user_message})
+    contents.append(
+        types.Content(
+            role="user",
+            parts=[types.Part(text=system_prompt)]
+        )
+    )
+    for m in history:
+        contents.append(
+            types.Content(
+                role="user" if m.role == "user" else "model",
+                parts=[types.Part(text=m.content)]
+            )
+        )
+    contents.append(
+        types.Content(
+            role="user",
+            parts=[types.Part(text=user_message)]
+        )
+    )
     
-    response = call_chat_model(messages)
+    response = call_chat_model(contents)
     
-    return response
+    return response.text
 
-def call_chat_model(messages):
-    return "test response from DM"
+def call_chat_model(contents):
+    response = client.models.generate_content(
+        model=MODEL_NAME,
+        contents=contents,
+        config=types.GenerateContentConfig(
+            temperature=0,
+            top_p=0.95,
+            top_k=20,
+        ),
+    )
+    return response
 
 def apply_dm_response_to_game_state(response, session, db):
     if not response:

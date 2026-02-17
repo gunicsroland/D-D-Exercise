@@ -40,7 +40,6 @@ app.add_middleware(
     allow_headers=["*"],         
 )
 
-
 @app.get("/me")
 def get_current_user(current_user: User = Depends(get_current_user)):
     return {"id": current_user.id, "username": current_user.username, "email": current_user.email}

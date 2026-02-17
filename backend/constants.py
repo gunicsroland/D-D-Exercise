@@ -34,3 +34,5 @@ DAY_CATEGORY_MAP = {
     5: ExerciseCategory.Core,           #Saturday
     6: ExerciseCategory.Cardio          #Sunday
 }
+
+MODEL_NAME = "gemini-2.5-flash"
