@@ -1,3 +1,6 @@
+from models import ExerciseCategory
+
+
 XP_LEVELS = {
     1: 0,
     2: 300,
@@ -21,3 +24,13 @@ XP_LEVELS = {
     20: 355000,
 }
 MAX_LEVEL = 20
+
+DAY_CATEGORY_MAP = {
+    0: ExerciseCategory.Strength,
+    1: ExerciseCategory.Strength,
+    2: ExerciseCategory.Flexibility,
+    3: ExerciseCategory.Flexibility,
+    4: ExerciseCategory.Core,       
+    5: ExerciseCategory.Core,
+    6: ExerciseCategory.Cardio    
+}

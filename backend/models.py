@@ -93,6 +93,16 @@ class Quest(Base):
     xp_reward = Column(Integer)
     item_reward = Column(Integer, ForeignKey("items.id"))
     
+class UserQuestProgress(Base):
+    __tablename__ = "user_quest_progress"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    quest_id = Column(Integer, ForeignKey("quests.id"))
+    progress = Column(Integer, default=0)
+    completed = Column(Boolean, default=False)
+    date = Column(TIMESTAMP)
+    
 class WorkoutLog(Base):
     __tablename__ = "workout_logs"
     
