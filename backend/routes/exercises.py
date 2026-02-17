@@ -133,7 +133,6 @@ def delete_exercise(
 @app.post("/finish/{exercise_id}")
 def finish_exercise(
     exercise_id: int,
-    user_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -142,20 +141,16 @@ def finish_exercise(
         logging.warning(f"Exercise with id={exercise_id} not found for completion")
         raise HTTPException(status_code=404, detail="Exercise not found")
     
-    if current_user.id != user_id:
-        logging.warning(f"Unauthorized exercise completion attempt by user {current_user.id} for user_id={user_id}")
-        raise HTTPException(status_code=403, detail="Not authorized")
+    logging.info(f"User {current_user.id} completed exercise with id={exercise_id}, awarding {exercise.xp_reward} XP")
+    character_service.add_xp(current_user.id, exercise.xp_reward, db)
     
-    logging.info(f"User {user_id} completed exercise with id={exercise_id}, awarding {exercise.xp_reward} XP")
-    character_service.add_xp(user_id, exercise.xp_reward, db)
-    
-    daily_quests = quest_service.get_daily_quests(db, user_id)
+    daily_quests = quest_service.get_daily_quests(db, current_user.id)
     if exercise_id in [quest.exercise_id for quest in daily_quests]:
-        quest_service.update_quest_progress(user_id, exercise_id, db)
+        quest_service.update_quest_progress(current_user.id, exercise_id, db)
     
-    logging.info(f"Rewards for exercise completion processed successfully for user {user_id}")
+    logging.info(f"Rewards for exercise completion processed successfully for user {current_user.id}")
     
-    log_service.log_exercise_completion(user_id, exercise_id, exercise.xp_reward, exercise.quantity, db)
+    log_service.log_exercise_completion(current_user.id, exercise_id, exercise.xp_reward, exercise.quantity, db)
     
     return {"message": "Exercise completed successfully, rewards processed"}
     

@@ -16,38 +16,28 @@ app = APIRouter(
 
 @app.get("/has_character/{user_id}")
 def user_has_character(
-    user_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    logging.info(f"Checking character existence for user_id={user_id}")
+    logging.info(f"Checking character existence for user_id={current_user.id}")
 
-    if current_user.id != user_id:
-        logging.warning(f"Unauthorized access attempt by user {current_user['id']} for user_id={user_id}")
-        raise HTTPException(status_code=403, detail="Not authorized")
+    character = db.query(Character).filter(Character.user_id == current_user.id).first()
 
-    character = db.query(Character).filter(Character.user_id == user_id).first()
-
-    logging.info(f"Character exists: {bool(character)} for user_id={user_id}")
+    logging.info(f"Character exists: {bool(character)} for user_id={current_user.id}")
     return {"has_character": bool(character)}
 
     
 @app.get("/{user_id}", response_model=schemas.CharacterRead)
 def get_user_character(
-    user_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    logging.info(f"Fetching character for user_id={user_id}")
+    logging.info(f"Fetching character for user_id={current_user.id}")
 
-    if current_user.id != user_id:
-        logging.warning(f"Unauthorized character fetch attempt by user {current_user.id} for user_id={user_id}")
-        raise HTTPException(status_code=403, detail="Not authorized")
-
-    character = db.query(Character).filter(Character.user_id == user_id).first()
+    character = db.query(Character).filter(Character.user_id == current_user.id).first()
 
     if not character:
-        logging.warning(f"No character found for user_id={user_id}")
+        logging.warning(f"No character found for user_id={current_user.id}")
         raise HTTPException(status_code=404, detail="Character not found")
 
     logging.info(
@@ -72,20 +62,15 @@ def get_all_characters(db: Session = Depends(get_db)):
 
 @app.post("/{user_id}")
 def create_character(
-    user_id: int,
     character_data: schemas.CharacterCreate,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    logging.info(f"Creating character for user_id={user_id}")
+    logging.info(f"Creating character for user_id={current_user.id}")
 
-    if current_user.id != user_id:
-        logging.warning(f"Unauthorized character creation attempt by user {current_user.id} for user_id={user_id}")
-        raise HTTPException(status_code=403, detail="Not authorized")
-
-    existing_character = db.query(Character).filter(Character.user_id == user_id).first()
+    existing_character = db.query(Character).filter(Character.user_id == current_user.id).first()
     if existing_character:
-        logging.warning(f"User {user_id} already has a character")
+        logging.warning(f"User {current_user.id} already has a character")
         raise HTTPException(status_code=400, detail="Character already exists")
 
     character = Character(
@@ -93,7 +78,7 @@ def create_character(
         class_=character_data.class_,
         level=1,
         xp=0,
-        user_id=user_id
+        user_id=current_user.id
     )
 
     character.abilities = [
@@ -105,7 +90,7 @@ def create_character(
     db.commit()
     db.refresh(character)
 
-    logging.info(f"Character created successfully with id={character.id} for user_id={user_id}")
+    logging.info(f"Character created successfully with id={character.id} for user_id={current_user.id}")
 
     return {
         "message": "Character created successfully",
@@ -114,57 +99,54 @@ def create_character(
 
 @app.delete("/{user_id}")
 def delete_character(
-    user_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    logging.info(f"Deleting character for user_id={user_id}")
+    logging.info(f"Deleting character for user_id={current_user.id}")
 
-    if current_user.id != user_id:
-        logging.warning(f"Unauthorized character deletion attempt by user {current_user.id} for user_id={user_id}")
+    if current_user.id != current_user.id:
+        logging.warning(f"Unauthorized character deletion attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
 
-    character = db.query(Character).filter(Character.user_id == user_id).first()
+    character = db.query(Character).filter(Character.user_id == current_user.id).first()
 
     if not character:
-        logging.warning(f"No character found to delete for user_id={user_id}")
+        logging.warning(f"No character found to delete for user_id={current_user.id}")
         raise HTTPException(status_code=404, detail="Character not found")
 
     db.delete(character)
     db.commit()
 
-    logging.info(f"Character deleted successfully for user_id={user_id}")
+    logging.info(f"Character deleted successfully for user_id={current_user.id}")
 
     return {"message": "Character deleted successfully"}
 
 @app.put("/{user_id}/xp")
 def add_xp(
-    user_id: int,
     xp_gain: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    logging.info(f"Adding XP for user={user_id}, xp_gain={xp_gain}")
+    logging.info(f"Adding XP for user={current_user.id}, xp_gain={xp_gain}")
     
-    if current_user.id != user_id:
-        logging.warning(f"Unauthorized XP addition attempt by user {current_user.id} for user_id={user_id}")
+    if current_user.id != current_user.id:
+        logging.warning(f"Unauthorized XP addition attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    message = character_service.award_xp(user_id, xp_gain, db)
-    logging.info(f"XP added successfully for user_id={user_id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}")
+    message = character_service.award_xp(current_user.id, xp_gain, db)
+    logging.info(f"XP added successfully for user_id={current_user.id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}")
     return message
     
 @app.put("/{user_id}/ability_points")
 def upgrade_ability(
-    user_id: int,
     ability: AbilityType,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    logging.info(f"Upgrading ability for user_id={user_id}, ability={ability.value}")
-    if current_user.id != user_id:
-        logging.warning(f"Unauthorized ability upgrade attempt by user {current_user.id} for user_id={user_id}")
+    logging.info(f"Upgrading ability for user_id={current_user.id}, ability={ability.value}")
+    if current_user.id != current_user.id:
+        logging.warning(f"Unauthorized ability upgrade attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    return character_service.upgrade_ability(user_id, ability, db)
+    return character_service.upgrade_ability(current_user.id, ability, db)
     
