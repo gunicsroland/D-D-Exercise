@@ -83,6 +83,12 @@ class ItemCreate(ItemBase):
 class ItemRead(ItemBase):
     id: int
     effects: List[ItemEffectRead] = []
+    
+class ItemUpdate(BaseSchema):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    item_type: Optional[str] = None
+    image_url: Optional[str] = None
         
 class InventoryBase(BaseSchema):
     quantity: int
@@ -108,6 +114,14 @@ class ExerciseCreate(ExerciseBase):
 
 class ExerciseRead(ExerciseBase):
     id: int
+    
+class ExerciseUpdate(BaseSchema):
+    name: Optional[str] = None
+    category: Optional[ExerciseCategory] = None
+    difficulty: Optional[ExerciseDifficulty] = None
+    quantity: Optional[int] = None
+    xp_reward: Optional[int] = None
+    media_url: Optional[str] = None
     
 class QuestBase(BaseSchema):
     name: str

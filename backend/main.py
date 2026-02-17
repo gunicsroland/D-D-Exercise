@@ -1,23 +1,24 @@
-from fastapi import FastAPI, HTTPException, Depends
+from backend.routes import characters, inventories
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy.orm import Session
 
-from database import get_db, Base, engine
+from database import Base, engine
 from models import *
-import schemas
 from functions import *
 from dependencies import get_current_user
-import logging
 
-from routes import auth, users, character, inventory, items
+from routes import auth, users, items, effects, exercises, quests
 
 app = FastAPI()
 
 app.include_router(auth.app)
 app.include_router(users.app)
-app.include_router(character.app)
-app.include_router(inventory.app)
+app.include_router(characters.app)
+app.include_router(inventories.app)
 app.include_router(items.app)
+app.include_router(effects.app)
+app.include_router(exercises.app)
+app.include_router(quests.app)
 
 Base.metadata.create_all(bind=engine)
 

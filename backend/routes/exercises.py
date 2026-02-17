@@ -8,6 +8,7 @@ import schemas
 from dependencies import get_admin_user, get_current_user
 from services import character as character_service
 from services import inventory as inventory_service
+from services import quests as quest_service
 
 app = APIRouter(
     prefix="/exercises",
@@ -82,7 +83,32 @@ def add_exercise(
     
     logging.info(f"Exercise '{exercise.name}' added successfully with id={new_exercise.id}")
     
-    return {"message": "Exercise added successfully", "exercise_id": new_exercise.id}
+    return {"message": "Exercise added successfully", "exercise": new_exercise}
+
+@app.put("/update/{exercise_id}")
+def update_exercise(
+    exercise_id: int,
+    exercise_data: schemas.ExerciseUpdate,
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    logging.info(f"Admin {admin_user.id} updating exercise with id={exercise_id}")
+    
+    exercise = db.query(Exercise).filter(Exercise.id == exercise_id).first()
+    if not exercise:
+        logging.warning(f"Exercise with id={exercise_id} not found for update")
+        raise HTTPException(status_code=404, detail="Exercise not found")
+    
+    for field, value in exercise_data.dict(exclude_unset=True).items():
+        setattr(exercise, field, value)
+
+    db.commit()
+    db.refresh(exercise)
+    
+    logging.info(f"Exercise with id={exercise_id} updated successfully")
+    
+    return {"message": "Exercise updated successfully", "exercise": exercise}
+    
 
 @app.delete("/{exercise_id}")
 def delete_exercise(
@@ -123,6 +149,7 @@ def finish_exercise(
     logging.info(f"User {user_id} completed exercise with id={exercise_id}, awarding {exercise.xp_reward} XP")
     
     character_service.add_xp(user_id, exercise.xp_reward, db)
+    quest_service.update_quest_progress(user_id, exercise_id, db)
     
     logging.info(f"Rewards for exercise completion processed successfully for user {user_id}")
     
