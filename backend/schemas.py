@@ -142,3 +142,11 @@ class QuestCreate(QuestBase):
 
 class QuestRead(QuestBase):
     id: int
+    
+class QuestUpdate(BaseSchema):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    exercise_id: Optional[int] = None
+    amount: Optional[int] = None
+    xp_reward: Optional[int] = None
+    item_reward: Optional[int] = None

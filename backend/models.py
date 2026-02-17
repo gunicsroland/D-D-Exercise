@@ -91,7 +91,7 @@ class Quest(Base):
     exercise_id = Column(Integer, ForeignKey("exercises.id"))
     amount = Column(Integer)
     xp_reward = Column(Integer)
-    item_reward = Column(Integer, ForeignKey("items.id"))
+    item_reward = Column(Integer, ForeignKey("items.id"), nullable=True)
     
 class UserQuestProgress(Base):
     __tablename__ = "user_quest_progress"
