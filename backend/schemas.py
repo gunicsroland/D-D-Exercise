@@ -150,3 +150,30 @@ class QuestUpdate(BaseSchema):
     amount: Optional[int] = None
     xp_reward: Optional[int] = None
     item_reward: Optional[int] = None
+    
+class AdventureSessionBase(BaseSchema):
+    character_id: int
+    user_id: int
+    title: str
+    
+class AdventureSessionCreate(AdventureSessionBase):
+    pass
+
+class AdventureSessionRead(AdventureSessionBase):
+    id: int
+    
+class AdventureSessionUpdate(BaseSchema):
+    character_id: Optional[int] = None
+    user_id: Optional[int] = None
+    title: Optional[str] = None
+    
+class AdventureMessageBase(BaseSchema):
+    session_id: int
+    role: str
+    content: str
+    
+class AdventureMessageCreate(AdventureMessageBase):
+    pass
+
+class AdventureMessageRead(AdventureMessageBase):
+    id: int

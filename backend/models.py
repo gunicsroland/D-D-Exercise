@@ -35,6 +35,11 @@ class ExerciseDifficulty(enum.Enum):
     VeryHard = "very_hard"
     NearlyImpossible = "nearly_impossible"
     
+class ChatRole(enum.Enum):
+    User = "user"
+    DM = "dm"
+    System = "system"
+    
 class User(Base):
     __tablename__ = "users"
 
@@ -158,3 +163,30 @@ class Inventory(Base):
     quantity = Column(Integer)
     
     item = relationship("Item")
+    
+class AdventureSession(Base):
+    __tablename__ = "adventure_sessions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    character_id = Column(Integer, ForeignKey("characters.id"), nullable=False)
+
+    title = Column(String, nullable=False)
+
+    created_at = Column(TIMESTAMP, server_default=func.now())
+
+    character = relationship("Character")
+    user = relationship("User")
+
+class AdventureMessage(Base):
+    __tablename__ = "adventure_messages"
+
+    id = Column(Integer, primary_key=True, index=True)
+    session_id = Column(Integer, ForeignKey("adventure_sessions.id"), nullable=False)
+
+    role = Column(Enum(ChatRole), nullable=False)
+    content = Column(String, nullable=False)
+
+    created_at = Column(TIMESTAMP, server_default=func.now())
+
+    session = relationship("AdventureSession")
