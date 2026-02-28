@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { useEffect } from "react";
+import { View, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { checkCharacter } from "../hooks/check_char";
-
+import React from 'react';
 
 export default function Home() {
     const router = useRouter();

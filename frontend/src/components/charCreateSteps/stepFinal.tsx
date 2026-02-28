@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native';
 import { baseStatsByClass } from '../../constants/baseStats';
 import { useEffect } from 'react';
+import React from 'react';
 
 export default function StepFinal({
     finalStats, setFinalStats,

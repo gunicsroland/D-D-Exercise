@@ -1,6 +1,7 @@
 import { View, Text, TextInput } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import { baseStatsByClass } from '../../constants/baseStats';
+import React from 'react';
 
 
 export default function StepName(

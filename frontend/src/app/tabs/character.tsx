@@ -26,6 +26,7 @@ export default function CharacterScreen() {
         });
 
         if (!res.ok) {
+          // TODO: Set error if no char for that person reroute to char creation
           throw new Error("Failed to fetch character");
         }
 

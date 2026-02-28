@@ -1,6 +1,5 @@
-import { use, useEffect, useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from "react";
+import { View, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { baseStatsByClass } from "../../constants/baseStats";
 import StepName from "../../components/charCreateSteps/stepName"
@@ -9,6 +8,7 @@ import StepRun from "../../components/charCreateSteps/stepRun"
 import StepAgility from "../../components/charCreateSteps/stepAgility"
 import StepFinal from "../../components/charCreateSteps/stepFinal"
 import { createChar } from "../../hooks/createCharacter";
+import React from "react";
 
 export default function CreateCharacter() {
     const classes = Object.keys(baseStatsByClass);
@@ -46,9 +46,6 @@ export default function CreateCharacter() {
             setStep(step - 1);
         }
     }
-
-
-
 
     return (
         <View>

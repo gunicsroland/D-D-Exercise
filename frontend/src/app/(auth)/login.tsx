@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import {ScrollView, Button, Text, TextInput, Alert} from 'react-native';
-import FormBox from '../../components/form_box';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { handleLogin } from '../../hooks/handle_login';
