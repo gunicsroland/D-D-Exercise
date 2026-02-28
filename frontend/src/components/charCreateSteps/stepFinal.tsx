@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { baseStatsByClass } from '../../constants/baseStats';
+import { BASE_STATS_BY_CLASS } from '../../constants';
 import { useEffect } from 'react';
 import React from 'react';
 
@@ -17,12 +17,12 @@ export default function StepFinal({
      agility:number})
      {
     useEffect(() => {
-        let baseStats = baseStatsByClass[selectedClass as keyof typeof baseStatsByClass];
+        let baseStats = BASE_STATS_BY_CLASS[selectedClass as keyof typeof BASE_STATS_BY_CLASS];
 
         const finalStats = { ...baseStats };
 
         finalStats.strength = baseStats.strength + (pushups ? Math.floor(pushups / 10) : 0);
-        finalStats.constitution = baseStats.constitution + (runTime ? Math.floor((300 - runTime) / 30) : 0);
+        finalStats.constitution = baseStats.constitution //+ (runTime ? Math.floor((300 - runTime) / 30) : 0);
         finalStats.dexterity = baseStats.dexterity + (agility ? Math.floor(agility / 5) : 0);
         finalStats.intelligence = baseStats.intelligence;
         finalStats.wisdom = baseStats.wisdom;
