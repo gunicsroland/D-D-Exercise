@@ -48,10 +48,23 @@ def create_admin(user: schemas.UserCreate, db: Session = Depends(get_db),
     return {"message": "Admin user created successfully"}
 
 @app.post("/login")
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    db_user = db.query(User).filter(User.username == form_data.username).first()
+def login(loginRequest: schemas.UserLogin, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.username == loginRequest.username).first()
     
-    if not db_user or not verify_password(form_data.password, db_user.password_hash):
+    if not db_user or not verify_password(loginRequest.password, db_user.password_hash):
+        raise HTTPException(status_code = 400, detail='Wrong username or wrong password')
+    
+    token = create_access_token({"sub": str(db_user.id)})
+    return {"access_token": token, "token_type": "bearer"}
+
+@app.post("/form_login")
+def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    username = form_data.username
+    password = form_data.password
+
+    db_user = db.query(User).filter(User.username == username).first()
+
+    if not db_user or not verify_password(password, db_user.password_hash):
         raise HTTPException(status_code = 400, detail='Wrong username or wrong password')
     
     token = create_access_token({"sub": str(db_user.id)})

@@ -6,7 +6,7 @@ from typing import List
 from database import get_db
 from models import  User
 import schemas
-from dependencies import get_admin_user
+from dependencies import get_admin_user, get_current_user
 
 app = APIRouter(
     prefix="/user",
@@ -20,6 +20,11 @@ def get_users(
 ):
     logging.info(f"Admin {admin_user.id} fetching all users")
     return db.query(User).all()
+
+@app.get("/me", response_model=schemas.UserRead)
+def get_me(db: Session = Depends(get_db),
+           current_user: User = Depends(get_current_user)):
+    return current_user
 
 @app.delete("/{user_id}")
 def delete_user(
