@@ -1,32 +1,32 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import {ScrollView, Button, Text, TextInput, Alert} from 'react-native';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState } from 'react';
+import { ScrollView, Button, Text, TextInput, Alert } from 'react-native';
 import { useRouter } from "expo-router";
-import { handleLogin } from '../../hooks/handle_login';
+import { useAuthContext } from '../../context/AuthContext';
 
 
-export default function Login () {
+export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const { login } = useAuthContext();
   const router = useRouter();
 
-  useEffect(() => {
-    const checkToken = async () => {
-      const token = await AsyncStorage.getItem("token")
-      if (token){
-        router.replace("/")
-      }
+  const handleSubmit = async () => {
+    try {
+      await login(username, password);
+      router.replace("/");
+    } catch (err: any) {
+      Alert.alert("Hiba", err.message);
     }
-    checkToken();
-  });
+  };
 
   return (
     <ScrollView>
       <Text>Bejelentkezés</Text>
       <TextInput placeholder="Felhasználónév" value={username} onChangeText={setUsername} />
       <TextInput placeholder="Jelszó" value={password} onChangeText={setPassword} secureTextEntry />
-      <Button title="Bejelentkezés" onPress={() => handleLogin(username, password, router)} />
+      <Button title="Bejelentkezés" onPress={handleSubmit} />
       <Button title="Regisztráció" onPress={() => router.push("register")} />
     </ScrollView>
   );
