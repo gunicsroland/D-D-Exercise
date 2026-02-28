@@ -2,7 +2,7 @@ import { router } from "expo-router/build/exports";
 import React, {useEffect, useState} from "react";
 import { View, Text, ActivityIndicator, FlatList } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Character, CharacterAbility } from "../../types/types";
+import { Character, CharacterAbility } from "../../../types/types";
 
 export default function CharacterScreen() {
   const [character, setCharacter] = useState<Character | null>(null);
