@@ -16,6 +16,10 @@ class UserCreate(UserBase):
 class UserRead(UserBase):
     id: int
     is_admin: bool
+
+class UserLogin(BaseSchema):
+    username: str
+    password: str
     
 class AbilityBase(BaseSchema):
     ability: AbilityType
@@ -31,13 +35,9 @@ class AbilityRead(AbilityBase):
 class CharacterBase(BaseSchema):
     name: str
     class_: str
-    level: int
-    xp: int
-    ability_points: int    
+
     
 class CharacterCreate(CharacterBase):
-    name: str
-    class_: str
     abilities: dict[AbilityType, int]
     
     @model_validator(mode="after")
@@ -57,6 +57,9 @@ class CharacterCreate(CharacterBase):
 
 class CharacterRead(CharacterBase):
     id: int
+    level: int
+    xp: int
+    ability_points: int    
     abilities: List[AbilityRead]
     
 class ItemEffectBase(BaseSchema):
