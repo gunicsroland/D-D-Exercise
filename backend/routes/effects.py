@@ -36,20 +36,15 @@ def get_all_item_effects(db: Session = Depends(get_db)):
 
 @app.post("/", response_model=schemas.ItemEffectRead)
 def add_item_effect(
-    item_id: int,
     effect_data: schemas.ItemEffectCreate,
     db: Session = Depends(get_db),
     admin_user: User = Depends(get_admin_user)
 ):
-    logging.info(f"Admin {admin_user.id} adding effect to item id={item_id}")
-
-    item = db.query(Item).filter(Item.id == item_id).first()
-    if not item:
-        raise HTTPException(status_code=404, detail="Item not found")
+    logging.info(f"Admin {admin_user.id} creating effect")
 
     effect = ItemEffect(
         attribute=effect_data.attribute,
-        operation=effect_data.operation,
+        increase=effect_data.increase,
         value=effect_data.value,
         duration=effect_data.duration,
     )

@@ -35,12 +35,20 @@ export interface CharacterUpdatePayload {
   ability_points?: number;
 }
 
+export interface Effect {
+  attribute: AbilityType,
+  increase: boolean,
+  value: number,
+  duration: number
+}
+
 export interface Item {
   id: number,
   name: string;
   description: string;
   item_type: string;
   image_url: string;
+  effects: Effect[];
 }
 
 export interface InventoryEntry {

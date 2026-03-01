@@ -10,6 +10,15 @@ export const CLASS_LABELS_HU: Record<string, string> = {
   Bard: "Bárd",
 };
 
+export const ABILITY_LABELS_HU: Record<string, string> = {
+    "strength" : "Erő",
+   "dexterity" : "Ügyesség",
+   "constitution" : "Állóképesség",
+   "intelligence" : "Intelligencia",
+   "wisdom" : "Bölcsesség",
+   "charisma" : "Karizma"
+}
+
 export const API_URL = "http://localhost:8000"
 export const TOKEN_KEY = "token"
 

@@ -145,8 +145,8 @@ class ItemEffect(Base):
     __tablename__ = "item_effects"
     
     id = Column(Integer, primary_key=True, index=True)
-    attribute = Column(String)
-    operation = Column(String)
+    attribute = Column("ability", Enum(AbilityType))
+    increase = Column(Boolean)
     value = Column(Integer)
     duration = Column(Integer)
     

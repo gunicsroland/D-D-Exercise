@@ -68,8 +68,8 @@ class CharacterUpdate(BaseSchema):
     ability_points: Optional[int] = None
     
 class ItemEffectBase(BaseSchema):
-    attribute: str
-    operation: str
+    attribute: AbilityType
+    increase: bool
     value: int
     duration: int
     
@@ -81,7 +81,7 @@ class ItemEffectRead(ItemEffectBase):
     
 class ItemEffectUpdate(BaseSchema):
     attribute: Optional[str] = None
-    operation: Optional[str] = None
+    increase: Optional[str] = None
     value: Optional[int] = None
     duration: Optional[int] = None
     

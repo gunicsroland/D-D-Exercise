@@ -21,7 +21,7 @@ def get_all_inventories(
     logging.info(f"Fetching all inventories")
     return db.query(Inventory).all()
 
-@app.get("/{user_id}", response_model=List[schemas.InventoryRead])
+@app.get("/me", response_model=List[schemas.InventoryRead])
 def get_inventory(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
@@ -34,7 +34,7 @@ def get_inventory(
 
     return inventory_items
 
-@app.post("/{user_id}/{item_id}/")
+@app.post("/{item_id}/")
 def add_item(
     item_id: int,
     quantity: int,
@@ -47,7 +47,7 @@ def add_item(
     
     return {"message": "Item added to inventory"}
 
-@app.delete("/{user_id}/{item_id}/")
+@app.delete("/{item_id}/")
 def remove_item(
     item_id: int,
     quantity: int = 1,
