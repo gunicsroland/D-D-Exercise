@@ -66,7 +66,7 @@ export default function KalandScreen() {
 
   const deleteSession = async (sessionId: number) => {
     try {
-      await fetch(`${API_URL}/${sessionId}`, {
+      await fetch(`${API_URL}/adventure/${sessionId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

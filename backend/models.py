@@ -172,11 +172,15 @@ class AdventureSession(Base):
     character_id = Column(Integer, ForeignKey("characters.id"), nullable=False)
 
     title = Column(String, nullable=False)
-
     created_at = Column(TIMESTAMP, server_default=func.now())
 
     character = relationship("Character")
     user = relationship("User")
+    messages = relationship(
+        "AdventureMessage",
+        back_populates="session",
+        cascade="all, delete-orphan"
+    )
 
 class AdventureMessage(Base):
     __tablename__ = "adventure_messages"
