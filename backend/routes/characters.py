@@ -37,7 +37,34 @@ def get_user_character(
     character = db.query(Character).filter(Character.user_id == current_user.id).first()
 
     if not character:
-        logging.warning(f"No character found for user_id={current_user.id}")
+        logging.info(f"No character found for user_id={current_user.id}")
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    logging.info(
+        "Character found",
+        extra={
+            "character_id": character.id,
+            "name": character.name,
+            "level": character.level,
+            "class": character.class_,
+            "xp": character.xp,
+            "ability_points": character.ability_points
+        }
+    )
+
+    return character
+
+@app.get("/me", response_model=schemas.CharacterRead)
+def get_user_character(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    logging.info(f"Fetching character for user_id={current_user.id}")
+
+    character = db.query(Character).filter(Character.user_id == current_user.id).first()
+
+    if not character:
+        logging.info(f"No character found for user_id={current_user.id}")
         raise HTTPException(status_code=404, detail="Character not found")
 
     logging.info(
@@ -70,7 +97,7 @@ def create_character(
 
     existing_character = db.query(Character).filter(Character.user_id == current_user.id).first()
     if existing_character:
-        logging.warning(f"User {current_user.id} already has a character")
+        logging.info(f"User {current_user.id} already has a character")
         raise HTTPException(status_code=400, detail="Character already exists")
 
     character = Character(
@@ -105,13 +132,13 @@ def delete_character(
     logging.info(f"Deleting character for user_id={current_user.id}")
 
     if current_user.id != current_user.id:
-        logging.warning(f"Unauthorized character deletion attempt by user {current_user.id}")
+        logging.info(f"Unauthorized character deletion attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
 
     character = db.query(Character).filter(Character.user_id == current_user.id).first()
 
     if not character:
-        logging.warning(f"No character found to delete for user_id={current_user.id}")
+        logging.info(f"No character found to delete for user_id={current_user.id}")
         raise HTTPException(status_code=404, detail="Character not found")
 
     db.delete(character)
@@ -121,7 +148,7 @@ def delete_character(
 
     return {"message": "Character deleted successfully"}
 
-@app.put("/{user_id}/xp")
+@app.put("/add_xp")
 def add_xp(
     xp_gain: int,
     current_user: User = Depends(get_current_user),
@@ -130,14 +157,14 @@ def add_xp(
     logging.info(f"Adding XP for user={current_user.id}, xp_gain={xp_gain}")
     
     if current_user.id != current_user.id:
-        logging.warning(f"Unauthorized XP addition attempt by user {current_user.id}")
+        logging.info(f"Unauthorized XP addition attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
     message = character_service.award_xp(current_user.id, xp_gain, db)
     logging.info(f"XP added successfully for user_id={current_user.id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}")
     return message
     
-@app.put("/{user_id}/ability_points")
+@app.put("/upgrade_ability")
 def upgrade_ability(
     ability: AbilityType,
     current_user: User = Depends(get_current_user),
@@ -145,7 +172,7 @@ def upgrade_ability(
 ):
     logging.info(f"Upgrading ability for user_id={current_user.id}, ability={ability.value}")
     if current_user.id != current_user.id:
-        logging.warning(f"Unauthorized ability upgrade attempt by user {current_user.id}")
+        logging.info(f"Unauthorized ability upgrade attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
     return character_service.upgrade_ability(current_user.id, ability, db)

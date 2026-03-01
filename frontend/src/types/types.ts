@@ -10,6 +10,7 @@ export interface Character {
   class_: Class;
   level: number;
   xp: number;
+  ability_points: number;
   abilities: CharacterAbility[];
 }
 
