@@ -57,3 +57,10 @@ export interface InventoryEntry {
   quantity: number;
   item: Item;
 };
+
+export interface Session {
+  id: number,
+  character_id: number,
+  user_id: number,
+  title: string
+}
