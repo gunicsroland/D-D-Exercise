@@ -29,3 +29,9 @@ export type AbilityType =
 
 export type Class = "Barbár" | "Varázsló" | "Bárd"
 
+export interface CharacterUpdatePayload {
+  name?: string;
+  xp?: number;
+  ability_points?: number;
+}
+

@@ -100,6 +100,9 @@ def create_character(
         logging.info(f"User {current_user.id} already has a character")
         raise HTTPException(status_code=400, detail="Character already exists")
 
+    if character_data.name == "":
+        raise HTTPException(status_code=400, detail="Name cannot be empty")
+
     character = Character(
         name=character_data.name,
         class_=character_data.class_,
@@ -171,9 +174,26 @@ def upgrade_ability(
     db: Session = Depends(get_db)
 ):
     logging.info(f"Upgrading ability for user_id={current_user.id}, ability={ability.value}")
-    if current_user.id != current_user.id:
-        logging.info(f"Unauthorized ability upgrade attempt by user {current_user.id}")
-        raise HTTPException(status_code=403, detail="Not authorized")
     
     return character_service.upgrade_ability(current_user.id, ability, db)
     
+@app.put("/me")
+def update_charecter(
+    data: schemas.CharacterUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    character = db.query(Character).filter(Character.user_id == current_user.id).first()
+    
+    if not character:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Character not found")
+    
+    update_data = data.dict(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(character, key, value)
+    
+    db.add(character)
+    db.commit()
+    db.refresh(character)
+
+    return character

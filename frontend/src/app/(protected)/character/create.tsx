@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { View, Button } from "react-native";
+import { ReactElement, useEffect, useState } from "react";
+import { View, Text, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { BASE_STATS_BY_CLASS } from "../../../constants";
 import StepName from "../../../components/charCreateSteps/stepName"
@@ -21,11 +21,12 @@ export default function CreateCharacter() {
 
     const [finalStats, setFinalStats] = useState(null);
     const [step, setStep] = useState(0);
+    const [error, setError] = useState("");
 
     const { user, token } = useAuthContext();
     const router = useRouter();
 
-    const steps = [
+    const steps: ReactElement[] = [
         <StepName charName={name} setCharName={setName} selectedClass={selectedClass} setSelectedClass={setSelectedClass} />,
         <StepPushups pushups={pushups} setPushups={setPushups} />,
         <StepRun runTime={runTime} setRunTime={setRunTime} />,
@@ -38,7 +39,7 @@ export default function CreateCharacter() {
         const verifyCharacter = async () => {
             if (!user || !token) return;
 
-            const hasCharacter = await checkCharacter(token, user.id);
+            const hasCharacter = await checkCharacter(token);
 
             if (hasCharacter) {
                 router.replace("/tabs/character");
@@ -58,10 +59,14 @@ export default function CreateCharacter() {
             }
 
             console.log("Final stats:", finalStats);
-            const res = await createChar(name, selectedClass, finalStats, user.id, token);
+            try {
+                const res = await createChar(name, selectedClass, finalStats, user.id, token);
 
-            if (res?.ok) {
-                router.replace("/tabs/character");
+                if (res?.ok) {
+                    router.replace("/tabs/character");
+                }
+            } catch (err: any) {
+                setError(err.message);
             }
         }
     }
@@ -79,6 +84,7 @@ export default function CreateCharacter() {
             </View>
 
             <View>
+                {error ? <Text style={{color: "red"}}>{error}</Text> : null}
                 <Button title="Previous" onPress={goPrev} disabled={step === 0} />
                 <Button title={step === steps.length - 1 ? "Finish" : "Next"} onPress={goNext} />
             </View>

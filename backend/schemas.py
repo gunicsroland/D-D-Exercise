@@ -61,6 +61,11 @@ class CharacterRead(CharacterBase):
     xp: int
     ability_points: int    
     abilities: List[AbilityRead]
+
+class CharacterUpdate(BaseSchema):
+    name: Optional[str] = None
+    xp: Optional[int] = None
+    ability_points: Optional[int] = None
     
 class ItemEffectBase(BaseSchema):
     attribute: str

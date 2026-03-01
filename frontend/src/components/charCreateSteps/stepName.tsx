@@ -1,6 +1,6 @@
 import { View, Text, TextInput } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
-import { BASE_STATS_BY_CLASS } from '../../constants';
+import { BASE_STATS_BY_CLASS, CLASS_LABELS_HU } from '../../constants';
 import React from 'react';
 
 
@@ -26,7 +26,7 @@ export default function StepName(
                 onValueChange={setSelectedClass}
             >
                 {classes.map(cls => (
-                    <Picker.Item key={cls} label={cls.charAt(0).toUpperCase() + cls.slice(1)} value={cls} />
+                    <Picker.Item key={cls} label={CLASS_LABELS_HU[cls]} value={cls} />
                 ))}
             </Picker>
         </View>

@@ -4,6 +4,12 @@ export const BASE_STATS_BY_CLASS = {
   Bard: { strength: 6, dexterity: 12, constitution: 8, intelligence: 10, wisdom: 10, charisma: 12 },
 };
 
+export const CLASS_LABELS_HU: Record<string, string> = {
+  Barbarian: "Barbár",
+  Wizard: "Varázsló",
+  Bard: "Bárd",
+};
+
 export const API_URL = "http://localhost:8000"
 export const TOKEN_KEY = "token"
 

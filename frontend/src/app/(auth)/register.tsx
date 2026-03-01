@@ -9,6 +9,7 @@ export default function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const { register } = useAuthContext();
     const router = useRouter();
@@ -18,13 +19,14 @@ export default function Register() {
             await register(username, email, password);
             router.replace("/");
         } catch (err: any) {
-            Alert.alert("Hiba", err.message);
+            setError(err.message);
         }
     };
 
     return (
         <ScrollView>
             <Text>Regisztráció</Text>
+            {error ? <Text style={{color: "red"}}>{error}</Text> : null}
             <TextInput placeholder="Felhasználónév" value={username} onChangeText={setUsername} />
             <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
             <TextInput placeholder="Jelszó" value={password} onChangeText={setPassword} secureTextEntry />

@@ -1,20 +1,24 @@
 import { router } from "expo-router/build/exports";
 import React, { useEffect, useState, useRef } from "react";
-import { View, Text, ActivityIndicator, FlatList, Button, AppState } from "react-native";
+import {
+  View, Text, ActivityIndicator, FlatList, Button, AppState, Modal,
+  Alert, TextInput
+} from "react-native";
 
 
 import { Character, CharacterAbility, AbilityType } from "../../../types/types";
 import { XP_LEVELS } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
-import { checkCharacter, getCharacter, lvlUpAbility } from "../../../services/character_service";
+import { checkCharacter, getCharacter, lvlUpAbility, updateCharacter } from "../../../services/character_service";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function CharacterScreen() {
   const [character, setCharacter] = useState<Character | null>(null);
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newName, setNewName] = useState(character?.name)
 
   const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current)
 
   const { token } = useAuthContext();
 
@@ -50,15 +54,15 @@ export default function CharacterScreen() {
     const subsription = AppState.addEventListener('change', async (nextState) => {
       console.log("AppState:", nextState);
       if (appState.current.match(/inactive|background/) &&
-          nextState === 'active') {
-            if (!token) return;
+        nextState === 'active') {
+        if (!token) return;
 
-            const data = await getCharacter(token);
-            setCharacter(data);
-        }
-
-        appState.current = nextState
+        const data = await getCharacter(token);
+        setCharacter(data);
       }
+
+      appState.current = nextState
+    }
     );
 
     return () => {
@@ -66,80 +70,114 @@ export default function CharacterScreen() {
     };
   }, [token]);
 
-if (loading || !character) {
+  if (loading || !character || !token) {
+    return (
+      <View>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
+  const handleUpgrade = async (ability: AbilityType) => {
+    if (!token) return;
+
+    try {
+      await lvlUpAbility(token, ability);
+
+      const updatedChar = await getCharacter(token);
+      setCharacter(updatedChar);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const handleChangeName = async () => {
+    if (!newName?.trim()) {
+      Alert.alert("Hiba", "A név nem lehet üres");
+      return;
+    }
+
+    try {
+      const updated = await updateCharacter(token, {name: newName});
+      
+      const updatedChar = await getCharacter(token);
+      setCharacter(updatedChar);
+      setModalVisible(false);
+    } catch (err: any) {
+      Alert.alert("Hiba", err.message || "Nem sikerült a név változtatása");
+    }
+  };
+
+  const XPBar = ({ level, xp }: { level: number, xp: number }) => {
+    const currentLevelXP = XP_LEVELS[level] ?? 0;
+    const nextLevelXP = XP_LEVELS[level + 1] ?? currentLevelXP;
+    const progress = Math.min(
+      Math.max(
+        (xp - currentLevelXP) / (nextLevelXP - currentLevelXP), 0),
+      1
+    )
+
+    return (
+      <View style={{ height: 24, width: "100%", backgroundColor: "#ddd", borderRadius: 10, overflow: "hidden", marginVertical: 5 }}>
+        <View style={{ height: "100%", width: `${progress * 100}%`, backgroundColor: "#4caf50", position: "absolute" }} />
+        <Text style={{ color: "#000", fontWeight: "bold", alignSelf: "center", zIndex: 1, }}>{xp}/{nextLevelXP} XP</Text>
+      </View>
+    )
+  }
+
+  const sortedAbilities = [...(character?.abilities ?? [])].sort((a, b) =>
+    a.ability.localeCompare(b.ability)
+  )
+
   return (
     <View>
-      <ActivityIndicator size="large" color="#0000ff" />
+      <View>
+        <Text>{character.name}</Text>
+        <Button title="Név változtatása" onPress={() => setModalVisible(true)} />
+        <Text>{character.level}. Szintű {character.class_}</Text>
+      </View>
+
+      <View>
+        <XPBar level={character.level} xp={character.xp} />
+      </View>
+
+      <View>
+        <Text>Ability Points: {character.ability_points}</Text>
+      </View>
+
+      <Text>Képességek:</Text>
+      <FlatList<CharacterAbility>
+        data={sortedAbilities}
+        keyExtractor={(item) => item.ability}
+        numColumns={2}
+        renderItem={({ item }) => (
+          <View style={{ flex: 1, margin: 5, padding: 10, backgroundColor: "#f0f0f0", borderRadius: 5 }}>
+            <Text>{item.ability}: {item.score}</Text>
+            <Button
+              title="+"
+              onPress={() => handleUpgrade(item.ability)}
+              disabled={character.ability_points <= 0}
+            />
+          </View>
+        )}
+      />
+
+      <Modal visible={modalVisible} transparent animationType="slide">
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#00000080" }}>
+          <View style={{ width: "80%", padding: 20, backgroundColor: "white", borderRadius: 10 }}>
+            <Text>Új név:</Text>
+            <TextInput
+              value={newName}
+              onChangeText={setNewName}
+              placeholder="Adj meg egy nevet"
+              style={{ borderBottomWidth: 1, borderColor: "#ccc", marginBottom: 20 }}
+            />
+            <Button title="Mentés" onPress={handleChangeName} />
+            <Button title="Mégse" onPress={() => setModalVisible(false)} color="red" />
+          </View>
+        </View>
+      </Modal>
+
     </View>
   );
-}
-
-const XPBar = ({ level, xp }: { level: number, xp: number }) => {
-  const currentLevelXP = XP_LEVELS[level] ?? 0;
-  const nextLevelXP = XP_LEVELS[level + 1] ?? currentLevelXP;
-  const progress = Math.min(
-    Math.max(
-      (xp - currentLevelXP) / (nextLevelXP - currentLevelXP), 0),
-    1
-  )
-
-  return (
-    <View style={{ height: 24, width: "100%", backgroundColor: "#ddd", borderRadius: 10, overflow: "hidden", marginVertical: 5 }}>
-      <View style={{ height: "100%", width: `${progress * 100}%`, backgroundColor: "#4caf50", position: "absolute" }} />
-      <Text style={{ color: "#000", fontWeight: "bold", alignSelf: "center", zIndex: 1, }}>{xp}/{nextLevelXP} XP</Text>
-    </View>
-  )
-}
-
-const handleUpgrade = async (ability: AbilityType) => {
-  if (!token) return;
-
-  try {
-    await lvlUpAbility(token, ability);
-
-    const updatedChar = await getCharacter(token);
-    setCharacter(updatedChar);
-  } catch (err) {
-    console.error(err);
-  }
-}
-
-const sortedAbilities = [...(character?.abilities ?? [])].sort((a, b) =>
-  a.ability.localeCompare(b.ability)
-)
-
-
-return (
-  <View>
-    <View>
-      <Text>{character.name}</Text>
-      <Text>{character.level}. Szintű {character.class_}</Text>
-    </View>
-
-    <View>
-      <XPBar level={character.level} xp={character.xp} />
-    </View>
-
-    <View>
-      <Text>Ability Points: {character.ability_points}</Text>
-    </View>
-
-    <Text>Képességek:</Text>
-    <FlatList<CharacterAbility>
-      data={character?.abilities}
-      keyExtractor={(item) => item.ability}
-      numColumns={2}
-      renderItem={({ item }) => (
-        <View style={{ flex: 1, margin: 5, padding: 10, backgroundColor: "#f0f0f0", borderRadius: 5 }}>
-          <Text>{item.ability}: {item.score}</Text>
-          <Button
-            title="+"
-            onPress={() => handleUpgrade(item.ability)}
-            disabled={character.ability_points <= 0}
-          />
-        </View>
-      )}
-    />
-  </View>
-);
 }

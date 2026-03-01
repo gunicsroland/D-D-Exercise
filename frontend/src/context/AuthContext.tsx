@@ -2,6 +2,8 @@ import React, { createContext, ReactNode, use, useContext, useEffect, useState }
 import { User } from "../types/types";
 import { storage } from '../services/storage_service';
 import { loginRequest, registerRequest, getMe } from '../services/auth_service';
+import { router, useRouter } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
 
 type AuthContextType = {
     user: User | null;
@@ -72,6 +74,8 @@ export const AuthProvider = ({ children, }: { children: ReactNode }) => {
 
         const userData = await getMe(data.access_token);
         setUser(userData);
+
+        return data;
     };
 
     const register = async (username: string, email: string, password: string) => {
@@ -83,6 +87,8 @@ export const AuthProvider = ({ children, }: { children: ReactNode }) => {
         await storage.removeToken();
         setUser(null);
         setToken(null);
+        const router = useRouter();
+        router.replace("/login")
     }
 
     return (

@@ -1,4 +1,5 @@
 import { API_URL } from "../constants";
+import { CharacterUpdatePayload } from "../types/types";
 
 export async function createChar(name: string, selectedClass: string, finalStats: any, id: number, token: string) {
     const res = await fetch(`${API_URL}/character/${id}`, {
@@ -68,4 +69,26 @@ export async function lvlUpAbility(token: string, ability:string) {
   }
 
   return res.json();
+}
+
+export async function updateCharacter(token:string, updateData: CharacterUpdatePayload) {
+  try {
+    const res = await fetch(`${API_URL}/character/me`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(updateData),
+    });
+
+    if(!res.ok){
+      throw new Error("Nem sikerült a név módosítás");
+    }
+
+    return res;
+
+  } catch (err: any){
+    return err.message;
+  }
 }
