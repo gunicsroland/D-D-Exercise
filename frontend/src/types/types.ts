@@ -35,3 +35,17 @@ export interface CharacterUpdatePayload {
   ability_points?: number;
 }
 
+export interface Item {
+  id: number,
+  name: string;
+  description: string;
+  item_type: string;
+  image_url: string;
+}
+
+export interface InventoryEntry {
+  id: number;
+  user_id: number;
+  quantity: number;
+  item: Item;
+};

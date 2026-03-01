@@ -25,7 +25,7 @@ def get_item(
         logging.warning(f"Item with id={item_id} not found")
         raise HTTPException(status_code=404, detail="Item not found")
 
-    logging.info(f"Item found: {item.name} (type={item.type.value}) with {len(item.effects)} effects")
+    logging.info(f"Item found: {item.name} (type={item.item_type.value}) with {len(item.effects)} effects")
 
     return item
 
@@ -46,7 +46,7 @@ def create_item(
         name=item_data.name,
         description=item_data.description,
         image_url=item_data.image_url,
-        type=ItemType(item_data.type)
+        item_type=ItemType(item_data.item_type)
     )
 
     db.add(item)

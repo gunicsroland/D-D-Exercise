@@ -89,7 +89,7 @@ class ItemBase(BaseSchema):
     name: str
     description: str
     item_type: str
-    image_url: Optional[str] = None
+    image_url: str = None
 
 class ItemCreate(ItemBase):
     pass
@@ -113,6 +113,7 @@ class InventoryCreate(InventoryBase):
     
 class InventoryRead(InventoryBase):
     id: int
+    user_id: int
     item: ItemRead
     
 class ExerciseBase(BaseSchema):
