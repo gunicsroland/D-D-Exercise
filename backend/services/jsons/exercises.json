@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Fali fekvőtámasz",
+    "category": "strength",
+    "difficulty": "very_easy",
+    "quantity": 10,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Saját testsúlyú guggolás",
+    "category": "strength",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Plank",
+    "category": "core",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Húzodzkodás",
+    "category": "strength",
+    "difficulty": "hard",
+    "quantity": 8,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Planche",
+    "category": "strength",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  }
+]

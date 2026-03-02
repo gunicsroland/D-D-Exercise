@@ -9,6 +9,7 @@ from dependencies import get_admin_user, get_current_user
 from services import character as character_service
 from services import log as log_service
 from services import quests as quest_service
+from services import seeded_generation
 
 app = APIRouter(
     prefix="/exercises",
@@ -154,3 +155,9 @@ def finish_exercise(
     
     return {"message": "Exercise completed successfully, rewards processed"}
     
+@app.post("/seed")
+def seed_exercises(
+    admin_user: User = Depends(get_admin_user),
+    db: Session = Depends(get_db)
+):
+    return seeded_generation.seed_exercises(db)
