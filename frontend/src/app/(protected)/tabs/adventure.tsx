@@ -3,14 +3,15 @@ import React, { useEffect, useState } from 'react';
 import { API_URL } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
 import { Session } from "../../../types/types";
+import { useRouter } from "expo-router";
 
 export default function KalandScreen() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [title, setTitle] = useState("");
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
-  const [message, setMessage] = useState("");
 
   const { token } = useAuthContext();
+  const router = useRouter();
 
   const fetchSessions = async () => {
     try {
@@ -44,25 +45,6 @@ export default function KalandScreen() {
     }
   };
 
-  const sendMessage = async () => {
-    if (!selectedSession) {
-      Alert.alert("Select a session first!");
-      return;
-    }
-    try {
-      const res = await fetch(`${API_URL}/adventure/${selectedSession.id}/message?message=${encodeURIComponent(message)}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await res.json();
-      Alert.alert("DM Response", data.dm_response);
-      setMessage("");
-      fetchSessions();
-    } catch (err) {
-      console.error(err);
-      Alert.alert("Error sending message");
-    }
-  };
 
   const deleteSession = async (sessionId: number) => {
     try {
@@ -94,7 +76,7 @@ export default function KalandScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Start a New Adventure</Text>
+      <Text style={styles.heading}>Új Kaland indítása</Text>
       <TextInput
         placeholder="Adventure Title"
         value={title}
@@ -103,14 +85,24 @@ export default function KalandScreen() {
       />
       <Button title="Start Adventure" onPress={startAdventure} />
 
-      <Text style={styles.heading}>Your Adventures</Text>
+      <Text style={styles.heading}>Korábbi kalandjaid</Text>
       <FlatList
         data={sessions}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.session}>
             <Text style={styles.sessionTitle}>{item.title}</Text>
-            <Button title="Select" onPress={() => setSelectedSession(item)} />
+            <Button title="Select" onPress={() => {
+              setSelectedSession(item);
+              router.push({
+                pathname: "/[sessionId]",
+                params: {
+                  sessionId: item.id,
+                  title: item.title
+                },
+              });
+            }
+            } />
             <Button title="Delete" onPress={() => deleteSession(item.id)} color="red" />
             <Button
               title="Update Title"
@@ -122,19 +114,6 @@ export default function KalandScreen() {
           </View>
         )}
       />
-
-      {selectedSession && (
-        <View style={styles.chatContainer}>
-          <Text style={styles.heading}>Chat with DM for "{selectedSession.title}"</Text>
-          <TextInput
-            placeholder="Your message..."
-            value={message}
-            onChangeText={setMessage}
-            style={styles.input}
-          />
-          <Button title="Send Message" onPress={sendMessage} />
-        </View>
-      )}
     </View>
   );
 }

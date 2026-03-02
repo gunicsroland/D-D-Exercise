@@ -15,10 +15,12 @@ def save_message(
     if not session:
         raise HTTPException(status_code=404, detail="Adventure session not found")
 
-    adventure_message = AdventureMessage(
+    message = adventure_message = AdventureMessage(
         session_id=session.id,
         role=role,
         content=content
     )
     db.add(adventure_message)
     db.commit()
+
+    return message

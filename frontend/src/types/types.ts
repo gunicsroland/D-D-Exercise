@@ -64,3 +64,12 @@ export interface Session {
   user_id: number,
   title: string
 }
+
+export type ChatRole = "user" | "dm" | "system"
+
+export interface Message {
+  id: number,
+  session_id: number,
+  role: ChatRole,
+  content: string
+}

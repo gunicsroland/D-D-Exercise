@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function TabsLayout() {
     return (
-        <Tabs screenOptions={{ headerShown: false }}>
+        <Tabs screenOptions={{ headerShown: true }}>
             <Tabs.Screen
                 name="adventure"
                 options={{

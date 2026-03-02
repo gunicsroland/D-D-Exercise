@@ -1,6 +1,6 @@
 from typing import List, Optional
 from pydantic import BaseModel, model_validator
-from models import AbilityType, ExerciseCategory, ExerciseDifficulty
+from models import AbilityType, ExerciseCategory, ExerciseDifficulty, ChatRole
 
 class BaseSchema(BaseModel):
     class Config:
@@ -178,7 +178,7 @@ class AdventureSessionUpdate(BaseSchema):
     
 class AdventureMessageBase(BaseSchema):
     session_id: int
-    role: str
+    role: ChatRole
     content: str
     
 class AdventureMessageCreate(AdventureMessageBase):

@@ -56,7 +56,7 @@ def get_all_adventure_sessions(
 ):
     return db.query(AdventureSession).all()
 
-@app.post("/{session_id}/message")
+@app.post("/{session_id}/message", response_model=schemas.AdventureMessageRead)
 def send_adventure_message(
     session_id: int,
     message: str,
@@ -78,7 +78,7 @@ def send_adventure_message(
         content=message,
         db=db
     )
-    messages_service.save_message(
+    dm_message = messages_service.save_message(
         user_id=current_user.id,
         session_id=session.id,
         role=ChatRole.DM,
@@ -88,7 +88,7 @@ def send_adventure_message(
 
     logging.info(f"Added user message and DM response to session_id={session_id}")
 
-    return {"dm_response": dm_response}
+    return dm_message
 
 @app.delete("/{session_id}")
 def delete_adventure_session(
