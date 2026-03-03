@@ -6,11 +6,19 @@ from database import get_db
 from models import Item, ItemEffect, User
 import schemas
 from dependencies import get_admin_user
+from services import seeded_generation
 
 app = APIRouter(
     prefix="/effects",
     tags=["effects"]
 )
+
+@app.post("/seed")
+def seeded_generation(
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    return seeded_generation.seed_item_effects(db)
 
 @app.get("/{effect_id}", response_model=schemas.ItemEffectRead)
 def get_item_effect(

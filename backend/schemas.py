@@ -20,6 +20,9 @@ class UserRead(UserBase):
 class UserLogin(BaseSchema):
     username: str
     password: str
+
+class UserUpdate(BaseModel):
+    quest_difficulty: ExerciseDifficulty
     
 class AbilityBase(BaseSchema):
     ability: AbilityType
@@ -140,26 +143,26 @@ class ExerciseUpdate(BaseSchema):
     
 class QuestBase(BaseSchema):
     name: str
-    description: str
-    exercise_id: int
+
     amount: int
     xp_reward: int
-    item_reward: Optional[int] = None
     
 class QuestCreate(QuestBase):
-    pass
+    exercise_id: int
+    item_reward: Optional[int] = None
 
 class QuestRead(QuestBase):
     id: int
+    exercise: ExerciseRead
+    item: Optional[ItemRead] = None
     
 class QuestUpdate(BaseSchema):
     name: Optional[str] = None
-    description: Optional[str] = None
     exercise_id: Optional[int] = None
     amount: Optional[int] = None
     xp_reward: Optional[int] = None
     item_reward: Optional[int] = None
-    
+
 class AdventureSessionBase(BaseSchema):
     character_id: int
     user_id: int

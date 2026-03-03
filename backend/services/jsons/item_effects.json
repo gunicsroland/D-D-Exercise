@@ -1,0 +1,218 @@
+[
+    {
+        "attribute": "strength",
+        "increase": false,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "strength",
+        "increase": false,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "strength",
+        "increase": false,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "strength",
+        "increase": true,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "strength",
+        "increase": true,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "strength",
+        "increase": true,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "dexterity",
+        "increase": false,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "dexterity",
+        "increase": false,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "dexterity",
+        "increase": false,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "dexterity",
+        "increase": true,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "dexterity",
+        "increase": true,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "dexterity",
+        "increase": true,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "constitution",
+        "increase": false,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "constitution",
+        "increase": false,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "constitution",
+        "increase": false,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "constitution",
+        "increase": true,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "constitution",
+        "increase": true,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "constitution",
+        "increase": true,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "intelligence",
+        "increase": false,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "intelligence",
+        "increase": false,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "intelligence",
+        "increase": false,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "intelligence",
+        "increase": true,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "intelligence",
+        "increase": true,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "intelligence",
+        "increase": true,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "wisdom",
+        "increase": false,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "wisdom",
+        "increase": false,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "wisdom",
+        "increase": false,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "wisdom",
+        "increase": true,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "wisdom",
+        "increase": true,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "wisdom",
+        "increase": true,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "charisma",
+        "increase": false,
+        "value": 3,
+        "duration": 2
+    },
+    {
+        "attribute": "charisma",
+        "increase": false,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "charisma",
+        "increase": false,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "charisma",
+        "increase": true,
+        "value": 1,
+        "duration": 6
+    },
+    {
+        "attribute": "charisma",
+        "increase": true,
+        "value": 2,
+        "duration": 3
+    },
+    {
+        "attribute": "charisma",
+        "increase": true,
+        "value": 3,
+        "duration": 2
+    }
+]

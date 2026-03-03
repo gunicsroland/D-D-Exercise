@@ -12,6 +12,8 @@ class ItemType(enum.Enum):
     Armor = 'armor'
     Weapon = 'weapon'
     Potion = 'potion'
+    Scroll = 'scroll'
+    Accessory = 'accessory'
     
 class AbilityType(enum.Enum):
     STR = "strength"
@@ -47,6 +49,8 @@ class User(Base):
     username = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
+
+    quest_difficulty = Column("quest_difficulty", Enum(ExerciseDifficulty), default=ExerciseDifficulty.VeryEasy)
     created_at = Column(TIMESTAMP, server_default=func.now())
     is_admin = Column(Boolean, default=False)
 
@@ -86,17 +90,21 @@ class Exercise(Base):
     quantity = Column(Integer, default=1)
     xp_reward = Column(Integer)
     media_url = Column(String, nullable=True)
+
+    quests = relationship("Quest", back_populates="exercise")
     
 class Quest(Base):
     __tablename__ = "quests"
     
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    description = Column(String)
     exercise_id = Column(Integer, ForeignKey("exercises.id"))
     amount = Column(Integer)
     xp_reward = Column(Integer)
     item_reward = Column(Integer, ForeignKey("items.id"), nullable=True)
+
+    exercise = relationship("Exercise", back_populates="quests")
+    item = relationship("Item")
     
 class UserQuestProgress(Base):
     __tablename__ = "user_quest_progress"

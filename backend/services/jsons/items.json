@@ -1,0 +1,56 @@
+[
+  {
+    "name": "életerő ital",
+    "description": "Mágikus ital, amely kisebb sebeket gyógyít és visszatölti az életerőt.",
+    "item_type": "potion",
+    "image_url": "hp_potion"
+  },
+  {
+    "name": "nagy életerő ital",
+    "description": "Erősebb gyógyital, amely jelentős mennyiségű életerőt állít vissza.",
+    "item_type": "potion",
+    "image_url": "greater_hp_potion"
+  },
+  {
+    "name": "mana ital",
+    "description": "Varázslók által használt ital, amely visszatölti a mágikus energiát.",
+    "item_type": "potion",
+    "image_url": "mana_potion"
+  },
+  {
+    "name": "vas kard",
+    "description": "Egyszerű, de megbízható közelharci fegyver kalandozók számára.",
+    "item_type": "weapon",
+    "image_url": "iron_sword"
+  },
+  {
+    "name": "mágikus tölgyfa bot",
+    "description": "Ősi rúnákkal vésett varázsbot, amely erősíti a varázslatokat.",
+    "item_type": "weapon",
+    "image_url": "magic_staff"
+  },
+  {
+    "name": "bőrvért",
+    "description": "Könnyű páncél, amely alapvető védelmet nyújt harc közben.",
+    "item_type": "armor",
+    "image_url": "leather_armor"
+  },
+  {
+    "name": "acél pajzs",
+    "description": "Masszív pajzs, amely növeli a védekezési esélyt.",
+    "item_type": "armor",
+    "image_url": "steel_shield"
+  },
+  {
+    "name": "láthatatlanság tekercs",
+    "description": "Egyszer használatos mágikus tekercs, amely rövid időre láthatatlanná tesz.",
+    "item_type": "potion",
+    "image_url": "invisibility_scroll"
+  },
+  {
+    "name": "tűzgyűrű",
+    "description": "Mágikus gyűrű, amely viselőjének tűzellenállást biztosít.",
+    "item_type": "potion",
+    "image_url": "fire_ring"
+  }
+]

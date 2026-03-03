@@ -6,11 +6,20 @@ from database import get_db
 from models import Item, ItemEffect, User, ItemType
 import schemas
 from dependencies import get_admin_user
+from services import seeded_generation
+from services import item as item_service
 
 app = APIRouter(
     prefix="/items",
     tags=["items"]
 )
+
+@app.post("/seed")
+def sedded_generation(
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    return seeded_generation.seed_items(db)
 
 @app.get("/{item_id}", response_model=schemas.ItemRead)
 def get_item(
@@ -98,6 +107,13 @@ def delete_item(
 
     return {"detail": "Item deleted successfully"}
 
+@app.post("/effects/seed")
+def seed_link_effect_to_item(
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    return seeded_generation.seed_link_effects(db)
+
 @app.post("/{item_id}/effects/{effect_id}")
 def link_effect_to_item(
     item_id: int,
@@ -107,20 +123,7 @@ def link_effect_to_item(
 ):
     logging.info(f"Admin {admin_user.id} linking effect id={effect_id} to item id={item_id}")
 
-    item = db.query(Item).filter(Item.id == item_id).first()
-    if not item:
-        raise HTTPException(status_code=404, detail="Item not found")
-
-    effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
-    if not effect:
-        raise HTTPException(status_code=404, detail="Item effect not found")
-
-    item.effects.append(effect)
-    db.commit()
-
-    logging.info(f"Effect id={effect_id} linked to item id={item_id} successfully")
-
-    return {"detail": "Effect linked to item successfully"}
+    return item_service.link_item_with_effect(item_id, effect_id, db)
 
 @app.delete("/{item_id}/effects/{effect_id}")
 def unlink_effect_from_item(

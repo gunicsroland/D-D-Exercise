@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from models import ExerciseCategory, Quest, UserQuestProgress
 from services import character as character_service
 from services import inventory as inventory_service
+from constants import DAILY_QUEST_COUNT
 
 def get_or_create_progress(user_id: int, quest_id: int, db: Session):
     today = date.today()
@@ -54,15 +55,21 @@ def update_quest_progress(user_id: int, quest_id: int, db: Session):
     
     return progress
 
-def generate_daily_quests(db: Session, user_id: int, num_quests: int = 3):
+def generate_daily_quests(db: Session, user_id: int, num_quests: int = DAILY_QUEST_COUNT):
     today = date.today()
     weekday = today.weekday()
 
     category = DAY_CATEGORY_MAP.get(weekday, ExerciseCategory.Strength)
 
+    user = (db.query(User).filter(User.user_id == user_id).first())
+
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
     quests = (
         db.query(Quest)
-        .filter(Quest.daily == True, Quest.exercise_category == category)
+        .join(Exercise, Quest.exercise_id == Exercise.id)
+        .filter(Exercise.category == category, Exercise.difficulty == user.quest_difficulty)
         .all()
     )
 

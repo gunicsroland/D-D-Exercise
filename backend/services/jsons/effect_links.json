@@ -1,0 +1,38 @@
+[
+  {
+    "item_id": 1,
+    "effect_ids": [18]
+  },
+  {
+    "item_id": 2,
+    "effect_ids": [19]
+  },
+  {
+    "item_id": 3,
+    "effect_ids": [24]
+  },
+  {
+    "item_id": 4,
+    "effect_ids": [6]
+  },
+  {
+    "item_id": 5,
+    "effect_ids": [25]
+  },
+  {
+    "item_id": 6,
+    "effect_ids": [18]
+  },
+  {
+    "item_id": 7,
+    "effect_ids": [19]
+  },
+  {
+    "item_id": 8,
+    "effect_ids": [13] 
+  },
+  {
+    "item_id": 9,
+    "effect_ids": [17]
+  }
+]

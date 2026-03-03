@@ -38,5 +38,965 @@
     "quantity": 1,
     "xp_reward": 500,
     "media_url": null
+  },
+  {
+    "name": "Térdelő fekvőtámasz",
+    "category": "strength",
+    "difficulty": "very_easy",
+    "quantity": 10,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Guggolva sétálás",
+    "category": "strength",
+    "difficulty": "easy",
+    "quantity": 10,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Kitörés állva (támogatva)",
+    "category": "strength",
+    "difficulty": "very_easy",
+    "quantity": 10,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Csípőemelés háton fekve",
+    "category": "strength",
+    "difficulty": "very_easy",
+    "quantity": 10,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Fekvő lábemelés",
+    "category": "strength",
+    "difficulty": "very_easy",
+    "quantity": 10,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Klasszikus fekvőtámasz",
+    "category": "strength",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Álló kitörés",
+    "category": "strength",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Csípőhid (egy lábbal könnyített)",
+    "category": "strength",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Tricepsz tolás hátul széken",
+    "category": "strength",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Széles guggolás",
+    "category": "strength",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Széles fekvőtámasz",
+    "category": "strength",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Egy lábas guggolás (asszisztált)",
+    "category": "strength",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Hegy mászó gyors",
+    "category": "strength",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Tolódzkodás padon",
+    "category": "strength",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Hajlított törzsű jó reggel",
+    "category": "strength",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Diamant fekvőtámasz",
+    "category": "strength",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Pisztoly guggolás (asszisztált)",
+    "category": "strength",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Egykaros tolódzkodás",
+    "category": "strength",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Egy lábas csípőemelés súly nélküli",
+    "category": "strength",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Ugró guggolás",
+    "category": "strength",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Egykaros fekvőtámasz",
+    "category": "strength",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Pisztoly guggolás teljes",
+    "category": "strength",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "T-hídból tolás",
+    "category": "strength",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Fejenállásból fekvőtámasz",
+    "category": "strength",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Egykaros tolódzkodás",
+    "category": "strength",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Egykezes egy lábas pisztoly",
+    "category": "strength",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Kézenállva fekvőtámasz (szabad)",
+    "category": "strength",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Azonnali 360° ugró pisztoly guggolás",
+    "category": "strength",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Emberi zászló asszisztálatlan",
+    "category": "strength",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Egykezes húzodzkodás",
+    "category": "strength",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Séta helyben",
+    "category": "cardio",
+    "difficulty": "very_easy",
+    "quantity": 30,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Lassú térdemelés",
+    "category": "cardio",
+    "difficulty": "very_easy",
+    "quantity": 30,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Alacsony intenzitású jumping jack",
+    "category": "cardio",
+    "difficulty": "very_easy",
+    "quantity": 30,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Könnyített lépcsőzés",
+    "category": "cardio",
+    "difficulty": "very_easy",
+    "quantity": 30,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Lassú sarok-emelés",
+    "category": "cardio",
+    "difficulty": "very_easy",
+    "quantity": 30,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Jumping jack",
+    "category": "cardio",
+    "difficulty": "easy",
+    "quantity": 40,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Magas térdemelés",
+    "category": "cardio",
+    "difficulty": "easy",
+    "quantity": 40,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Könnyű burpee (fekvőtámasz nélkül)",
+    "category": "cardio",
+    "difficulty": "easy",
+    "quantity": 40,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Gyors lépcsőzés",
+    "category": "cardio",
+    "difficulty": "easy",
+    "quantity": 40,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Stacionárius futás helyben",
+    "category": "cardio",
+    "difficulty": "easy",
+    "quantity": 40,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Burpee",
+    "category": "cardio",
+    "difficulty": "medium",
+    "quantity": 60,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Hegymászó",
+    "category": "cardio",
+    "difficulty": "medium",
+    "quantity": 60,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Heveder (skater hops)",
+    "category": "cardio",
+    "difficulty": "medium",
+    "quantity": 60,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Váltott tempojú futás",
+    "category": "cardio",
+    "difficulty": "medium",
+    "quantity": 60,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Kombinált ugrálás",
+    "category": "cardio",
+    "difficulty": "medium",
+    "quantity": 60,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Burpee fekvőtámaszzal",
+    "category": "cardio",
+    "difficulty": "hard",
+    "quantity": 90,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Többszörös hegymászó",
+    "category": "cardio",
+    "difficulty": "hard",
+    "quantity": 90,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Sprint helyben 30s",
+    "category": "cardio",
+    "difficulty": "hard",
+    "quantity": 90,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Dobozugrás helyben",
+    "category": "cardio",
+    "difficulty": "hard",
+    "quantity": 90,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Tabata jumping jack",
+    "category": "cardio",
+    "difficulty": "hard",
+    "quantity": 90,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Burpee + felugrás",
+    "category": "cardio",
+    "difficulty": "very_hard",
+    "quantity": 120,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Gyors hegyi futás 60s",
+    "category": "cardio",
+    "difficulty": "very_hard",
+    "quantity": 120,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Plyometrikus ugrások sorozata",
+    "category": "cardio",
+    "difficulty": "very_hard",
+    "quantity": 120,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Skater burst",
+    "category": "cardio",
+    "difficulty": "very_hard",
+    "quantity": 120,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Burpee + tuck jump",
+    "category": "cardio",
+    "difficulty": "very_hard",
+    "quantity": 120,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "100 jumping jack sorozat",
+    "category": "cardio",
+    "difficulty": "nearly_impossible",
+    "quantity": 180,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "60 másodperc nonstop burpee",
+    "category": "cardio",
+    "difficulty": "nearly_impossible",
+    "quantity": 180,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Futóintervallum max 2 perc",
+    "category": "cardio",
+    "difficulty": "nearly_impossible",
+    "quantity": 180,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "300 mountain climber sorozat",
+    "category": "cardio",
+    "difficulty": "nearly_impossible",
+    "quantity": 180,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Nonstop plyo 3 perc",
+    "category": "cardio",
+    "difficulty": "nearly_impossible",
+    "quantity": 180,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Nyak körzés ülve",
+    "category": "flexibility",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Vállkörzés állva",
+    "category": "flexibility",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Lábszár nyújtás falnál",
+    "category": "flexibility",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Csípő nyitás egyszerű",
+    "category": "flexibility",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Könnyű macska-tehén",
+    "category": "flexibility",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Elülső comb nyújtás állva",
+    "category": "flexibility",
+    "difficulty": "easy",
+    "quantity": 30,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Lunge csípőnyújtás",
+    "category": "flexibility",
+    "difficulty": "easy",
+    "quantity": 30,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Oldalsó törzsnyújtás",
+    "category": "flexibility",
+    "difficulty": "easy",
+    "quantity": 30,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Lábujj érintés ülve",
+    "category": "flexibility",
+    "difficulty": "easy",
+    "quantity": 30,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Könnyített előrehajlás",
+    "category": "flexibility",
+    "difficulty": "easy",
+    "quantity": 30,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Mély csípőnyújtás",
+    "category": "flexibility",
+    "difficulty": "medium",
+    "quantity": 45,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Fél híd",
+    "category": "flexibility",
+    "difficulty": "medium",
+    "quantity": 45,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Dinamikus hamstring nyújtás",
+    "category": "flexibility",
+    "difficulty": "medium",
+    "quantity": 45,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Butterfly tartás",
+    "category": "flexibility",
+    "difficulty": "medium",
+    "quantity": 45,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Felülő törzscsavar",
+    "category": "flexibility",
+    "difficulty": "medium",
+    "quantity": 45,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Teljes híd",
+    "category": "flexibility",
+    "difficulty": "hard",
+    "quantity": 60,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Gyakori egyensúly nyújtás",
+    "category": "flexibility",
+    "difficulty": "hard",
+    "quantity": 60,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Izomcsoport-specifikus dinamikus nyújtás",
+    "category": "flexibility",
+    "difficulty": "hard",
+    "quantity": 60,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Egylábas előrehajlás mélyen",
+    "category": "flexibility",
+    "difficulty": "hard",
+    "quantity": 60,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Tartós hamstring tartás 60s",
+    "category": "flexibility",
+    "difficulty": "hard",
+    "quantity": 60,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Szűk combhajlító mobilitás 90s",
+    "category": "flexibility",
+    "difficulty": "very_hard",
+    "quantity": 90,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Teljes előrehajlás lábtartásban",
+    "category": "flexibility",
+    "difficulty": "very_hard",
+    "quantity": 90,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Fejtől talpig mély nyújtás",
+    "category": "flexibility",
+    "difficulty": "very_hard",
+    "quantity": 90,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Mély csípőnyújtás kitartással",
+    "category": "flexibility",
+    "difficulty": "very_hard",
+    "quantity": 90,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Egyensúlyos mély guggolás mobilitás",
+    "category": "flexibility",
+    "difficulty": "very_hard",
+    "quantity": 90,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Spárga megtartása 60s",
+    "category": "flexibility",
+    "difficulty": "nearly_impossible",
+    "quantity": 120,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Előre spárga mély tartás",
+    "category": "flexibility",
+    "difficulty": "nearly_impossible",
+    "quantity": 120,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Hátsó híd tartás 60s",
+    "category": "flexibility",
+    "difficulty": "nearly_impossible",
+    "quantity": 120,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Fekvő forgatás teljes mozgástartomány",
+    "category": "flexibility",
+    "difficulty": "nearly_impossible",
+    "quantity": 120,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Sortartás extremo",
+    "category": "flexibility",
+    "difficulty": "nearly_impossible",
+    "quantity": 120,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Hasi légzés fekve",
+    "category": "core",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Farizom bekapcsolás",
+    "category": "core",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Könnyített plank térdelve",
+    "category": "core",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Dead bug könnyített",
+    "category": "core",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Oldal plank térdelve",
+    "category": "core",
+    "difficulty": "very_easy",
+    "quantity": 20,
+    "xp_reward": 25,
+    "media_url": null
+  },
+  {
+    "name": "Plank (térdelve hosszabb)",
+    "category": "core",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Hajlított térdes hasprés",
+    "category": "core",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Lábemelés hajlított térddel",
+    "category": "core",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Reverse crunch könnyített",
+    "category": "core",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Könnyített V-up",
+    "category": "core",
+    "difficulty": "easy",
+    "quantity": 15,
+    "xp_reward": 50,
+    "media_url": null
+  },
+  {
+    "name": "Plank teljes",
+    "category": "core",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Bicycle crunch",
+    "category": "core",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Lábemelés egyenes",
+    "category": "core",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Hanging knee raise (asszisztált)",
+    "category": "core",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Russian twist",
+    "category": "core",
+    "difficulty": "medium",
+    "quantity": 30,
+    "xp_reward": 100,
+    "media_url": null
+  },
+  {
+    "name": "Plank 1 lábbal",
+    "category": "core",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Dragon flag progresszió",
+    "category": "core",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "L-sit (asszisztált)",
+    "category": "core",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "V-up sorozat",
+    "category": "core",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Hanging leg raise",
+    "category": "core",
+    "difficulty": "hard",
+    "quantity": 12,
+    "xp_reward": 200,
+    "media_url": null
+  },
+  {
+    "name": "Dragon flag teljes",
+    "category": "core",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "L-sit teljes",
+    "category": "core",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Front lever progresszió",
+    "category": "core",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "One-arm plank körök",
+    "category": "core",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Komplex core circuit 60s",
+    "category": "core",
+    "difficulty": "very_hard",
+    "quantity": 6,
+    "xp_reward": 300,
+    "media_url": null
+  },
+  {
+    "name": "Full front lever",
+    "category": "core",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Full planche push",
+    "category": "core",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "Human flag core hold",
+    "category": "core",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "30s dragon flag hold",
+    "category": "core",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
+  },
+  {
+    "name": "One-arm L-sit",
+    "category": "core",
+    "difficulty": "nearly_impossible",
+    "quantity": 1,
+    "xp_reward": 500,
+    "media_url": null
   }
 ]

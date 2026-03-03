@@ -1,14 +1,15 @@
 from datetime import date
 from constants import DAY_CATEGORY_MAP
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 import logging
 
 from database import get_db
-from models import Quest, User
+from models import Quest, User, Item, ItemEffect
 import schemas
 from dependencies import get_admin_user, get_current_user
 from services import quests as quest_service
+from services import seeded_generation
 
 app = APIRouter(
     prefix="/quests",
@@ -20,7 +21,12 @@ def get_quests(
     db: Session = Depends(get_db)
 ):
     logging.info("Fetching all quests")
-    return db.query(Quest).all()
+    return (db.query(Quest)
+        .options(
+            joinedload(Quest.exercise),
+            joinedload(Quest.item).joinedload(Item.effects)
+        )
+    .all())
 
 @app.get("/{quest_id}", response_model=schemas.QuestRead)
 def get_quest(
@@ -28,7 +34,14 @@ def get_quest(
     db: Session = Depends(get_db)
 ):
     logging.info(f"Fetching quest with id={quest_id}")
-    quest = db.query(Quest).filter(Quest.id == quest_id).first()
+    quest = (
+    db.query(Quest)
+    .options(
+        joinedload(Quest.exercise),
+        joinedload(Quest.item).joinedload(Item.effects)
+    )
+    .first()
+)
     if not quest:
         logging.warning(f"Quest with id={quest_id} not found")
         raise HTTPException(status_code=404, detail="Quest not found")
@@ -52,9 +65,21 @@ def create_quest(
     admin_user: User = Depends(get_admin_user)
 ):
     logging.info(f"Admin user {admin_user.id} is creating a new quest with name '{quest.name}'")
+
+    quest = db.query(Exercise).filter(Exercise.id == quest.exercise_id).first()
+
+    if not quest:
+        logging.warning(f"Exercise with id={quest.exercise_id} not found")
+        raise HTTPException(status_code=404, detail="Exercise not found")
+
+    item = db.query(Item).filter(Item.id == quest.item_reward).first()
+
+    if not item:
+        logging.warning(f"Item with id={quest.item_reward} not found")
+        raise HTTPException(status_code=404, detail="Item not found")
+
     new_quest = Quest(
         name=quest.name,
-        description=quest.description,
         exercise_id=quest.exercise_id,
         amount=quest.amount,
         xp_reward=quest.xp_reward,
@@ -65,6 +90,13 @@ def create_quest(
     db.refresh(new_quest)
     logging.info(f"Quest '{new_quest.name}' created successfully with id={new_quest.id}")
     return new_quest
+
+@app.post("/seeded")
+def seed_quests(
+    db: Session = Depends(get_db),
+    admin_user: User = Depends(get_admin_user)
+):
+    return seeded_generation.seed_quests(db)
 
 @app.delete("/{quest_id}")
 def delete_quest(

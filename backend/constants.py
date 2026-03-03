@@ -36,3 +36,5 @@ DAY_CATEGORY_MAP = {
 }
 
 MODEL_NAME = "gemini-2.5-flash"
+
+DAILY_QUEST_COUNT = 3
