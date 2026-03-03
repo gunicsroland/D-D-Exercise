@@ -39,12 +39,6 @@ export default function StepFinal({
         console.log("Final stats updated:", finalStats);
     }, [pushups, runTime, agility, selectedClass]);
 
-    useEffect(() => {
-        if (!loading && !token) {
-            router.replace("/login");
-        }
-    }, [loading, token]);
-
     const stats = finalStats ?? {
         strength: 0,
         constitution: 0,

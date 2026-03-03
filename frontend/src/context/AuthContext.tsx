@@ -22,8 +22,8 @@ export function useAuthContext() {
     if (context === undefined) {
         throw new Error("useUserContext must be used with a Provider");
     }
-    for (let child in context){
-        if (child === null){
+    for (let child in context) {
+        if (child === null) {
             throw new Error("useUserContext must be used with a Provider");
         }
     }
@@ -36,6 +36,12 @@ export const AuthProvider = ({ children, }: { children: ReactNode }) => {
     const [token, setToken] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const router = useRouter();
+
+    useEffect(() => {
+        if (!loading && !token) {
+            logout();
+        }
+    }, [loading, token]);
 
     useEffect(
         () => {

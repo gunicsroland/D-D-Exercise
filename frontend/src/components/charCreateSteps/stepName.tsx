@@ -15,15 +15,6 @@ export default function StepName(
             selectedClass: string, setSelectedClass: (cls: string) => void
         }) {
     const classes = Object.keys(BASE_STATS_BY_CLASS);
-    const { loading, token } = useAuthContext();
-    const router = useRouter()
-
-    useEffect(() => {
-        if (!loading && !token) {
-            router.replace("/login");
-        }
-    }, [loading, token]);
-
 
     return (
         <View>
