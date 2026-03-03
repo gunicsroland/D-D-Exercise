@@ -2,14 +2,28 @@ import { View, Text, TextInput } from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import { BASE_STATS_BY_CLASS, CLASS_LABELS_HU } from '../../constants';
 import React from 'react';
+import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
+import { useAuthContext } from '../../context/AuthContext'
 
 
 export default function StepName(
     { charName, setCharName,
-      selectedClass, setSelectedClass }:
-    { charName: string, setCharName: (name: string) => void,
-      selectedClass: string, setSelectedClass: (cls: string) => void }) {
+        selectedClass, setSelectedClass }:
+        {
+            charName: string, setCharName: (name: string) => void,
+            selectedClass: string, setSelectedClass: (cls: string) => void
+        }) {
     const classes = Object.keys(BASE_STATS_BY_CLASS);
+    const { loading, token } = useAuthContext();
+    const router = useRouter()
+
+    useEffect(() => {
+        if (!loading && !token) {
+            router.replace("/login");
+        }
+    }, [loading, token]);
+
 
     return (
         <View>

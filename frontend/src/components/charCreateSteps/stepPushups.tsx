@@ -1,8 +1,20 @@
 import React from 'react';
-import {View, Text, TextInput, Button} from 'react-native';
+import { View, Text, TextInput, Button } from 'react-native';
+import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
+import { useAuthContext } from '../../context/AuthContext';
 
-export default function StepPushups({pushups, setPushups} :
-     {pushups: number, setPushups: (value: number) => void}) {
+export default function StepPushups({ pushups, setPushups }:
+    { pushups: number, setPushups: (value: number) => void }) {
+
+    const { loading, token } = useAuthContext();
+    const router = useRouter()
+
+    useEffect(() => {
+        if (!loading && !token) {
+            router.replace("/login");
+        }
+    }, [loading, token]);
 
     return (
         <View>

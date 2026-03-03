@@ -10,17 +10,17 @@ import { Character, CharacterAbility, AbilityType } from "../../../types/types";
 import { XP_LEVELS } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
 import { checkCharacter, getCharacter, lvlUpAbility, updateCharacter } from "../../../services/character_service";
-import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 export default function CharacterScreen() {
   const [character, setCharacter] = useState<Character | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  const [newName, setNewName] = useState(character?.name)
+  const [newName, setNewName] = useState(character?.name);
+  const [error, setError] = useState("");
 
   const appState = useRef(AppState.currentState);
 
-  const { token } = useAuthContext();
+  const { token, loading } = useAuthContext();
 
   useEffect(() => {
     const hasCharacter = async () => {
@@ -57,8 +57,13 @@ export default function CharacterScreen() {
         nextState === 'active') {
         if (!token) return;
 
-        const data = await getCharacter(token);
-        setCharacter(data);
+        try {
+          const data = await getCharacter(token);
+          setCharacter(data);
+        }catch{
+          setError("Nem sikerült betölteni a karaktered, Póbáld újra!");
+        }
+        
       }
 
       appState.current = nextState
@@ -70,7 +75,7 @@ export default function CharacterScreen() {
     };
   }, [token]);
 
-  if (loading || !character || !token) {
+  if (pageLoading || !character || !token) {
     return (
       <View>
         <ActivityIndicator size="large" color="#0000ff" />

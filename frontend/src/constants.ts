@@ -11,7 +11,7 @@ export const CLASS_LABELS_HU: Record<string, string> = {
 };
 
 export const ABILITY_LABELS_HU: Record<string, string> = {
-    "strength" : "Erő",
+   "strength" : "Erő",
    "dexterity" : "Ügyesség",
    "constitution" : "Állóképesség",
    "intelligence" : "Intelligencia",
