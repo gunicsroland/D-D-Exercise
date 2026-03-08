@@ -12,6 +12,8 @@ import { useAuthContext } from "../../../context/AuthContext";
 import { DIFFICULTY_ORDER } from "../../../constants";
 import { QuestCard } from "../../../components/QuestCard";
 import { ExerciseCard } from "../../../components/ExerciseCard";
+import { useExercisePlanContext } from "../../../context/ExercisePlanContext";
+import ExercisePlanModal from "../../../components/ExercisePlanModal";
 
 export default function ExerciseScreen() {
   const [dailyQuests, setDailyQuests] = useState<Quest[]>([]);
@@ -27,8 +29,10 @@ export default function ExerciseScreen() {
   const [sortBy, setSortBy] = useState<"difficulty" | "category" | null>(null);
 
   const [questDifficulty, setLocalQuestDifficulty] = useState<ExerciseDifficulty>("very_easy");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { token } = useAuthContext();
+  const { plan, addExercise, removeExercise, clearPlan } = useExercisePlanContext();
 
   const fetchInitialData = async () => {
     if (!token) {
@@ -106,97 +110,130 @@ export default function ExerciseScreen() {
     return questProgress.find((p) => p.quest_id === questId);
   };
 
-
   return (token &&
-    <ScrollView>
-      <View style={{ padding: 16 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-          Napi küldetések
-        </Text>
+    <>
+      <ScrollView>
+        <View style={{ padding: 16 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            Napi küldetések
+          </Text>
 
-        <View style={{ flexDirection: "row", flexWrap: "wrap", marginVertical: 10 }}>
-          {Object.keys(DIFFICULTY_ORDER).map((diff) => (
-            <TouchableOpacity
-              key={diff}
-              onPress={() => updateQuestDifficulty(token, diff as ExerciseDifficulty)}
-              style={{
-                marginRight: 8,
-                marginBottom: 6,
-                padding: 6,
-                borderRadius: 6,
-                backgroundColor:
-                  questDifficulty === diff ? "#4CAF50" : "#ccc",
-              }}
-            >
-              <Text>{diff}</Text>
-            </TouchableOpacity>
-          ))}
+          <View style={{ flexDirection: "row", flexWrap: "wrap", marginVertical: 10 }}>
+            {Object.keys(DIFFICULTY_ORDER).map((diff) => (
+              <TouchableOpacity
+                key={diff}
+                onPress={() => updateQuestDifficulty(token, diff as ExerciseDifficulty)}
+                style={{
+                  marginRight: 8,
+                  marginBottom: 6,
+                  padding: 6,
+                  borderRadius: 6,
+                  backgroundColor:
+                    questDifficulty === diff ? "#4CAF50" : "#ccc",
+                }}
+              >
+                <Text>{diff}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          {questError ? (
+            <Text style={{ color: "red", marginVertical: 6 }}>{questError}</Text>
+          ) : null}
+          {progressError ? (
+            <Text style={{ color: "red", marginVertical: 6 }}>{progressError}</Text>
+          ) : null}
+
+          <FlatList
+            data={dailyQuests}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => <QuestCard quest={item} progress={getProgressForQuest(item.id)} />}
+          />
         </View>
 
+        <View style={{ padding: 16 }}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Edzések</Text>
+          <Text style={{ fontSize: 18 }}>Szűrők</Text>
+
+          <View style={{ flexDirection: "row", marginVertical: 8 }}>
+            {["strength", "cardio", "flexibility", "core"].map((cat) => (
+              <TouchableOpacity
+                key={cat}
+                onPress={() =>
+                  setSelectedCategory(
+                    selectedCategory === cat ? null : cat
+                  )
+                }
+                style={{ marginRight: 8 }}
+              >
+                <Text>{cat}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <View style={{ flexDirection: "row", flexWrap: "wrap", marginVertical: 8 }}>
+            {Object.keys(DIFFICULTY_ORDER).map((diff) => (
+              <TouchableOpacity
+                key={diff}
+                onPress={() =>
+                  setSelectedDifficulty(
+                    selectedDifficulty === diff ? null : diff
+                  )
+                }
+                style={{ marginRight: 8, marginBottom: 6 }}
+              >
+                <Text>{diff}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <View style={{ flexDirection: "row", marginVertical: 8 }}>
+            <TouchableOpacity
+              onPress={() => setSortBy("difficulty")}
+              style={{ marginRight: 12 }}
+            >
+              <Text>Sort by Difficulty</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => setSortBy("category")}>
+              <Text>Sort by Category</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {ExerciseError ? (
+          <Text style={{ color: "red", marginVertical: 6 }}>{ExerciseError}</Text>
+        ) : null}
         <FlatList
-          data={dailyQuests}
+          data={filteredExercises}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <QuestCard quest={item} progress={getProgressForQuest(item.id)} />}
+          scrollEnabled={false}
+          renderItem={({ item }) => <ExerciseCard exercise={item}></ExerciseCard>
+          }
         />
-      </View>
 
-      <View style={{ padding: 16 }}>
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Edzések</Text>
-        <Text style={{ fontSize: 18 }}>Szűrők</Text>
 
-        <View style={{ flexDirection: "row", marginVertical: 8 }}>
-          {["strength", "cardio", "flexibility", "core"].map((cat) => (
-            <TouchableOpacity
-              key={cat}
-              onPress={() =>
-                setSelectedCategory(
-                  selectedCategory === cat ? null : cat
-                )
-              }
-              style={{ marginRight: 8 }}
-            >
-              <Text>{cat}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+      </ScrollView>
 
-        <View style={{ flexDirection: "row", flexWrap: "wrap", marginVertical: 8 }}>
-          {Object.keys(DIFFICULTY_ORDER).map((diff) => (
-            <TouchableOpacity
-              key={diff}
-              onPress={() =>
-                setSelectedDifficulty(
-                  selectedDifficulty === diff ? null : diff
-                )
-              }
-              style={{ marginRight: 8, marginBottom: 6 }}
-            >
-              <Text>{diff}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+      <TouchableOpacity
+        onPress={() => setModalVisible(true)}
+        style={{
+          position: "absolute",
+          bottom: 20,
+          right: 20,
+          backgroundColor: "#10b981",
+          padding: 16,
+          borderRadius: 32,
+          elevation: 4,
+        }}
+      >
+        <Text style={{ color: "white", fontWeight: "bold" }}>Start</Text>
+      </TouchableOpacity>
 
-        <View style={{ flexDirection: "row", marginVertical: 8 }}>
-          <TouchableOpacity
-            onPress={() => setSortBy("difficulty")}
-            style={{ marginRight: 12 }}
-          >
-            <Text>Sort by Difficulty</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => setSortBy("category")}>
-            <Text>Sort by Category</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <FlatList
-        data={filteredExercises}
-        keyExtractor={(item) => item.id.toString()}
-        scrollEnabled={false}
-        renderItem={({ item }) => <ExerciseCard exercise={item}></ExerciseCard>
-        }
+      <ExercisePlanModal
+        isOpen={modalVisible}
+        onClose={() => setModalVisible(false)}
       />
-    </ScrollView>
+    </>
   );
 }

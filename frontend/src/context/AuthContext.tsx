@@ -2,8 +2,7 @@ import React, { createContext, ReactNode, use, useContext, useEffect, useState }
 import { User } from "../types/types";
 import { storage } from '../services/storage_service';
 import { loginRequest, registerRequest, getMe } from '../services/auth_service';
-import { router, useRouter } from 'expo-router';
-import { useRoute } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 type AuthContextType = {
     user: User | null;
