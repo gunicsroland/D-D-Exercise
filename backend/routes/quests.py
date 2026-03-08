@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session, joinedload
 import logging
 
 from database import get_db
-from models import Quest, User, Item, ItemEffect
+from models import Quest, User, Item, ItemEffect, UserQuestProgress
 import schemas
 from dependencies import get_admin_user, get_current_user
 from services import quests as quest_service
@@ -28,6 +28,26 @@ def get_quests(
         )
     .all())
 
+@app.get("/daily_quests", response_model=list[schemas.QuestRead])
+def get_daily_quests(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    logging.info(f"Fetching daily quests for user {current_user.id}")
+    daily_quests = quest_service.get_daily_quests(db, current_user.id)
+
+    logging.info(f"Found {len(daily_quests)} daily quests for user {current_user.id}")
+    return daily_quests
+
+@app.get("/quest_progress", response_model=list[schemas.UserQuestProgressRead])
+def get_user_quest_progress(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    return db.query(UserQuestProgress).filter(
+        UserQuestProgress.user_id == current_user.id
+    ).all()
+
 @app.get("/{quest_id}", response_model=schemas.QuestRead)
 def get_quest(
     quest_id: int,
@@ -46,17 +66,6 @@ def get_quest(
         logging.warning(f"Quest with id={quest_id} not found")
         raise HTTPException(status_code=404, detail="Quest not found")
     return quest
-
-@app.get("/daily_quests", response_model=list[schemas.QuestRead])
-def get_daily_quests(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    logging.info(f"Fetching daily quests for user {current_user.id}")
-    daily_quests = quest_service.get_daily_quests(db, current_user.id)
-
-    logging.info(f"Found {len(daily_quests)} daily quests for user {current_user.id}")
-    return daily_quests
 
 @app.post("/")
 def create_quest(

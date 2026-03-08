@@ -15,7 +15,7 @@ export default function Home() {
                 router.replace("/login");
             }
             else {
-                const hasChar = await checkCharacter(token, router);
+                const hasChar = await checkCharacter(token);
                 if (!hasChar) {
                     router.replace("/character/create");
                 }

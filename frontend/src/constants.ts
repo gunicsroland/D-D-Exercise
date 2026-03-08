@@ -11,37 +11,46 @@ export const CLASS_LABELS_HU: Record<string, string> = {
 };
 
 export const ABILITY_LABELS_HU: Record<string, string> = {
-   "strength" : "Erő",
-   "dexterity" : "Ügyesség",
-   "constitution" : "Állóképesség",
-   "intelligence" : "Intelligencia",
-   "wisdom" : "Bölcsesség",
-   "charisma" : "Karizma"
+  "strength": "Erő",
+  "dexterity": "Ügyesség",
+  "constitution": "Állóképesség",
+  "intelligence": "Intelligencia",
+  "wisdom": "Bölcsesség",
+  "charisma": "Karizma"
 }
 
 export const API_URL = "http://localhost:8000"
 export const TOKEN_KEY = "token"
 
 export const XP_LEVELS: Record<number, number> = {
-    1: 0,
-    2: 300,
-    3: 900,
-    4: 2700,
-    5: 6500,
-    6: 14000,
-    7: 23000,
-    8: 34000,
-    9: 48000,
-    10: 64000,
-    11: 85000,
-    12: 100000,
-    13: 120000,
-    14: 140000,
-    15: 165000,
-    16: 195000,
-    17: 225000,
-    18: 265000,
-    19: 305000,
-    20: 355000,
+  1: 0,
+  2: 300,
+  3: 900,
+  4: 2700,
+  5: 6500,
+  6: 14000,
+  7: 23000,
+  8: 34000,
+  9: 48000,
+  10: 64000,
+  11: 85000,
+  12: 100000,
+  13: 120000,
+  14: 140000,
+  15: 165000,
+  16: 195000,
+  17: 225000,
+  18: 265000,
+  19: 305000,
+  20: 355000,
 }
 export const MAX_LEVEL = 20
+
+export const DIFFICULTY_ORDER = {
+  very_easy: 1,
+  easy: 2,
+  medium: 3,
+  hard: 4,
+  very_hard: 5,
+  nearly_impossible: 6,
+};

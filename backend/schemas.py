@@ -163,6 +163,12 @@ class QuestUpdate(BaseSchema):
     xp_reward: Optional[int] = None
     item_reward: Optional[int] = None
 
+class UserQuestProgressRead(BaseModel):
+    id: int
+    quest_id: int
+    progress: int
+    completed: bool
+
 class AdventureSessionBase(BaseSchema):
     character_id: int
     user_id: int

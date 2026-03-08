@@ -1,11 +1,11 @@
 import logging
 from datetime import date
-from random import random
+import random
 from constants import DAY_CATEGORY_MAP
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from models import ExerciseCategory, Quest, UserQuestProgress
+from models import ExerciseCategory, Quest, UserQuestProgress, User, Exercise
 from services import character as character_service
 from services import inventory as inventory_service
 from constants import DAILY_QUEST_COUNT
@@ -22,6 +22,7 @@ def get_or_create_progress(user_id: int, quest_id: int, db: Session):
         )
         .first()
     )
+
     if not progress:
         progress = UserQuestProgress(
             user_id=user_id,
@@ -33,6 +34,7 @@ def get_or_create_progress(user_id: int, quest_id: int, db: Session):
         db.add(progress)
         db.commit()
         db.refresh(progress)
+
     return progress
 
 def update_quest_progress(user_id: int, quest_id: int, db: Session):
@@ -61,7 +63,7 @@ def generate_daily_quests(db: Session, user_id: int, num_quests: int = DAILY_QUE
 
     category = DAY_CATEGORY_MAP.get(weekday, ExerciseCategory.Strength)
 
-    user = (db.query(User).filter(User.user_id == user_id).first())
+    user = (db.query(User).filter(User.id == user_id).first())
 
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

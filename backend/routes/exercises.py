@@ -23,7 +23,7 @@ def get_exercises(
     logging.info("Fetching all exercises")
     return db.query(Exercise).all()
 
-@app.get("/{exercise_id}", response_model=schemas.ExerciseRead)
+@app.get("/id/{exercise_id}", response_model=schemas.ExerciseRead)
 def get_exercise(
     exercise_id: int,
     db: Session = Depends(get_db)
@@ -35,7 +35,7 @@ def get_exercise(
         raise HTTPException(status_code=404, detail="Exercise not found")
     return exercise
 
-@app.get("/{category}", response_model=list[schemas.ExerciseRead])
+@app.get("/category/{category}", response_model=list[schemas.ExerciseRead])
 def get_exercises_by_category(
     category: ExerciseCategory,
     db: Session = Depends(get_db)
@@ -43,7 +43,7 @@ def get_exercises_by_category(
     logging.info(f"Fetching exercises in category '{category}'")
     return db.query(Exercise).filter(Exercise.category == category).all()
 
-@app.get("/{difficulty}", response_model=list[schemas.ExerciseRead])
+@app.get("/difficulty/{difficulty}", response_model=list[schemas.ExerciseRead])
 def get_exercises_by_difficulty(
     difficulty: ExerciseDifficulty,
     db: Session = Depends(get_db)

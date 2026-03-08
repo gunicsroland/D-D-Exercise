@@ -1,7 +1,7 @@
 export interface User {
-    id: number,
-    username: string,
-    email: string,
+  id: number,
+  username: string,
+  email: string,
 }
 
 export interface Character {
@@ -72,4 +72,37 @@ export interface Message {
   session_id: number,
   role: ChatRole,
   content: string
+}
+
+export type ExerciseCategory = "strength" | "cardio" | "flexibility"
+ | "core"
+
+export type ExerciseDifficulty = "very_easy" | "easy"
+  | "medium" | "hard" | "very_hard"
+  | "nearly_impossible"
+
+export interface Exercise {
+  id: number,
+  name: string,
+  category: ExerciseCategory,
+  difficulty: ExerciseDifficulty,
+  quantity: number,
+  xp_reward: number,
+  media_url: string | null
+}
+
+export interface Quest {
+  id: number,
+  name: string,
+  amount: number,
+  xp_reward: number,
+  exercise: Exercise,
+  item: Item | null
+}
+
+export interface QuestProgress {
+    id: number,
+    quest_id: number,
+    progress: number,
+    completed: boolean
 }

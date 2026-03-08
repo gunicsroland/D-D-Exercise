@@ -42,3 +42,14 @@ def delete_user(
     db.commit()
     logging.info(f"User with id={user_id} deleted successfully")
     return {"message": "User deleted successfully"}
+
+@app.put("/quest_difficulty", response_model=schemas.UserRead)
+def update_user_quest_difficulty(
+    update: schemas.UserUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    current_user.quest_difficulty = update.quest_difficulty
+    db.commit()
+    db.refresh(current_user)
+    return current_user
