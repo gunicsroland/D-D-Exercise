@@ -83,7 +83,7 @@ export default function KalandScreen() {
         onChangeText={setTitle}
         style={styles.input}
       />
-      <Button title="Start Adventure" onPress={startAdventure} />
+      <Button title="Start Adventure" onPress={startAdventure} disabled={title == "" ? true : false}/>
 
       <Text style={styles.heading}>Korábbi kalandjaid</Text>
       <FlatList

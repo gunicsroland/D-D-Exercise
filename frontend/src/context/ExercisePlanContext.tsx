@@ -43,7 +43,6 @@ export const ExercisePlanProvider = ({ children }: { children: ReactNode }) => {
 
   const startPlan = () => {
     router.push("/exerciseRunner");
-    clearPlan();
   }
 
   return (
