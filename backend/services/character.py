@@ -17,7 +17,7 @@ def calculate_level(xp: int) -> int:
         
     return min(level, constants.MAX_LEVEL)
 
-def award_xp(user_id: int, xp_gain: int, db: Session):
+def add_xp(user_id: int, xp_gain: int, db: Session):
     character = db.query(Character).filter(Character.user_id == user_id).first()
     if not character:
         logging.warning(f"No character found for user_id={user_id} when trying to add XP")
