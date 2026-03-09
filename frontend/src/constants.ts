@@ -54,3 +54,5 @@ export const DIFFICULTY_ORDER = {
   very_hard: 5,
   nearly_impossible: 6,
 };
+
+export const QUEUE_KEY = "offline_exercise_completions";

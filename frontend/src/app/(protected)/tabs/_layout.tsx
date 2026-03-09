@@ -1,8 +1,24 @@
 import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import React from 'react';
+import React, { useEffect } from 'react';
+import NetInfo from "@react-native-community/netinfo";
+import { useAuthContext } from "../../../context/AuthContext";
+import { syncFinishedExercises } from "../../../services/quest_service";
 
 export default function TabsLayout() {
+
+    const {token} = useAuthContext();
+
+    useEffect(() => {
+        const unsubscribe = NetInfo.addEventListener((state) => {
+            if (state.isConnected && token){
+                syncFinishedExercises(token);
+            }
+        })
+
+        unsubscribe();
+    }, [token]);
+
     return (
         <Tabs screenOptions={{ headerShown: true }}>
             <Tabs.Screen

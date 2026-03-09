@@ -1,5 +1,7 @@
-import { API_URL } from "../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_URL, QUEUE_KEY } from "../constants";
 import { ExerciseDifficulty } from "../types/types";
+import { addExerciseToQueue, getOfflineCompletions } from "./offlineStorage";
 
 export async function getExercises(token: string) {
     const res = await fetch(`${API_URL}/exercises/`, {
@@ -49,10 +51,10 @@ export async function getQuestProgress(token: string) {
     return res.json();
 }
 
-export async function setQuestDifficulty(token:string, difficulty: ExerciseDifficulty) {
+export async function setQuestDifficulty(token: string, difficulty: ExerciseDifficulty) {
     const res = await fetch(`${API_URL}/user/quest_difficulty`, {
         method: "PUT",
-         headers: {
+        headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
         },
@@ -67,4 +69,51 @@ export async function setQuestDifficulty(token:string, difficulty: ExerciseDiffi
     }
 
     return await res.json();
+}
+
+export async function finishExercise(token: string, id: number) {
+    try {
+        const res = await fetch(`${API_URL}/exercises/finish/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+        })
+
+        if (!res.ok) {
+            throw new Error("Server error");
+        }
+
+    } catch{
+        console.log("Offline, saving exercise for sync:", id);
+        await addExerciseToQueue(id);
+    }
+}
+
+export async function syncFinishedExercises(token: string) {
+  const queue = await getOfflineCompletions();
+
+  if (queue.length === 0) return;
+
+  const remaining = [];
+
+  for (const item of queue) {
+    try {
+      const res = await fetch(`${API_URL}/exercises/finish/${item.exerciseId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error("Server error");
+
+    } catch {
+      remaining.push(item);
+    }
+  }
+
+  await AsyncStorage.setItem(QUEUE_KEY, JSON.stringify(remaining));
 }

@@ -91,6 +91,11 @@ export interface Exercise {
   media_url: string | null
 }
 
+export type OfflineExercise = {
+  exerciseId: number;
+  timestamp: number;
+};
+
 export interface Quest {
   id: number,
   name: string,
