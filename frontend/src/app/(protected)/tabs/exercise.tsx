@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { QuestCard } from "../../../components/QuestCard";
 import { ExerciseCard } from "../../../components/ExerciseCard";
 import { useExercisePlanContext } from "../../../context/ExercisePlanContext";
 import ExercisePlanModal from "../../../components/ExercisePlanModal";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function ExerciseScreen() {
   const [dailyQuests, setDailyQuests] = useState<Quest[]>([]);
@@ -65,9 +66,11 @@ export default function ExerciseScreen() {
     }
   };
 
-  useEffect(() => {
-    fetchInitialData();
-  }, [token]);
+  useFocusEffect(
+    useCallback(() => {
+      fetchInitialData();
+    }, [token])
+  )
 
   const filteredExercises = useMemo(() => {
     let filtered = [...allExercises];

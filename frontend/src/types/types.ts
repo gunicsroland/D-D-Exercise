@@ -96,6 +96,11 @@ export type OfflineExercise = {
   timestamp: number;
 };
 
+export type ExercisePlan = {
+  exercise: Exercise;
+  uuid: number;
+}
+
 export interface Quest {
   id: number,
   name: string,

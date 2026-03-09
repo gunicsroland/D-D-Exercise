@@ -85,8 +85,11 @@ export async function finishExercise(token: string, id: number) {
             throw new Error("Server error");
         }
 
-    } catch{
+        console.log("Finished exercise", id)
+
+    } catch (error){
         console.log("Offline, saving exercise for sync:", id);
+        console.error(error);
         await addExerciseToQueue(id);
     }
 }

@@ -5,6 +5,7 @@ import { useExercisePlanContext } from "../../context/ExercisePlanContext";
 import { useRouter } from "expo-router";
 import { useAuthContext } from "../../context/AuthContext";
 import { finishExercise } from "../../services/quest_service";
+import { ExercisePlan } from "../../types/types";
 
 export default function ExerciseRunner() {
     const { plan, clearPlan } = useExercisePlanContext();
@@ -12,7 +13,7 @@ export default function ExerciseRunner() {
     const router = useRouter();
 
     const [index, setIndex] = useState(0);
-    const [completed, setCompleted] = useState<Set<number>>(new Set());
+    const [completed, setCompleted] = useState<Set<ExercisePlan>>(new Set());
 
     if (plan.length === 0) {
         return (
@@ -22,7 +23,7 @@ export default function ExerciseRunner() {
         );
     }
 
-    const exercise = plan[index];
+    const exercise = plan[index].exercise;
 
     const nextExercise = () => {
         if (index < plan.length - 1) {
@@ -38,13 +39,9 @@ export default function ExerciseRunner() {
         }
     };
 
-    const finishCurrentExercise = () => {
-        const ex = plan[index];
+    const completeCurrentExercise = () => {
 
-        const updated = new Set(completed);
-        updated.add(ex.id);
-
-        setCompleted(updated);
+        setCompleted(prevCompleted => prevCompleted.add(plan[index]))
 
         nextExercise();
     };
@@ -52,11 +49,11 @@ export default function ExerciseRunner() {
     const finishWorkout = async () => {
         if (!token) return;
 
-        for (const ex_id of completed) {
+        for (const exercisePlan of completed) {
             try {
-                await finishExercise(token, ex_id);
+                await finishExercise(token, exercisePlan.exercise.id);
             } catch (err) {
-                console.error("Failed exercise:", ex_id);
+                console.error("Failed exercise:", exercisePlan.exercise.id);
             }
         }
 
@@ -122,7 +119,7 @@ export default function ExerciseRunner() {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                        onPress={finishCurrentExercise}
+                        onPress={completeCurrentExercise}
                         style={{
                             backgroundColor: "#10b981",
                             padding: 12,

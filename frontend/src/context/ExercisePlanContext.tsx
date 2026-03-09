@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Exercise } from "../types/types";
+import { Exercise, ExercisePlan } from "../types/types";
 import { useRouter } from "expo-router";
 
 type ExercisePlanContextType = {
-  plan: Exercise[];
+  plan: ExercisePlan[];
   addExercise: (ex: Exercise) => void;
   removeExercise: (id: number) => void;
   clearPlan: () => void;
@@ -28,15 +28,20 @@ export function useExercisePlanContext() {
 }
 
 export const ExercisePlanProvider = ({ children }: { children: ReactNode }) => {
-  const [plan, setPlan] = useState<Exercise[]>([]);
+  const [plan, setPlan] = useState<ExercisePlan[]>([]);
   const router = useRouter();
 
   const addExercise = (ex: Exercise) => {
-    setPlan((prev) => (prev.find((e) => e.id === ex.id) ? prev : [...prev, ex]));
+    const newPlan: ExercisePlan={
+      exercise: ex,
+      uuid: Date.now() + Math.random()
+    }
+
+    setPlan((prev) => [...prev, newPlan]);
   };
 
-  const removeExercise = (id: number) => {
-    setPlan((prev) => prev.filter((e) => e.id !== id));
+  const removeExercise = (uuid: number) => {
+    setPlan((prev) => prev.filter((e) => e.uuid !== uuid));
   };
 
   const clearPlan = () => setPlan([]);

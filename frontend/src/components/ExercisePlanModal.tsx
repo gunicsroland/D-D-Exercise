@@ -3,9 +3,11 @@ import { Exercise } from "../types/types";
 import { Modal, View, Text, FlatList, TouchableOpacity } from "react-native";
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
+import { useRouter } from "expo-router";
 
 export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-    const { plan, addExercise, removeExercise, clearPlan } = useExercisePlanContext();
+    const { plan, addExercise, removeExercise, clearPlan, startPlan } = useExercisePlanContext();
+    const router = useRouter();
 
     return (
         <Modal
@@ -49,7 +51,7 @@ export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean
                     ) : (
                         <FlatList
                             data={plan}
-                            keyExtractor={(item) => item.id.toString()}
+                            keyExtractor={(item) => item.uuid.toString()}
                             renderItem={({ item }) => (
                                 <View
                                     style={{
@@ -58,8 +60,8 @@ export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean
                                         paddingVertical: 6,
                                     }}
                                 >
-                                    <Text>{item.name} x {item.quantity}</Text>
-                                    <TouchableOpacity onPress={() => removeExercise(item.id)}>
+                                    <Text>{item.exercise.name} x {item.exercise.quantity}</Text>
+                                    <TouchableOpacity onPress={() => removeExercise(item.uuid)}>
                                         <Text style={{ color: "red" }}>Remove</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -72,7 +74,9 @@ export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean
                         justifyContent: "space-around"
                     }}>
                         <TouchableOpacity
-                            onPress={onClose}
+                            onPress={() => {
+                                onClose();
+                                startPlan();}}
                             style={{
                                 marginTop: 12,
                                 padding: 12,
