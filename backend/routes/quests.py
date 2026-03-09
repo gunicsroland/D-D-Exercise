@@ -107,6 +107,16 @@ def seed_quests(
 ):
     return seeded_generation.seed_quests(db)
 
+@app.post("/complete/{quest_id}")
+def complete_quest(
+    quest_id: int,
+    current_user: User = Depends(get_admin_user),
+    db: Session = Depends(get_db)
+):
+    quest = db.query(Quest).filter(Quest.id == quest_id).first()
+
+    return quest_service.complete_quest(current_user.id, quest, db)
+
 @app.delete("/{quest_id}")
 def delete_quest(
     quest_id: int,

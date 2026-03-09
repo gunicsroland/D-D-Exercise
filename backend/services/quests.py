@@ -114,6 +114,8 @@ def complete_quest(user_id: int, quest: Quest, db: Session):
     character_service.add_xp(user_id, quest.xp_reward, db)
     
     if quest.item_reward:
-        inventory_service.add_item_to_inventory(user_id, quest.item_reward, db)
+        inventory_service.add_item(user_id, quest.item_reward, 1, db)
     
     logging.info(f"Rewards for quest completion processed successfully for user {user_id}")
+
+    return "Success"
