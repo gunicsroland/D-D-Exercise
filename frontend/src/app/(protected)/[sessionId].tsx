@@ -45,7 +45,7 @@ export default function AdventureChatScreen() {
 
         try {
             setTalking(true);
-            const res = await fetch(`${API_URL}/adventure/${id}/message?message=${encodeURIComponent(newMessage)}`, {
+            const res = await fetch(`${API_URL}/messages/message?message=${encodeURIComponent(newMessage)}`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
             });

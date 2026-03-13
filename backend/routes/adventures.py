@@ -56,40 +56,6 @@ def get_all_adventure_sessions(
 ):
     return db.query(AdventureSession).all()
 
-@app.post("/{session_id}/message", response_model=schemas.AdventureMessageRead)
-def send_adventure_message(
-    session_id: int,
-    message: str,
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    session = db.query(AdventureSession).filter(AdventureSession.id == session_id, AdventureSession.user_id == current_user.id).first()
-
-    if not session:
-        logging.warning(f"Adventure session not found with id={session_id}")
-        raise HTTPException(status_code=404, detail="Adventure session not found")
-
-    dm_response = chat_service.generate_dm_response(session, message, db)
-
-    messages_service.save_message(
-        user_id=current_user.id,
-        session_id=session.id,
-        role=ChatRole.User,
-        content=message,
-        db=db
-    )
-    dm_message = messages_service.save_message(
-        user_id=current_user.id,
-        session_id=session.id,
-        role=ChatRole.DM,
-        content=dm_response,
-        db=db
-    )
-
-    logging.info(f"Added user message and DM response to session_id={session_id}")
-
-    return dm_message
-
 @app.delete("/{session_id}")
 def delete_adventure_session(
     session_id: int,
