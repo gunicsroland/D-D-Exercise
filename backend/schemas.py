@@ -1,4 +1,5 @@
 from typing import List, Optional
+from datetime import datetime
 from pydantic import BaseModel, model_validator
 from models import AbilityType, ExerciseCategory, ExerciseDifficulty, ChatRole
 
@@ -106,6 +107,19 @@ class ItemUpdate(BaseSchema):
     description: Optional[str] = None
     item_type: Optional[str] = None
     image_url: Optional[str] = None
+
+class ActiveEffectBase(BaseSchema):
+    user_id: int
+    expires_at: datetime
+    attribute: AbilityType
+    increase: bool
+    value: int
+
+class ActiveEffectRead(ActiveEffectBase):
+    id: int
+
+class ActiveEffectCreate(ActiveEffectBase):
+    pass
         
 class InventoryBase(BaseSchema):
     quantity: int

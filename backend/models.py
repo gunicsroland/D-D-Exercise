@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Boolean, String, ForeignKey, Enum, TIMESTAMP, func, Table
+from sqlalchemy import Column, Integer, Boolean, String, ForeignKey, Enum, TIMESTAMP, func, Table, DateTime
 from sqlalchemy.orm import relationship
 from database import Base
 import enum
@@ -161,6 +161,17 @@ class ItemEffect(Base):
     items = relationship("Item",
                          secondary=item_effect_link,
                          back_populates="effects")
+
+class ActiveEffect(Base):
+    __tablename__ = "active_effects"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    expires_at = Column(DateTime)
+
+    attribute = Column("ability", Enum(AbilityType))
+    increase = Column(Boolean)
+    value = Column(Integer)
     
 class Inventory(Base):
     __tablename__ = "inventory"
