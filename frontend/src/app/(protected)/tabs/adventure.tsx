@@ -1,9 +1,12 @@
-import { View, Text, Alert, Button, FlatList, TextInput, StyleSheet } from "react-native";
+import { View, Text, Alert, Button, FlatList, TextInput, StyleSheet, Pressable } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { API_URL } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
 import { Session } from "../../../types/types";
 import { useRouter } from "expo-router";
+import { adventure_styles } from "../../../styles/tabs_adventure";
+import { colors } from "../../../styles/colors";
+
 
 export default function KalandScreen() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -75,54 +78,68 @@ export default function KalandScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Új Kaland indítása</Text>
-      <TextInput
-        placeholder="Adventure Title"
-        value={title}
-        onChangeText={setTitle}
-        style={styles.input}
-      />
-      <Button title="Start Adventure" onPress={startAdventure} disabled={title == "" ? true : false}/>
+    <View style={adventure_styles.container}>
+      <Text style={adventure_styles.title}>Új Kaland indítása</Text>
+      <View style={adventure_styles.panel}>
+        <TextInput
+          placeholder="Kaland címe"
+          placeholderTextColor={colors.textTernary}
+          value={title}
+          onChangeText={setTitle}
+          style={adventure_styles.input}
+        />
+        <Pressable
+          style={[adventure_styles.button, title === "" && adventure_styles.buttonDisabled]}
+          onPress={startAdventure}
+          disabled={title === ""}
+        >
+          <Text style={adventure_styles.buttonText}>Kaland indítása</Text>
+        </Pressable>
+      </View>
 
-      <Text style={styles.heading}>Korábbi kalandjaid</Text>
+      <Text style={adventure_styles.title}>Korábbi kalandjaid</Text>
       <FlatList
         data={sessions}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.session}>
-            <Text style={styles.sessionTitle}>{item.title}</Text>
-            <Button title="Select" onPress={() => {
-              setSelectedSession(item);
-              router.push({
-                pathname: "/[sessionId]",
-                params: {
-                  sessionId: item.id,
-                  title: item.title
-                },
-              });
-            }
-            } />
-            <Button title="Delete" onPress={() => deleteSession(item.id)} color="red" />
-            <Button
-              title="Update Title"
-              onPress={() => {
-                const newTitle = prompt("Enter new title:", item.title); // web only, for RN you may need a modal
-                if (newTitle) updateTitle(item.id, newTitle);
-              }}
-            />
+          <View style={adventure_styles.sessionCard}>
+            <Text style={adventure_styles.sessionTitle}>{item.title}</Text>
+            <View style={adventure_styles.buttonCol}>
+              <Pressable
+                style={adventure_styles.buttonSmall}
+                onPress={() =>
+                  router.push({
+                    pathname: "/[sessionId]",
+                    params: {
+                      sessionId: item.id,
+                      title: item.title,
+                    },
+                  })
+                }
+              >
+                <Text style={adventure_styles.buttonText}>Kiválasztás</Text>
+              </Pressable>
+
+              <Pressable
+                style={adventure_styles.buttonSmall}
+                onPress={() => {
+                  const newTitle = prompt("Add meg az új címet:", item.title);
+                  if (newTitle) updateTitle(item.id, newTitle);
+                }}
+              >
+                <Text style={adventure_styles.buttonText}>Átnevezés</Text>
+              </Pressable>
+
+              <Pressable
+                style={[adventure_styles.buttonSmall, adventure_styles.deleteButton]}
+                onPress={() => deleteSession(item.id)}
+              >
+                <Text style={adventure_styles.buttonText}>Törlés</Text>
+              </Pressable>
+            </View>
           </View>
         )}
       />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  heading: { fontSize: 18, fontWeight: "bold", marginTop: 20, marginBottom: 10 },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  session: { marginBottom: 10, padding: 10, borderWidth: 1, borderColor: "#ddd", borderRadius: 5 },
-  sessionTitle: { fontSize: 16, marginBottom: 5 },
-  chatContainer: { marginTop: 20 },
-});
