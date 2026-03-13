@@ -15,6 +15,7 @@ import { ExerciseCard } from "../../../components/ExerciseCard";
 import { useExercisePlanContext } from "../../../context/ExercisePlanContext";
 import ExercisePlanModal from "../../../components/ExercisePlanModal";
 import { useFocusEffect } from "@react-navigation/native";
+import { exercise_styles } from "../../../styles/tabs_exercise";
 
 export default function ExerciseScreen() {
   const [dailyQuests, setDailyQuests] = useState<Quest[]>([]);
@@ -24,7 +25,7 @@ export default function ExerciseScreen() {
   const [questError, setQuestError] = useState("");
   const [progressError, setProgressError] = useState("");
   const [ExerciseError, setExerciseError] = useState("");
- 
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"difficulty" | "category" | null>(null);
@@ -114,66 +115,62 @@ export default function ExerciseScreen() {
 
   return (token &&
     <>
-      <ScrollView>
-        <View style={{ padding: 16 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+      <ScrollView style={exercise_styles.screen}>
+        <View style={exercise_styles.section}>
+          <Text style={exercise_styles.title}>
             Napi küldetések
           </Text>
 
-          <View style={{ flexDirection: "row", flexWrap: "wrap", marginVertical: 10 }}>
+          <View style={exercise_styles.filterRow}>
             {Object.keys(DIFFICULTY_ORDER).map((diff) => (
               <TouchableOpacity
                 key={diff}
                 onPress={() => updateQuestDifficulty(token, diff as ExerciseDifficulty)}
-                style={{
-                  marginRight: 8,
-                  marginBottom: 6,
-                  padding: 6,
-                  borderRadius: 6,
-                  backgroundColor:
-                    questDifficulty === diff ? "#4CAF50" : "#ccc",
-                }}
+                style={[exercise_styles.filterButton, questDifficulty === diff && exercise_styles.filterActive]}
               >
-                <Text>{diff}</Text>
+                <Text style={exercise_styles.filterText}>{diff}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
-          {questError ? (
-            <Text style={{ color: "red", marginVertical: 6 }}>{questError}</Text>
-          ) : null}
-          {progressError ? (
-            <Text style={{ color: "red", marginVertical: 6 }}>{progressError}</Text>
-          ) : null}
+
+          {questError ? <Text style={exercise_styles.error}>{questError}</Text> : null}
+          {progressError ? <Text style={exercise_styles.error}>{progressError}</Text> : null}
 
           <FlatList
             data={dailyQuests}
             keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => <QuestCard quest={item} progress={getProgressForQuest(item.id)} />}
+            renderItem={({ item }) => (
+              <QuestCard
+                quest={item}
+                progress={getProgressForQuest(item.id)}
+              />
+            )}
           />
         </View>
 
-        <View style={{ padding: 16 }}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Edzések</Text>
-          <Text style={{ fontSize: 18 }}>Szűrők</Text>
+        <View style={exercise_styles.section}>
+          <Text style={exercise_styles.title}>Edzések</Text>
+          <Text style={exercise_styles.subtitle}>Szűrők</Text>
 
-          <View style={{ flexDirection: "row", marginVertical: 8 }}>
+          <View style={exercise_styles.filterRow}>
             {["strength", "cardio", "flexibility", "core"].map((cat) => (
               <TouchableOpacity
                 key={cat}
                 onPress={() =>
-                  setSelectedCategory(
-                    selectedCategory === cat ? null : cat
-                  )
+                  setSelectedCategory(selectedCategory === cat ? null : cat)
                 }
-                style={{ marginRight: 8 }}
+                style={[
+                  exercise_styles.filterButton,
+                  selectedCategory === cat && exercise_styles.filterActive,
+                ]}
               >
-                <Text>{cat}</Text>
+                <Text style={exercise_styles.filterText}>{cat}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
-          <View style={{ flexDirection: "row", flexWrap: "wrap", marginVertical: 8 }}>
+          <View style={exercise_styles.filterRow}>
             {Object.keys(DIFFICULTY_ORDER).map((diff) => (
               <TouchableOpacity
                 key={diff}
@@ -182,54 +179,42 @@ export default function ExerciseScreen() {
                     selectedDifficulty === diff ? null : diff
                   )
                 }
-                style={{ marginRight: 8, marginBottom: 6 }}
+                style={[
+                  exercise_styles.filterButton,
+                  selectedDifficulty === diff && exercise_styles.filterActive,
+                ]}
               >
-                <Text>{diff}</Text>
+                <Text style={exercise_styles.filterText}>{diff}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
-          <View style={{ flexDirection: "row", marginVertical: 8 }}>
-            <TouchableOpacity
-              onPress={() => setSortBy("difficulty")}
-              style={{ marginRight: 12 }}
-            >
-              <Text>Sort by Difficulty</Text>
+          <View style={exercise_styles.sortRow}>
+            <TouchableOpacity onPress={() => setSortBy("difficulty")}>
+              <Text style={exercise_styles.sortText}>Sort by Difficulty</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setSortBy("category")}>
-              <Text>Sort by Category</Text>
+              <Text style={exercise_styles.sortText}>Sort by Category</Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        {ExerciseError ? (
-          <Text style={{ color: "red", marginVertical: 6 }}>{ExerciseError}</Text>
-        ) : null}
+        {ExerciseError ? <Text style={exercise_styles.error}>{ExerciseError}</Text> : null}
+
         <FlatList
           data={filteredExercises}
           keyExtractor={(item) => item.id.toString()}
           scrollEnabled={false}
-          renderItem={({ item }) => <ExerciseCard exercise={item}></ExerciseCard>
-          }
+          renderItem={({ item }) => <ExerciseCard exercise={item} />}
         />
-
-
       </ScrollView>
 
       <TouchableOpacity
         onPress={() => setModalVisible(true)}
-        style={{
-          position: "absolute",
-          bottom: 20,
-          right: 20,
-          backgroundColor: "#10b981",
-          padding: 16,
-          borderRadius: 32,
-          elevation: 4,
-        }}
+        style={exercise_styles.startButton}
       >
-        <Text style={{ color: "white", fontWeight: "bold" }}>Start</Text>
+        <Text style={exercise_styles.startText}>⚔ Start</Text>
       </TouchableOpacity>
 
       <ExercisePlanModal

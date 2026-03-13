@@ -4,106 +4,75 @@ import { Modal, View, Text, FlatList, TouchableOpacity } from "react-native";
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
 import { useRouter } from "expo-router";
+import { exerciseModal_styles } from "../styles/exerciseModal";
 
 export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-    const { plan, addExercise, removeExercise, clearPlan, startPlan } = useExercisePlanContext();
+    const { plan, removeExercise, clearPlan, startPlan } = useExercisePlanContext();
     const router = useRouter();
 
     return (
         <Modal
             visible={isOpen}
-            animationType="slide"
+            animationType="fade"
             transparent
             onRequestClose={onClose}
         >
-            <View
-                style={{
-                    flex: 1,
-                    backgroundColor: "rgba(0,0,0,0.5)",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <View
-                    style={{
-                        width: "90%",
-                        backgroundColor: "white",
-                        borderRadius: 12,
-                        padding: 16,
-                    }}
-                >
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between"
-                    }}>
+            <View style={exerciseModal_styles.overlay}>
+        <View style={exerciseModal_styles.modal}>
 
-                    <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}>
-                        Edzés Terv
-                    </Text>
-                    <TouchableOpacity
-                    onPress={onClose}>
-                        <Text>X</Text>
-                    </TouchableOpacity>
-                    </View>
+          <View style={exerciseModal_styles.header}>
+            <Text style={exerciseModal_styles.title}>⚔ Edzés Terv</Text>
 
-                    {plan.length === 0 ? (
-                        <Text style={{ color: "#666" }}>No exercises yet</Text>
-                    ) : (
-                        <FlatList
-                            data={plan}
-                            keyExtractor={(item) => item.uuid.toString()}
-                            renderItem={({ item }) => (
-                                <View
-                                    style={{
-                                        flexDirection: "row",
-                                        justifyContent: "space-between",
-                                        paddingVertical: 6,
-                                    }}
-                                >
-                                    <Text>{item.exercise.name} x {item.exercise.quantity}</Text>
-                                    <TouchableOpacity onPress={() => removeExercise(item.uuid)}>
-                                        <Text style={{ color: "red" }}>Remove</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            )}
-                        />
-                    )}
+            <TouchableOpacity onPress={onClose} style={exerciseModal_styles.closeButton}>
+              <Text style={exerciseModal_styles.closeText}>✕</Text>
+            </TouchableOpacity>
+          </View>
 
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: "space-around"
-                    }}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                onClose();
-                                startPlan();}}
-                            style={{
-                                marginTop: 12,
-                                padding: 12,
-                                backgroundColor: "#10b981",
-                                borderRadius: 8,
-                                alignItems: "center",
-                            }}
-                            disabled={plan.length == 0 ? true : false}
-                        >
-                            <Text style={{ color: "white", fontWeight: "700" }}>Edzés Kezdése</Text>
-                        </TouchableOpacity>
+          {plan.length === 0 ? (
+            <Text style={exerciseModal_styles.empty}>Nincs még gyakorlat a tervben</Text>
+          ) : (
+            <FlatList
+              data={plan}
+              keyExtractor={(item) => item.uuid.toString()}
+              renderItem={({ item }) => (
+                <View style={exerciseModal_styles.exerciseRow}>
+                  <Text style={exerciseModal_styles.exerciseText}>
+                    {item.exercise.name}  x {item.exercise.quantity}
+                  </Text>
 
-                        <TouchableOpacity
-                            onPress={clearPlan}
-                            style={{
-                                marginTop: 12,
-                                padding: 12,
-                                backgroundColor: "#b91010",
-                                borderRadius: 8,
-                                alignItems: "center",
-                            }}
-                        >
-                            <Text style={{ color: "white", fontWeight: "700" }}>Edzés Terv Ürítése</Text>
-                        </TouchableOpacity>
-                    </View>
+                  <TouchableOpacity
+                    onPress={() => removeExercise(item.uuid)}
+                    style={exerciseModal_styles.removeButton}
+                  >
+                    <Text style={exerciseModal_styles.removeText}>Remove</Text>
+                  </TouchableOpacity>
                 </View>
-            </View>
+              )}
+            />
+          )}
+
+          <View style={exerciseModal_styles.buttons}>
+            <TouchableOpacity
+              onPress={() => {
+                onClose();
+                startPlan();
+              }}
+              style={[
+                exerciseModal_styles.startButton,
+                plan.length === 0 && exerciseModal_styles.disabledButton,
+              ]}
+              disabled={plan.length === 0}
+            >
+              <Text style={exerciseModal_styles.startText}>▶ Edzés Kezdése</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={clearPlan} style={exerciseModal_styles.clearButton}>
+              <Text style={exerciseModal_styles.clearText}>✖ Terv Ürítése</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+      </View>
         </Modal>
     )
 }
