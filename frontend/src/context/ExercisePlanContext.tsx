@@ -18,11 +18,6 @@ export function useExercisePlanContext() {
     if (context === undefined) {
         throw new Error("useUserContext must be used with a Provider");
     }
-    for (let child in context) {
-        if (child === null) {
-            throw new Error("useUserContext must be used with a Provider");
-        }
-    }
 
     return context;
 }
