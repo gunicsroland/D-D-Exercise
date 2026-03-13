@@ -146,8 +146,9 @@ def finish_exercise(
     character_service.add_xp(current_user.id, exercise.xp_reward, db)
     
     daily_quests = quest_service.get_daily_quests(db, current_user.id)
-    if exercise_id in [quest.exercise_id for quest in daily_quests]:
-        quest_service.update_quest_progress(current_user.id, exercise_id, db)
+    for quest in daily_quests:
+        if exercise_id == quest.exercise_id:
+            quest_service.update_quest_progress(current_user.id, quest.id, db)
     
     logging.info(f"Rewards for exercise completion processed successfully for user {current_user.id}")
     
