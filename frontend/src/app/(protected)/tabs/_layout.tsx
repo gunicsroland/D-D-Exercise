@@ -5,13 +5,17 @@ import NetInfo from "@react-native-community/netinfo";
 import { useAuthContext } from "../../../context/AuthContext";
 import { syncFinishedExercises } from "../../../services/quest_service";
 
+import { useFonts, Cinzel_600SemiBold } from "@expo-google-fonts/cinzel";
+import { colors } from "../../../styles/colors";
+
 export default function TabsLayout() {
 
-    const {token} = useAuthContext();
+    const { token } = useAuthContext();
+    const [fontsLoaded] = useFonts({ Cinzel_600SemiBold });
 
     useEffect(() => {
         const unsubscribe = NetInfo.addEventListener((state) => {
-            if (state.isConnected && token){
+            if (state.isConnected && token) {
                 syncFinishedExercises(token);
             }
         })
@@ -19,50 +23,72 @@ export default function TabsLayout() {
         unsubscribe();
     }, [token]);
 
+    const ICON_SIZE = 20;
+
     return (
-        <Tabs screenOptions={{ headerShown: true }}>
+        <Tabs screenOptions={{
+            headerShown: true,
+            headerStyle: {
+                backgroundColor: colors.surface
+            },
+            headerTitleStyle: {
+                color: colors.gold,
+                fontFamily: "Cinzel_600SemiBold"
+            },
+            tabBarStyle: {
+                backgroundColor: colors.surface,
+                borderTopColor: colors.secondary,
+                height: 60
+            },
+            tabBarActiveTintColor: colors.gold,
+            tabBarInactiveTintColor: colors.textSecondary,
+            tabBarLabelStyle: {
+                fontFamily: "Cinzel_600SemiBold",
+                fontSize: 12,
+            },
+        }}>
             <Tabs.Screen
                 name="adventure"
                 options={{
                     title: "Kaland",
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="compass" size={size} color={color} />
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="compass" size={ICON_SIZE} color={color} />
                     ),
                 }}
             />
             <Tabs.Screen
-                name = "inventory"
+                name="inventory"
                 options={{
                     title: "Eszköztár",
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="briefcase-outline" size={size} color={color} />
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="briefcase-outline" size={ICON_SIZE} color={color} />
                     ),
                 }}
             />
             <Tabs.Screen
-                name = "exercise"
+                name="exercise"
                 options={{
                     title: "Edzés",
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="barbell-outline" size={size} color={color} />
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="barbell-outline" size={ICON_SIZE} color={color} />
                     ),
                 }}
             />
             <Tabs.Screen
-                name = "character"
+                name="character"
                 options={{
                     title: "Karakter",
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="person-outline" size={size} color={color} />
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="person-outline" size={ICON_SIZE} color={color} />
                     ),
                 }}
             />
             <Tabs.Screen
-                name = "settings"
+                name="settings"
                 options={{
                     title: "Beállítások",
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="settings-outline" size={size} color={color} />
+                    tabBarIcon: ({ color }) => (
+                        <Ionicons name="settings-outline" size={ICON_SIZE} color={color} />
                     ),
                 }}
             />
