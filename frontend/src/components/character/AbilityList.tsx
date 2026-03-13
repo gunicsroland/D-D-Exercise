@@ -1,7 +1,9 @@
-import { View, Text, Button, FlatList } from "react-native";
+import { View, Text, Button, FlatList, Pressable } from "react-native";
 import { Character, CharacterAbility, AbilityType } from "../../types/types";
 import { getAbilityBonus } from "../../hooks/useAbilityBonus";
 import React from "react";
+import { character_styles } from "../../styles/tabs_character";
+import { colors } from "../../styles/colors";
 
 export const AbilityList = ({ character, handleUpgrade }: { character: Character; handleUpgrade: (ability: AbilityType) => void }) => {
   const sortedAbilities = [...(character?.abilities ?? [])].sort((a, b) => a.ability.localeCompare(b.ability));
@@ -15,15 +17,36 @@ export const AbilityList = ({ character, handleUpgrade }: { character: Character
         const bonus = getAbilityBonus(character, item.ability);
         const total = item.score + bonus;
 
+        const bonusColor =
+          bonus > 0 ? colors.health : bonus < 0 ? "#C0392B" : colors.text;
+
         return (
-          <View style={{ flex: 1, margin: 5, padding: 10, backgroundColor: "#f0f0f0", borderRadius: 5 }}>
-            <Text>
-              {item.ability}:{" "}
-              <Text style={{ color: bonus > 0 ? "green" : bonus < 0 ? "red" : "black" }}>{total}</Text>
-              {bonus !== 0 && <Text style={{ color: "gray" }}> ({item.score} {bonus > 0 ? "+" : ""}{bonus})</Text>}
+          <View style={character_styles.card}>
+            <Text style={character_styles.abilityName}>{item.ability}</Text>
+
+            <Text style={character_styles.value}>
+              <Text style={{ color: bonusColor }}>{total}</Text>
+
+              {bonus !== 0 && (
+                <Text style={character_styles.bonus}>
+                  {" "}
+                  ({item.score} {bonus > 0 ? "+" : ""}
+                  {bonus})
+                </Text>
+              )}
             </Text>
-            <Button title="+" onPress={() => handleUpgrade(item.ability)} disabled={character.ability_points <= 0} />
-          </View>
+
+
+            <Pressable
+              style={[
+                character_styles.upgradeButton,
+                character.ability_points <= 0 && character_styles.disabledButton,
+              ]}
+              onPress={() => handleUpgrade(item.ability)}
+              disabled={character.ability_points <= 0}
+            >
+              <Text style={character_styles.buttonText}>+</Text>
+            </Pressable>          </View>
         );
       }}
     />

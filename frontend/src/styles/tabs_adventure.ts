@@ -62,13 +62,20 @@ export const adventure_styles = StyleSheet.create({
   },
 
   buttonSmall: {
-    backgroundColor: colors.health,
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 8,
     margin: 4,
     justifyContent: "center",
     alignItems: "center"
+  },
+
+  chooseButton: {
+    backgroundColor: colors.health,
+  },
+
+  renameButton: {
+    backgroundColor: colors.mana
   },
 
   deleteButton: {

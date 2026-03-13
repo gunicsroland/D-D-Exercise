@@ -106,7 +106,7 @@ export default function KalandScreen() {
             <Text style={adventure_styles.sessionTitle}>{item.title}</Text>
             <View style={adventure_styles.buttonCol}>
               <Pressable
-                style={adventure_styles.buttonSmall}
+                style={[adventure_styles.buttonSmall, adventure_styles.chooseButton]}
                 onPress={() =>
                   router.push({
                     pathname: "/[sessionId]",
@@ -121,7 +121,7 @@ export default function KalandScreen() {
               </Pressable>
 
               <Pressable
-                style={adventure_styles.buttonSmall}
+                style={[adventure_styles.buttonSmall, adventure_styles.renameButton]}
                 onPress={() => {
                   const newTitle = prompt("Add meg az új címet:", item.title);
                   if (newTitle) updateTitle(item.id, newTitle);

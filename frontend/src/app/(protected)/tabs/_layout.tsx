@@ -34,7 +34,8 @@ export default function TabsLayout() {
             },
             headerTitleStyle: {
                 color: colors.gold,
-                fontFamily: "Cinzel_600SemiBold"
+                fontFamily: "Cinzel_600SemiBold",
+                fontSize: 25
             },
             tabBarStyle: {
                 backgroundColor: colors.surface,
