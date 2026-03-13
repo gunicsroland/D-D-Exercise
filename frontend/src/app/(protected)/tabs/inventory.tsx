@@ -1,8 +1,8 @@
-import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity, Modal, Pressable } from "react-native";
-import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, ActivityIndicator, Image, TouchableOpacity, Modal, Pressable, AppState } from "react-native";
+import React, { useEffect, useState, useRef } from 'react';
 import { ABILITY_LABELS_HU, API_URL } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
-import { InventoryEntry, Item } from "../../../types/types";
+import { InventoryEntry } from "../../../types/types";
 import { ITEM_IMAGES } from "../../../../assets/itemImages";
 import { consumeItem } from "../../../services/inventory_service";
 
@@ -17,36 +17,53 @@ export default function InventoryScreen() {
   const [loading, setLoading] = useState(true);
   const { token } = useAuthContext();
 
+  const appState = useRef(AppState.currentState);
+
+  const loadInventory = async () => {
+    if (!token) return;
+
+    try {
+      setLoading(true);
+
+      const res = await fetch(`${API_URL}/inventory/me`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error();
+
+      const fetchedItems = await res.json();
+      setItems(fetchedItems);
+    } catch {
+      setError("Nem érhető el az eszköztárad!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const getInventory = async () => {
+    loadInventory();
+  }, [token]);
 
-      try {
-        const res = await fetch(`${API_URL}/inventory/me`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", async (nextState) => {
 
-        if (!res.ok) {
-          const data = await res.json();
-          console.log(data);
-          throw new Error();
-        }
-
-        const fetchedItems = await res.json();
-        setItems(fetchedItems);
-
-
-      } catch (err: any) {
-        setError("Nem érhető el az eszköztárad!");
-      } finally {
-        setLoading(false);
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextState === "active"
+      ) {
+        await loadInventory();
       }
-    };
 
-    getInventory();
+      appState.current = nextState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
   }, [token]);
 
   if (!token) {
@@ -192,9 +209,10 @@ export default function InventoryScreen() {
                   )}
 
                   <Pressable
-                    onPress={() => {
+                    onPress={async () => {
                       setSelectedItem(null);
-                      consumeItem(token, selectedItem?.item.id);
+                      await consumeItem(token, selectedItem?.item.id);
+                      await loadInventory();
                     }}
                     style={{
                       marginTop: 20,
