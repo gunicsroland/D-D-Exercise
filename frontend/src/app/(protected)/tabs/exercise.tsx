@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   View,
   Text,
@@ -24,7 +24,7 @@ export default function ExerciseScreen() {
   const [questError, setQuestError] = useState("");
   const [progressError, setProgressError] = useState("");
   const [ExerciseError, setExerciseError] = useState("");
-
+ 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"difficulty" | "category" | null>(null);
@@ -33,7 +33,6 @@ export default function ExerciseScreen() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { token } = useAuthContext();
-  const { plan, addExercise, removeExercise, clearPlan } = useExercisePlanContext();
 
   const fetchInitialData = async () => {
     if (!token) {

@@ -4,7 +4,7 @@ import React from "react"
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
 
 export function ExerciseCard({ exercise }: { exercise: Exercise}) {
-    const { plan, addExercise, removeExercise, clearPlan, startPlan } = useExercisePlanContext();
+    const { plan, addExercise, startPlan } = useExercisePlanContext();
 
     const  startSingleExercise = (exercise: Exercise) => {
         addExercise(exercise);

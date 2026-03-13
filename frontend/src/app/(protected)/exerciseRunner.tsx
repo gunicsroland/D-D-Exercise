@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { WebView } from "react-native-webview";
 import { useExercisePlanContext } from "../../context/ExercisePlanContext";
@@ -14,6 +14,25 @@ export default function ExerciseRunner() {
 
     const [index, setIndex] = useState(0);
     const [completed, setCompleted] = useState<Set<ExercisePlan>>(new Set());
+
+    const [isPause, setIsPause] = useState(false);
+    const [pauseTime, setPauseTime] = useState(20);
+
+    useEffect(() => {
+        if (!isPause) return;
+
+        if (pauseTime <= 0) {
+            setIsPause(false);
+            setIndex(prev => prev + 1);
+            return;
+        }
+
+        const timer = setTimeout(() => {
+            setPauseTime(prev => prev - 1);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+    }, [pauseTime, isPause]);
 
     if (plan.length === 0) {
         return (
@@ -43,7 +62,12 @@ export default function ExerciseRunner() {
 
         setCompleted(prevCompleted => prevCompleted.add(plan[index]))
 
-        nextExercise();
+        if (index < plan.length - 1) {
+            setPauseTime(20);
+            setIsPause(true);
+        } else {
+            finishWorkout();
+        }
     };
 
     const finishWorkout = async () => {
@@ -60,6 +84,60 @@ export default function ExerciseRunner() {
         clearPlan();
         router.back();
     };
+
+    if (isPause) {
+        const nextExercise = plan[index + 1].exercise;
+
+        return (
+            <View style={{ flex: 1, justifyContent: "space-between", padding: 20 }}>
+
+                <View style={{ alignItems: "center", marginTop: 60 }}>
+                    <Text style={{ fontSize: 36, fontWeight: "bold" }}>
+                        {pauseTime}s
+                    </Text>
+
+                    <Text style={{ fontSize: 18, marginTop: 20 }}>
+                        Next Exercise
+                    </Text>
+
+                    <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 10 }}>
+                        {nextExercise.name}
+                    </Text>
+
+                    <Text style={{ fontSize: 18 }}>
+                        Amount: {nextExercise.quantity}
+                    </Text>
+                </View>
+
+                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                    <TouchableOpacity
+                        onPress={() => setPauseTime(prev => prev + 10)}
+                        style={{
+                            backgroundColor: "#3b82f6",
+                            padding: 14,
+                            borderRadius: 8,
+                        }}
+                    >
+                        <Text style={{ color: "white" }}>+10s</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsPause(false);
+                            setIndex(prev => prev + 1);
+                        }}
+                        style={{
+                            backgroundColor: "#ef4444",
+                            padding: 14,
+                            borderRadius: 8,
+                        }}
+                    >
+                        <Text style={{ color: "white" }}>Skip</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
 
     return (
         <View style={{ flex: 1 }}>
