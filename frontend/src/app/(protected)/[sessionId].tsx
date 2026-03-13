@@ -3,8 +3,10 @@ import { API_URL } from "../../constants";
 import { useAuthContext } from "../../context/AuthContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { Message } from "../../types/types";
-import { View, Text, StyleSheet, KeyboardAvoidingView, FlatList, Platform, TextInput, TouchableOpacity, Button } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, FlatList, Platform, TextInput, TouchableOpacity, Button, Pressable } from "react-native";
 import React from "react";
+import { colors } from "../../styles/colors";
+import { session_styles } from "../../styles/session";
 
 export default function AdventureChatScreen() {
     const { sessionId, title } = useLocalSearchParams();
@@ -45,7 +47,7 @@ export default function AdventureChatScreen() {
 
         try {
             setTalking(true);
-            const res = await fetch(`${API_URL}/messages/message?message=${encodeURIComponent(newMessage)}`, {
+            const res = await fetch(`${API_URL}/messages/${id}?message=${encodeURIComponent(newMessage)}`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -59,8 +61,8 @@ export default function AdventureChatScreen() {
             fetchMessages();
         } catch (err) {
             console.error(err);
-            setError("Nem sikerült elküldeni az üzenetet");
-        }finally{
+            setError("Nem sikerült elküldeni az üzenetet!");
+        } finally {
             setTalking(false);
         }
     };
@@ -71,92 +73,54 @@ export default function AdventureChatScreen() {
         return (
             <View
                 style={[
-                    styles.messageContainer,
-                    isUser ? styles.userContainer : styles.dmContainer,
+                    session_styles.messageContainer,
+                    isUser ? session_styles.userContainer : session_styles.dmContainer,
                 ]}
             >
-                <Text style={styles.messageText}>{item.content}</Text>
+                <Text style={session_styles.messageText}>{item.content}</Text>
             </View>
         );
     };
 
-      return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={80}
-    >
-        <View>
-            <TouchableOpacity onPress={() => {router.back()}}>
-                <Text>Vissza</Text>
-            </TouchableOpacity>
-        </View>
+    return (
+        <KeyboardAvoidingView
+            style={{ flex: 1, backgroundColor: colors.background }}
+            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            keyboardVerticalOffset={80}
+        >
+            <View style={session_styles.header}>
+                <TouchableOpacity onPress={() => { router.back() }}>
+                    <Text style={session_styles.backText}>Vissza</Text>
+                </TouchableOpacity>
+            </View>
 
-      <View style={styles.container}>
-        {error ? <Text style={styles.error}>{error}</Text> : null}
+            <View style={session_styles.container}>
+                {error ? <Text style={session_styles.error}>{error}</Text> : null}
 
-        <FlatList
-          data={messages}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderItem}
-          contentContainerStyle={{ padding: 10 }}
-        />
+                <FlatList
+                    data={messages}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={renderItem}
+                    contentContainerStyle={{ padding: 10 }}
+                />
 
-        <View style={styles.inputContainer}>
-          <TextInput
-            value={newMessage}
-            onChangeText={setNewMessage}
-            placeholder="Írj üzenetet..."
-            style={styles.input}
-          />
-          <Button title="Küldés" onPress={sendMessage} disabled={talking}>
-          </Button>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
-  );
+                <View style={session_styles.inputContainer}>
+                    <TextInput
+                        value={newMessage}
+                        onChangeText={setNewMessage}
+                        placeholder="Írj üzenetet..."
+                        style={session_styles.input}
+                    />
+                    <Pressable
+                        style={[session_styles.sendButton, talking && session_styles.disabledButton]}
+                        onPress={sendMessage}
+                        disabled={talking}
+                    >
+                        <Text style={session_styles.sendText}>Küldés</Text>
+                    </Pressable>
+                </View>
+            </View>
+        </KeyboardAvoidingView>
+    );
 
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    error: {
-        color: "red",
-        textAlign: "center",
-        marginTop: 10,
-    },
-    messageContainer: {
-        maxWidth: "75%",
-        padding: 10,
-        borderRadius: 12,
-        marginVertical: 5,
-    },
-    userContainer: {
-        alignSelf: "flex-end",
-        backgroundColor: "#007AFF",
-    },
-    dmContainer: {
-        alignSelf: "flex-start",
-        backgroundColor: "#E5E5EA",
-    },
-    messageText: {
-        color: "black",
-    },
-    inputContainer: {
-        flexDirection: "row",
-        padding: 10,
-        borderTopWidth: 1,
-        borderColor: "#ddd",
-    },
-    input: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 20,
-        paddingHorizontal: 15,
-        paddingVertical: 8,
-        marginRight: 10,
-    },
-});

@@ -9,6 +9,7 @@ import schemas
 from dependencies import get_current_user
 
 import services.messages as messages_service
+from services import chat as chat_service
 
 app = APIRouter(
     prefix="/messages",
@@ -27,7 +28,7 @@ def get_adventure_messages(
     
     return db.query(AdventureMessage).filter(AdventureMessage.session_id == session_id).order_by(AdventureMessage.created_at).all()
 
-@app.post("/{session_id}/", response_model=schemas.AdventureMessageRead)
+@app.post("/{session_id}", response_model=schemas.AdventureMessageRead)
 def send_adventure_message(
     session_id: int,
     message: str,
