@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { Character, InventoryEntry } from "../types/types";
 import { getCharacter } from "../services/character_service";
 import { getInventory } from "../services/inventory_service";
 import { useAuthContext } from "./AuthContext";
+import { AppState } from "react-native";
 
 interface GameContextType {
   character: Character | null;
@@ -26,6 +27,8 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [character, setCharacter] = useState<Character | null>(null);
   const [inventory, setInventory] = useState<InventoryEntry[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const appState = useRef(AppState.currentState);
 
   const refreshCharacter = async () => {
     if (!token) return;
@@ -56,6 +59,17 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     refreshAll();
   }, [token]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", async (nextState) => {
+      if (appState.current.match(/inactive|background/) && nextState === "active") {
+        await refreshAll();
+      }
+      appState.current = nextState;
+    });
+
+    return () => subscription.remove();
+  }, [refreshAll]);
 
   return (
     <GameContext.Provider value={{ character, inventory, loading, refreshCharacter, refreshInventory, refreshAll }}>
