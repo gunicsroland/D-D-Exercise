@@ -3,12 +3,18 @@ import { View, Text, FlatList, ActivityIndicator, AppState } from "react-native"
 import { useAuthContext } from "../../../context/AuthContext";
 import { InventoryItem } from "../../../components/InventoryItem";
 import { useGameContext } from "../../../context/GameContext";
+import { inventory_styles } from "../../../styles/tabs_inventory";
+import { colors } from "../../../styles/colors";
 
 export default function InventoryScreen() {
   const { token } = useAuthContext();
-  const {inventory, loading, refreshAll} = useGameContext();
+  const { inventory, loading, refreshAll } = useGameContext();
 
-  if (!token) return <ActivityIndicator size="large" color="#0000ff" />;
+  if (!token) return(
+     <View style={inventory_styles.loader}>
+        <ActivityIndicator size="large" color={colors.gold} />
+      </View>
+  )
 
   const paddedItems = [...inventory];
   while (paddedItems.length % 3 !== 0) {
@@ -16,16 +22,28 @@ export default function InventoryScreen() {
   }
 
   return (
-    <FlatList
-      data={paddedItems}
-      keyExtractor={(entry) => entry.id.toString()}
-      numColumns={3}
-      columnWrapperStyle={{ justifyContent: "space-between" }}
-      contentContainerStyle={{ padding: 10 }}
-      renderItem={({ item }) => ("isEmpty" in item ? <View
-         style={{ flex: 1, margin: 5, padding: 10, backgroundColor: "#c6c0c0", borderRadius: 8 }} /> 
-         : <InventoryItem item={item} token={token} onInventoryChange={refreshAll} />)}
-      ListEmptyComponent={<Text style={{ textAlign: "center", marginTop: 20 }}>Az eszköztár üres.</Text>}
-    />
+    <View style={inventory_styles.container}>
+      <FlatList
+        data={paddedItems}
+        keyExtractor={(entry) => entry.id.toString()}
+        numColumns={3}
+        columnWrapperStyle={inventory_styles.row}
+        contentContainerStyle={inventory_styles.grid}
+        renderItem={({ item }) =>
+          "isEmpty" in item ? (
+            <View style={inventory_styles.emptySlot} />
+          ) : (
+            <InventoryItem
+              item={item}
+              token={token}
+              onInventoryChange={refreshAll}
+            />
+          )
+        }
+        ListEmptyComponent={
+          <Text style={inventory_styles.emptyText}>Az eszköztár üres.</Text>
+        }
+      />
+    </View>
   );
 }
