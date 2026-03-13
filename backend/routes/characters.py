@@ -2,6 +2,7 @@ from fastapi import HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 import logging
 from typing import List
+from datetime import datetime
 
 from database import get_db
 from models import *
@@ -52,6 +53,21 @@ def get_user_character(
         }
     )
 
+    active_effects = db.query(ActiveEffect).filter(
+        ActiveEffect.user_id == current_user.id,
+        ActiveEffect.expires_at > datetime.utcnow()
+    ).all()
+
+    character.active_effects = [
+        {
+            "attribute": ae.attribute,
+            "increase": ae.increase,
+            "value": ae.value,
+            "expires_at": ae.expires_at
+        }
+        for ae in active_effects
+    ]
+
     return character
 
 @app.get("/me", response_model=schemas.CharacterRead)
@@ -86,9 +102,9 @@ def get_user_character(
 
     character.active_effects = [
         {
-            "attribute": ae.effect.attribute,
-            "increase": ae.effect.increase,
-            "value": ae.effect.value,
+            "attribute": ae.attribute,
+            "increase": ae.increase,
+            "value": ae.value,
             "expires_at": ae.expires_at
         }
         for ae in active_effects

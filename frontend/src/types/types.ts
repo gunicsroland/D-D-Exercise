@@ -4,6 +4,15 @@ export interface User {
   email: string,
 }
 
+export interface ActiveEffect {
+  id: number,
+  user_id: number,
+  expires_at: string,
+  attribute: AbilityType,
+  increase: boolean,
+  value: number
+}
+
 export interface Character {
   id: number;
   name: string;
@@ -12,6 +21,7 @@ export interface Character {
   xp: number;
   ability_points: number;
   abilities: CharacterAbility[];
+  active_effects: ActiveEffect[];
 }
 
 export interface CharacterAbility {

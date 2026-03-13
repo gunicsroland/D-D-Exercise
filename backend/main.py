@@ -1,10 +1,13 @@
 from routes import characters, inventories
+from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from datetime import datetime, timezone
 
 from database import Base, engine
+import schemas
 from models import *
-from dependencies import get_current_user
+from dependencies import get_current_user, get_db
 
 from routes import auth, users, items, effects, exercises, quests, adventures, messages
 
@@ -40,6 +43,18 @@ app.add_middleware(
     allow_headers=["*"],         
 )
 
+@app.get("/me/effects", response_model=list[schemas.ActiveEffectRead])
+def get_active_effects(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)):
+    print(current_user)
+
+    effects = db.query(ActiveEffect).filter(
+        ActiveEffect.user_id == current_user.id,
+        ActiveEffect.expires_at > datetime.now(timezone.utc)
+    ).all()
+    return effects
+
 @app.get("/me")
-def get_current_user(current_user: User = Depends(get_current_user)):
-    return {"id": current_user.id, "username": current_user.username, "email": current_user.email}
+def get_me(current_user: User = Depends(get_current_user), response_model=schemas.UserRead):
+    return current_user

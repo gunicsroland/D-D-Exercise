@@ -17,6 +17,7 @@ export default function CharacterScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [newName, setNewName] = useState(character?.name);
   const [error, setError] = useState("");
+  const [now, setNow] = useState(Date.now());
 
   const appState = useRef(AppState.currentState);
 
@@ -60,10 +61,10 @@ export default function CharacterScreen() {
         try {
           const data = await getCharacter(token);
           setCharacter(data);
-        }catch{
+        } catch {
           setError("Nem sikerült betölteni a karaktered, Póbáld újra!");
         }
-        
+
       }
 
       appState.current = nextState
@@ -74,6 +75,14 @@ export default function CharacterScreen() {
       subsription.remove();
     };
   }, [token]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   if (pageLoading || !character || !token) {
     return (
@@ -103,8 +112,8 @@ export default function CharacterScreen() {
     }
 
     try {
-      const updated = await updateCharacter(token, {name: newName});
-      
+      const updated = await updateCharacter(token, { name: newName });
+
       const updatedChar = await getCharacter(token);
       setCharacter(updatedChar);
       setModalVisible(false);
@@ -130,9 +139,36 @@ export default function CharacterScreen() {
     )
   }
 
+  const getAbilityBonus = (ability: AbilityType) => {
+    if (!character) return 0;
+
+    return character.active_effects.reduce((sum, effect) => {
+      if (effect.attribute !== ability) return sum;
+
+      return sum + (effect.increase ? effect.value : -effect.value);
+    }, 0);
+  };
+
+  const getRemainingTime = (expiresAt: string) => {
+    console.log(expiresAt)
+    const diff = new Date(expiresAt).getTime() - now;
+    console.log(diff)
+
+    if (diff <= 0) return "0s";
+
+    const minutes = Math.floor(diff / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
   const sortedAbilities = [...(character?.abilities ?? [])].sort((a, b) =>
     a.ability.localeCompare(b.ability)
   )
+
+  const active_effects = character.active_effects.filter(
+  effect => new Date(effect.expires_at).getTime() > now
+);
 
   return (
     <View>
@@ -150,21 +186,54 @@ export default function CharacterScreen() {
         <Text>Ability Points: {character.ability_points}</Text>
       </View>
 
+      <View>
+        <Text>Aktív hatások:</Text>
+
+        {active_effects.length === 0 && <Text>Nincsenek aktív hatások</Text>}
+
+        {active_effects.map(effect => (
+          <View key={effect.id} style={{ padding: 6 }}>
+            <Text>
+              {effect.increase ? "+" : "-"}
+              {effect.value} {effect.attribute}
+              ({getRemainingTime(effect.expires_at)})
+            </Text>
+          </View>
+        ))}
+      </View>
+
       <Text>Képességek:</Text>
       <FlatList<CharacterAbility>
         data={sortedAbilities}
         keyExtractor={(item) => item.ability}
         numColumns={2}
-        renderItem={({ item }) => (
-          <View style={{ flex: 1, margin: 5, padding: 10, backgroundColor: "#f0f0f0", borderRadius: 5 }}>
-            <Text>{item.ability}: {item.score}</Text>
-            <Button
-              title="+"
-              onPress={() => handleUpgrade(item.ability)}
-              disabled={character.ability_points <= 0}
-            />
-          </View>
-        )}
+        renderItem={({ item }) => {
+          const bonus = getAbilityBonus(item.ability);
+          const total = item.score + bonus;
+
+          return (
+            <View style={{ flex: 1, margin: 5, padding: 10, backgroundColor: "#f0f0f0", borderRadius: 5 }}>
+              <Text>
+                {item.ability}:{" "}
+                <Text style={{ color: bonus > 0 ? "green" : bonus < 0 ? "red" : "black" }}>
+                  {total}
+                </Text>
+
+                {bonus !== 0 && (
+                  <Text style={{ color: "gray" }}>
+                    {" "}({item.score} {bonus > 0 ? "+" : ""}{bonus})
+                  </Text>
+                )}
+              </Text>
+
+              <Button
+                title="+"
+                onPress={() => handleUpgrade(item.ability)}
+                disabled={character.ability_points <= 0}
+              />
+            </View>
+          );
+        }}
       />
 
       <Modal visible={modalVisible} transparent animationType="slide">

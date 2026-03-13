@@ -37,14 +37,13 @@ class AbilityRead(AbilityBase):
     pass
     
 class ActiveEffectBase(BaseSchema):
-    user_id: int
     expires_at: datetime
     attribute: AbilityType
     increase: bool
     value: int
 
 class ActiveEffectRead(ActiveEffectBase):
-    id: int
+    pass
 
 class ActiveEffectCreate(ActiveEffectBase):
     pass
