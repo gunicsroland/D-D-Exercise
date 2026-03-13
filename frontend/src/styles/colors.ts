@@ -9,6 +9,7 @@ export const colors = {
 
   text: "#F5F1E8",
   textSecondary: "#B8B2A7",
+  textTernary: "#a49c8c",
 
   gold: "#D4AF37",
   health: "#2E8B57",

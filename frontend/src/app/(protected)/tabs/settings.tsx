@@ -1,6 +1,7 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import React from 'react';
 import { useAuthContext } from "../../../context/AuthContext";
+import { settings_styles } from "../../../styles/tabs_settings";
 
 
 export default function SettingsScreen() {
@@ -8,12 +9,13 @@ export default function SettingsScreen() {
   const {logout} = useAuthContext();
 
   return (
-    <View>
-      <Text>Beállítások</Text>
-      <Button
-        title="Kilépés"
-        onPress={logout}
-        />
+    <View style={settings_styles.container}>
+      <Text style={settings_styles.title}>Beállítások</Text>
+      <Pressable
+        style={settings_styles.button}
+        onPress={logout}>
+          <Text style={settings_styles.buttonText}>Kilépés</Text>
+        </Pressable>
     </View>
   );
 }
