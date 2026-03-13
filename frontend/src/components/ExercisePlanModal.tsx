@@ -84,6 +84,7 @@ export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean
                                 borderRadius: 8,
                                 alignItems: "center",
                             }}
+                            disabled={plan.length == 0 ? true : false}
                         >
                             <Text style={{ color: "white", fontWeight: "700" }}>Edzés Kezdése</Text>
                         </TouchableOpacity>
