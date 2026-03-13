@@ -67,6 +67,11 @@ def get_user_character(
         logging.info(f"No character found for user_id={current_user.id}")
         raise HTTPException(status_code=404, detail="Character not found")
 
+    active_effects = db.query(ActiveEffect).filter(
+        ActiveEffect.user_id == current_user.id,
+        ActiveEffect.expires_at > datetime.utcnow()
+    ).all()
+
     logging.info(
         "Character found",
         extra={
@@ -78,6 +83,16 @@ def get_user_character(
             "ability_points": character.ability_points
         }
     )
+
+    character.active_effects = [
+        {
+            "attribute": ae.effect.attribute,
+            "increase": ae.effect.increase,
+            "value": ae.effect.value,
+            "expires_at": ae.expires_at
+        }
+        for ae in active_effects
+    ]
 
     return character
 

@@ -36,6 +36,19 @@ class AbilityCreate(BaseSchema):
 class AbilityRead(AbilityBase):
     pass
     
+class ActiveEffectBase(BaseSchema):
+    user_id: int
+    expires_at: datetime
+    attribute: AbilityType
+    increase: bool
+    value: int
+
+class ActiveEffectRead(ActiveEffectBase):
+    id: int
+
+class ActiveEffectCreate(ActiveEffectBase):
+    pass
+
 class CharacterBase(BaseSchema):
     name: str
     class_: str
@@ -65,6 +78,8 @@ class CharacterRead(CharacterBase):
     xp: int
     ability_points: int    
     abilities: List[AbilityRead]
+    
+    active_effects: list[ActiveEffectRead] = []
 
 class CharacterUpdate(BaseSchema):
     name: Optional[str] = None
@@ -107,19 +122,6 @@ class ItemUpdate(BaseSchema):
     description: Optional[str] = None
     item_type: Optional[str] = None
     image_url: Optional[str] = None
-
-class ActiveEffectBase(BaseSchema):
-    user_id: int
-    expires_at: datetime
-    attribute: AbilityType
-    increase: bool
-    value: int
-
-class ActiveEffectRead(ActiveEffectBase):
-    id: int
-
-class ActiveEffectCreate(ActiveEffectBase):
-    pass
         
 class InventoryBase(BaseSchema):
     quantity: int
