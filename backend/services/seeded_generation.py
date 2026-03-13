@@ -233,6 +233,7 @@ def seed_quests(db: Session):
             logging.info(f"Added quest: {q['name']}")
 
         db.commit()
+        return "Success"
 
     except Exception as e:
         db.rollback()

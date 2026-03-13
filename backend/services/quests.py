@@ -40,7 +40,7 @@ def get_or_create_progress(user_id: int, quest_id: int, db: Session):
 def update_quest_progress(user_id: int, quest_id: int, db: Session):
     quest = db.query(Quest).filter(Quest.id == quest_id).first()
     if not quest:
-        raise HTTPException(status_code=404, detail="Quest not found")
+        raise HTTPException(status_code=404, detail=f"Quest with {quest_id} not found")
     
     progress = get_or_create_progress(user_id, quest_id, db)
     

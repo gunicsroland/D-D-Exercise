@@ -15,7 +15,7 @@ app = APIRouter(
 )
 
 @app.post("/seed")
-def sedded_generation(
+def seed_items(
     db: Session = Depends(get_db),
     admin_user: User = Depends(get_admin_user)
 ):
