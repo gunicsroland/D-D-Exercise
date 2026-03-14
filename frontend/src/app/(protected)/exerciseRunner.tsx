@@ -6,6 +6,7 @@ import { useRouter } from "expo-router";
 import { useAuthContext } from "../../context/AuthContext";
 import { finishExercise } from "../../services/quest_service";
 import { ExercisePlan } from "../../types/types";
+import { exerciseRunner_styles } from "../../styles/exerciseRunner";
 
 export default function ExerciseRunner() {
     const { plan, clearPlan } = useExercisePlanContext();
@@ -46,7 +47,8 @@ export default function ExerciseRunner() {
 
     const nextExercise = () => {
         if (index < plan.length - 1) {
-            setIndex(index + 1);
+            setPauseTime(20);
+            setIsPause(true);
         } else {
             finishWorkout();
         }
@@ -54,7 +56,7 @@ export default function ExerciseRunner() {
 
     const prevExercise = () => {
         if (index > 0) {
-            setIndex(index - 1);
+            setIndex(prev => prev - 1);
         }
     };
 
@@ -89,50 +91,35 @@ export default function ExerciseRunner() {
         const nextExercise = plan[index + 1].exercise;
 
         return (
-            <View style={{ flex: 1, justifyContent: "space-between", padding: 20 }}>
+            <View style={exerciseRunner_styles.screen}>
+                <View style={exerciseRunner_styles.pauseContainer}>
+                    <Text style={exerciseRunner_styles.pauseTimer}>{pauseTime}s</Text>
 
-                <View style={{ alignItems: "center", marginTop: 60 }}>
-                    <Text style={{ fontSize: 36, fontWeight: "bold" }}>
-                        {pauseTime}s
-                    </Text>
+                    <Text style={exerciseRunner_styles.pauseLabel}>Következő feladat</Text>
 
-                    <Text style={{ fontSize: 18, marginTop: 20 }}>
-                        Next Exercise
-                    </Text>
+                    <Text style={exerciseRunner_styles.pauseTitle}>{nextExercise.name}</Text>
 
-                    <Text style={{ fontSize: 24, fontWeight: "bold", marginTop: 10 }}>
-                        {nextExercise.name}
-                    </Text>
-
-                    <Text style={{ fontSize: 18 }}>
-                        Amount: {nextExercise.quantity}
+                    <Text style={exerciseRunner_styles.text}>
+                        Mennyiség: {nextExercise.quantity}
                     </Text>
                 </View>
 
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <View style={exerciseRunner_styles.pauseButtons}>
                     <TouchableOpacity
-                        onPress={() => setPauseTime(prev => prev + 10)}
-                        style={{
-                            backgroundColor: "#3b82f6",
-                            padding: 14,
-                            borderRadius: 8,
-                        }}
+                        onPress={() => setPauseTime((prev) => prev + 10)}
+                        style={[exerciseRunner_styles.button, exerciseRunner_styles.blueButton]}
                     >
-                        <Text style={{ color: "white" }}>+10s</Text>
+                        <Text style={exerciseRunner_styles.buttonText}>+10s</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => {
                             setIsPause(false);
-                            setIndex(prev => prev + 1);
+                            setIndex((prev) => prev + 1);
                         }}
-                        style={{
-                            backgroundColor: "#ef4444",
-                            padding: 14,
-                            borderRadius: 8,
-                        }}
+                        style={[exerciseRunner_styles.button,exerciseRunner_styles.redButton]}
                     >
-                        <Text style={{ color: "white" }}>Skip</Text>
+                        <Text style={exerciseRunner_styles.buttonText}>Skip</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -140,82 +127,50 @@ export default function ExerciseRunner() {
     }
 
     return (
-        <View style={{ flex: 1 }}>
-
-            <View style={{ flex: 3 }}>
+        <View style={exerciseRunner_styles.screen}>
+            <View style={exerciseRunner_styles.media}>
                 {exercise.media_url ? (
                     <WebView source={{ uri: exercise.media_url }} />
                 ) : (
-                    <View
-                        style={{
-                            flex: 1,
-                            justifyContent: "center",
-                            alignItems: "center",
-                        }}
-                    >
-                        <Text>No media for this exercise</Text>
+                    <View style={exerciseRunner_styles.center}>
+                        <Text style={exerciseRunner_styles.text}>No media for this exercise</Text>
                     </View>
                 )}
             </View>
 
-            <View
-                style={{
-                    flex: 2,
-                    padding: 20,
-                    justifyContent: "space-between",
-                }}
-            >
+            <View style={exerciseRunner_styles.info}>
                 <View>
-                    <Text style={{ fontSize: 22, fontWeight: "bold" }}>
-                        {exercise.name}
-                    </Text>
+                    <Text style={exerciseRunner_styles.title}>{exercise.name}</Text>
 
-                    <Text style={{ fontSize: 18 }}>
+                    <Text style={exerciseRunner_styles.text}>
                         Amount: {exercise.quantity}
                     </Text>
 
-                    <Text style={{ marginTop: 6 }}>
+                    <Text style={exerciseRunner_styles.progress}>
                         Exercise {index + 1} / {plan.length}
                     </Text>
                 </View>
 
-                <View
-                    style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                    }}
-                >
+                <View style={exerciseRunner_styles.controls}>
                     <TouchableOpacity
                         onPress={prevExercise}
-                        style={{
-                            backgroundColor: "#888",
-                            padding: 12,
-                            borderRadius: 8,
-                        }}
+                        style={[exerciseRunner_styles.button,exerciseRunner_styles.grayButton]}
                     >
-                        <Text style={{ color: "white" }}>Prev</Text>
+                        <Text style={exerciseRunner_styles.buttonText}>Prev</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={completeCurrentExercise}
-                        style={{
-                            backgroundColor: "#10b981",
-                            padding: 12,
-                            borderRadius: 8,
-                        }}
+                        style={[exerciseRunner_styles.button,exerciseRunner_styles.greenButton]}
                     >
-                        <Text style={{ color: "white" }}>Finished</Text>
+                        <Text style={exerciseRunner_styles.buttonText}>Finished</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={nextExercise}
-                        style={{
-                            backgroundColor: "#ef4444",
-                            padding: 12,
-                            borderRadius: 8,
-                        }}
+                        style={[exerciseRunner_styles.button,exerciseRunner_styles.redButton]}
                     >
-                        <Text style={{ color: "white" }}>Skip</Text>
+                        <Text style={exerciseRunner_styles.buttonText}>Skip</Text>
                     </TouchableOpacity>
                 </View>
             </View>
