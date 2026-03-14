@@ -58,7 +58,9 @@ export const adventure_styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: colors.gold
   },
 
   buttonSmall: {
@@ -67,7 +69,9 @@ export const adventure_styles = StyleSheet.create({
     borderRadius: 8,
     margin: 4,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.gold
   },
 
   chooseButton: {
