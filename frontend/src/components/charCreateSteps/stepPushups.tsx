@@ -1,18 +1,26 @@
 import React from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
+import { creation_styles } from '../../styles/creation';
 
 export default function StepPushups({ pushups, setPushups }:
     { pushups: number, setPushups: (value: number) => void }) {
 
     return (
-        <View>
-            <Text>Add meg, hogy hány fekvőtámaszt tudsz megcsinálni egy perc alatt:</Text>
+        <View style={creation_styles.container}>
+            <Text style={creation_styles.title}>Erő felmérése</Text>
+
+            <Text style={creation_styles.label}>
+                Hány fekvőtámaszt tudsz megcsinálni 1 perc alatt?
+            </Text>
+
             <TextInput
-                placeholder="Fekvőtámaszok száma"
+                placeholder="Pl. 25"
+                placeholderTextColor="#888"
                 keyboardType="numeric"
-                value={pushups.toString()}
-                onChangeText={text => setPushups(Number(text))}
+                value={pushups ? pushups.toString() : ""}
+                onChangeText={(text) => setPushups(Number(text) || 0)}
+                style={creation_styles.input}
             />
         </View>
-    )
+    );
 }

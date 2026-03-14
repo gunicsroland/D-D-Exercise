@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import React from 'react';
 import { useAuthContext } from '../../context/AuthContext';
 import { useRouter } from 'expo-router';
+import { creation_styles } from '../../styles/creation';
 
 export default function StepFinal({
     finalStats, setFinalStats,
@@ -20,7 +21,7 @@ export default function StepFinal({
         agility: number
     }) {
 
-    const {loading, token} = useAuthContext();
+    const { loading, token } = useAuthContext();
     const router = useRouter()
 
     useEffect(() => {
@@ -48,18 +49,37 @@ export default function StepFinal({
         charisma: 0
     };
 
-    return (
-        <View>
-            <Text>Összegzés:</Text>
-            <Text>Kiválasztott kaszt: {CLASS_LABELS_HU[selectedClass]}</Text>
-            <Text>Karakter neve: {name}</Text>
-            <Text>Alap statisztikák:</Text>
-            <Text>Erő: {stats.strength}</Text>
-            <Text>Állóképesség: {stats.constitution}</Text>
-            <Text>Ügyesség: {stats.dexterity}</Text>
-            <Text>Intelligencia: {stats.intelligence}</Text>
-            <Text>Bölcsesség: {stats.wisdom}</Text>
-            <Text>Karizma: {stats.charisma}</Text>
+    const StatRow = ({ label, value }: { label: string; value: number }) => (
+        <View style={creation_styles.statRow}>
+            <Text style={creation_styles.statLabel}>{label}</Text>
+
+            <View style={creation_styles.barBackground}>
+                <View style={[creation_styles.barFill, { width: `${value/20 *100}%` }]} />
+            </View>
+
+            <Text style={creation_styles.statValue}>{value}</Text>
         </View>
     );
+
+  return (
+    <View style={creation_styles.container}>
+      <Text style={creation_styles.title}>Karakter Összegzés</Text>
+
+      <View style={creation_styles.card}>
+        <Text style={creation_styles.characterName}>{name}</Text>
+        <Text style={creation_styles.characterClass}>
+          {CLASS_LABELS_HU[selectedClass]}
+        </Text>
+
+        <View style={creation_styles.divider} />
+
+        <StatRow label="Erő" value={stats.strength} />
+        <StatRow label="Állóképesség" value={stats.constitution} />
+        <StatRow label="Ügyesség" value={stats.dexterity} />
+        <StatRow label="Intelligencia" value={stats.intelligence} />
+        <StatRow label="Bölcsesség" value={stats.wisdom} />
+        <StatRow label="Karizma" value={stats.charisma} />
+      </View>
+    </View>
+  );
 }

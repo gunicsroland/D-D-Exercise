@@ -5,6 +5,8 @@ import React from 'react';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { useAuthContext } from '../../context/AuthContext'
+import { colors } from '../../styles/colors';
+import { creation_styles } from '../../styles/creation';
 
 
 export default function StepName(
@@ -16,24 +18,40 @@ export default function StepName(
         }) {
     const classes = Object.keys(BASE_STATS_BY_CLASS);
 
-    return (
+      return (
+    <View style={creation_styles.container}>
+      <View style={creation_styles.card}>
+        <Text style={creation_styles.title}>⚔️ Karakter létrehozása</Text>
+
+        <Text style={creation_styles.label}>Karakter neve</Text>
+
+        <TextInput
+          placeholder="Add meg a neved"
+          placeholderTextColor="#888"
+          value={charName}
+          onChangeText={setCharName}
+          style={creation_styles.input}
+        />
+
+        <Text style={creation_styles.label}>Kaszt választása</Text>
+
         <View>
-            <Text>Add meg a karaktered nevét: :</Text>
-            <TextInput placeholder="Név"
-                value={charName}
-                onChangeText={setCharName}
-            />
-
-            <Text> Add meg a kasztodat:</Text>
-
-            <Picker
-                selectedValue={selectedClass}
-                onValueChange={setSelectedClass}
-            >
-                {classes.map(cls => (
-                    <Picker.Item key={cls} label={CLASS_LABELS_HU[cls]} value={cls} />
-                ))}
-            </Picker>
+          <Picker
+            selectedValue={selectedClass}
+            onValueChange={setSelectedClass}
+            dropdownIconColor={colors.gold}
+            style={creation_styles.pickerWrapper}
+          >
+            {classes.map((cls) => (
+              <Picker.Item
+                key={cls}
+                label={CLASS_LABELS_HU[cls]}
+                value={cls}
+              />
+            ))}
+          </Picker>
         </View>
-    )
+      </View>
+    </View>
+  );
 }

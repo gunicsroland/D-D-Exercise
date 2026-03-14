@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { View, Text, Button } from "react-native";
+import { View, Text, Button, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { BASE_STATS_BY_CLASS } from "../../../constants";
 import StepName from "../../../components/charCreateSteps/stepName"
@@ -10,6 +10,7 @@ import StepFinal from "../../../components/charCreateSteps/stepFinal"
 import { createChar, checkCharacter } from "../../../services/character_service";
 import React from "react";
 import { useAuthContext } from "../../../context/AuthContext";
+import { creation_styles } from "../../../styles/creation";
 
 export default function CreateCharacter() {
     const classes = Object.keys(BASE_STATS_BY_CLASS);
@@ -78,18 +79,38 @@ export default function CreateCharacter() {
     }
 
     return (
-        <View>
-            <View>
+        <View style={creation_styles.screen}>
+            <View style={creation_styles.stepCard}>
                 {steps[step]}
             </View>
 
-            <View>
-                {error ? <Text style={{color: "red"}}>{error}</Text> : null}
-                <Button title="Previous" onPress={goPrev} disabled={step === 0} />
-                <Button title={step === steps.length - 1 ? "Finish" : "Next"} onPress={goNext} />
+            {error ? <Text style={creation_styles.error}>{error}</Text> : null}
+
+            <View style={creation_styles.navigation}>
+                <TouchableOpacity
+                    onPress={goPrev}
+                    disabled={step === 0}
+                    style={[
+                        creation_styles.button,
+                        creation_styles.secondaryButton,
+                        step === 0 && creation_styles.disabledButton
+                    ]}
+                >
+                    <Text style={creation_styles.buttonText}>◀ Previous</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={goNext}
+                    style={[creation_styles.button, creation_styles.primaryButton]}
+                >
+                    <Text style={creation_styles.buttonText}>
+                        {step === steps.length - 1 ? "⚔ Finish" : "Next ▶"}
+                    </Text>
+                </TouchableOpacity>
             </View>
+
         </View>
-    )
+    );
 
 }
 

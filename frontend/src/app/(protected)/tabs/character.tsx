@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, ActivityIndicator, Button, AppState, Modal, TextInput, Pressable } from "react-native";
+import { View, Text, ActivityIndicator, Button, AppState, Modal, TextInput, Pressable, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { useAuthContext } from "../../../context/AuthContext";
@@ -43,7 +43,7 @@ export default function CharacterScreen() {
   }
 
   return (
-    <View style={character_styles.container}>
+    <ScrollView style={character_styles.container}>
       <View style={character_styles.panel}>
         <View style={character_styles.nameRow}>
           <Text style={character_styles.name}>{character.name}</Text>
@@ -101,6 +101,6 @@ export default function CharacterScreen() {
           </View>
         </View>
       </Modal>
-    </View>
+    </ScrollView>
   );
 }
