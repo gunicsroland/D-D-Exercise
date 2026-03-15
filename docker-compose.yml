@@ -2,15 +2,13 @@ services:
   db:
     image: postgres:15
     container_name: dndne_db
+    restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./db:/docker-entrypoint-initdb.d
-    ports:
-      - "${POSTGRES_PORT}:5432"
   backend:
     build: ./backend
     container_name: dndne_backend
@@ -20,23 +18,5 @@ services:
       - "${BACKEND_PORT}:8000"
     depends_on:
       - db
-    volumes:
-      - ./backend:/app
-  frontend:
-    build: ./frontend
-    container_name: dndne_frontend
-    depends_on:
-      - backend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    ports:
-      - ${FRONTEND_PORT}:8081
-    stdin_open: true
-    tty: true
-    environment:
-    - EXPO_DEVTOOLS_LISTEN_ADDRESS=0.0.0.0
-    - CHOKIDAR_USEPOLLING=true
-
 volumes:
   pgdata:
