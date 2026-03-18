@@ -72,7 +72,7 @@ def consume_item(
 
     for effect in inventory_item.item.effects:
 
-        expires = datetime.now(timezone.utc) + timedelta(minutes=effect_duration)
+        expires = datetime.now(timezone.utc) + timedelta(minutes=effect.duration)
 
         active_effect = ActiveEffect(
             user_id=current_user.id,
