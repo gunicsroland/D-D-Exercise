@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, useRef } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { Character, InventoryEntry } from "../types/types";
 import { getCharacter } from "../services/character_service";
 import { getInventory } from "../services/inventory_service";
@@ -18,11 +24,14 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export const useGameContext = () => {
   const context = useContext(GameContext);
-  if (!context) throw new Error("useGameContext must be used within GameProvider");
+  if (!context)
+    throw new Error("useGameContext must be used within GameProvider");
   return context;
 };
 
-export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const GameProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { token } = useAuthContext();
   const [character, setCharacter] = useState<Character | null>(null);
   const [inventory, setInventory] = useState<InventoryEntry[]>([]);
@@ -61,18 +70,33 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [token]);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener("change", async (nextState) => {
-      if (appState.current.match(/inactive|background/) && nextState === "active") {
-        await refreshAll();
-      }
-      appState.current = nextState;
-    });
+    const subscription = AppState.addEventListener(
+      "change",
+      async (nextState) => {
+        if (
+          appState.current.match(/inactive|background/) &&
+          nextState === "active"
+        ) {
+          await refreshAll();
+        }
+        appState.current = nextState;
+      },
+    );
 
     return () => subscription.remove();
   }, [refreshAll]);
 
   return (
-    <GameContext.Provider value={{ character, inventory, loading, refreshCharacter, refreshInventory, refreshAll }}>
+    <GameContext.Provider
+      value={{
+        character,
+        inventory,
+        loading,
+        refreshCharacter,
+        refreshInventory,
+        refreshAll,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

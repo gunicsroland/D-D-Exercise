@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import React from 'react';
+import React from "react";
 import { AuthProvider } from "../context/AuthContext";
 import { ExercisePlanProvider } from "../context/ExercisePlanContext";
 import { GameProvider } from "../context/GameContext";
@@ -9,14 +9,13 @@ import { colors } from "../styles/colors";
 export default function RootLayout() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
-    <AuthProvider>
-      <ExercisePlanProvider>
+      <AuthProvider>
+        <ExercisePlanProvider>
           <GameProvider>
-            <Stack screenOptions={{ headerShown: false }}/>
+            <Stack screenOptions={{ headerShown: false }} />
           </GameProvider>
-      </ExercisePlanProvider>
-    </AuthProvider>
+        </ExercisePlanProvider>
+      </AuthProvider>
     </SafeAreaView>
-
   );
 }

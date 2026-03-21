@@ -1,11 +1,16 @@
-import React from 'react';
-import { useState } from 'react';
-import { ScrollView, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import React from "react";
+import { useState } from "react";
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { useRouter } from "expo-router";
-import { useAuthContext } from '../../context/AuthContext';
-import { colors } from '../../styles/colors';
-import { auth_styles } from '../../styles/auth';
-
+import { useAuthContext } from "../../context/AuthContext";
+import { colors } from "../../styles/colors";
+import { auth_styles } from "../../styles/auth";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -16,18 +21,17 @@ export default function Login() {
   const router = useRouter();
 
   const handleSubmit = async () => {
-  try {
-    await login(username, password);
-    router.replace("/");
-  } catch {
-    setError("Sikertelen bejelentkezés");
-  }
-};
+    try {
+      await login(username, password);
+      router.replace("/");
+    } catch {
+      setError("Sikertelen bejelentkezés");
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={auth_styles.container}>
       <View style={auth_styles.card}>
-
         <Text style={auth_styles.title}>⚔ Bejelentkezés</Text>
 
         {error ? <Text style={auth_styles.error}>{error}</Text> : null}
@@ -49,7 +53,10 @@ export default function Login() {
           style={auth_styles.input}
         />
 
-        <TouchableOpacity style={auth_styles.submitButton} onPress={handleSubmit}>
+        <TouchableOpacity
+          style={auth_styles.submitButton}
+          onPress={handleSubmit}
+        >
           <Text style={auth_styles.submitText}>Belépés</Text>
         </TouchableOpacity>
 
@@ -59,8 +66,7 @@ export default function Login() {
         >
           <Text style={auth_styles.subText}>Regisztráció</Text>
         </TouchableOpacity>
-
       </View>
     </ScrollView>
   );
-};
+}

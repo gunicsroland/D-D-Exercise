@@ -120,7 +120,7 @@ export const character_styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-    card: {
+  card: {
     flex: 1,
     margin: 6,
     padding: 14,
@@ -156,5 +156,5 @@ export const character_styles = StyleSheet.create({
 
   disabledButton: {
     opacity: 0.4,
-  }
+  },
 });

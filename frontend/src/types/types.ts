@@ -1,15 +1,15 @@
 export interface User {
-  id: number,
-  username: string,
-  email: string,
+  id: number;
+  username: string;
+  email: string;
 }
 
 export interface ActiveEffect {
-  id: number,
-  expires_at: string,
-  attribute: AbilityType,
-  increase: boolean,
-  value: number
+  id: number;
+  expires_at: string;
+  attribute: AbilityType;
+  increase: boolean;
+  value: number;
 }
 
 export interface Character {
@@ -21,6 +21,15 @@ export interface Character {
   ability_points: number;
   abilities: CharacterAbility[];
   active_effects: ActiveEffect[];
+}
+
+export interface Stats {
+  strength: number;
+  constitution: number;
+  dexterity: number;
+  intelligence: number;
+  wisdom: number;
+  charisma: number;
 }
 
 export interface CharacterAbility {
@@ -36,7 +45,7 @@ export type AbilityType =
   | "wisdom"
   | "charisma";
 
-export type Class = "Barbár" | "Varázsló" | "Bárd"
+export type Class = "Barbár" | "Varázsló" | "Bárd";
 
 export interface CharacterUpdatePayload {
   name?: string;
@@ -45,14 +54,14 @@ export interface CharacterUpdatePayload {
 }
 
 export interface Effect {
-  attribute: AbilityType,
-  increase: boolean,
-  value: number,
-  duration: number
+  attribute: AbilityType;
+  increase: boolean;
+  value: number;
+  duration: number;
 }
 
 export interface Item {
-  id: number,
+  id: number;
   name: string;
   description: string;
   item_type: string;
@@ -65,41 +74,44 @@ export interface InventoryEntry {
   user_id: number;
   quantity: number;
   item: Item;
-};
+}
 
 export interface Session {
-  id: number,
-  character_id: number,
-  user_id: number,
-  title: string
+  id: number;
+  character_id: number;
+  user_id: number;
+  title: string;
 }
 
-export type ChatRole = "user" | "dm" | "system"
+export type ChatRole = "user" | "dm" | "system";
 
 export interface Message {
-  id: number,
-  session_id: number,
-  role: ChatRole,
-  content: string
+  id: number;
+  session_id: number;
+  role: ChatRole;
+  content: string;
 }
 
-export type ExerciseCategory = "strength" | "cardio" | "flexibility"
- | "core"
+export type ExerciseCategory = "strength" | "cardio" | "flexibility" | "core";
 
-export const ExerciseCategories = ["strength", "cardio", "flexibility", "core"]
+export const ExerciseCategories = ["strength", "cardio", "flexibility", "core"];
 
-export type ExerciseDifficulty = "very_easy" | "easy"
-  | "medium" | "hard" | "very_hard"
-  | "nearly_impossible"
+export type ExerciseDifficulty =
+  | "very_easy"
+  | "easy"
+  | "medium"
+  | "hard"
+  | "very_hard"
+  | "nearly_impossible";
 
 export interface Exercise {
-  id: number,
-  name: string,
-  category: ExerciseCategory,
-  difficulty: ExerciseDifficulty,
-  quantity: number,
-  xp_reward: number,
-  media_url: string | null
+  id: number;
+  name: string;
+  category: ExerciseCategory;
+  difficulty: ExerciseDifficulty;
+  quantity: number;
+  xp_reward: number;
+  media_url: string | null;
 }
 
 export type OfflineExercise = {
@@ -110,20 +122,20 @@ export type OfflineExercise = {
 export type ExercisePlan = {
   exercise: Exercise;
   uuid: number;
-}
+};
 
 export interface Quest {
-  id: number,
-  name: string,
-  amount: number,
-  xp_reward: number,
-  exercise: Exercise,
-  item: Item | null
+  id: number;
+  name: string;
+  amount: number;
+  xp_reward: number;
+  exercise: Exercise;
+  item: Item | null;
 }
 
 export interface QuestProgress {
-    id: number,
-    quest_id: number,
-    progress: number,
-    completed: boolean
+  id: number;
+  quest_id: number;
+  progress: number;
+  completed: boolean;
 }

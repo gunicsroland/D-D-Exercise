@@ -1,61 +1,69 @@
-import { View, Text } from 'react-native';
-import { BASE_STATS_BY_CLASS } from '../../constants';
+import { View, Text } from "react-native";
+import { BASE_STATS_BY_CLASS } from "../../constants";
 import { CLASS_LABELS_HU } from "../../text_labels";
-import { useEffect } from 'react';
-import React from 'react';
-import { creation_styles } from '../../styles/creation';
+import { useEffect } from "react";
+import React from "react";
+import { creation_styles } from "../../styles/creation";
+import { Stats } from "../../types/types";
 
 export default function StepFinal({
-    finalStats, setFinalStats,
-    selectedClass, name,
-    pushups, runTime, agility }:
+  finalStats,
+  setFinalStats,
+  selectedClass,
+  name,
+  pushups,
+  runTime,
+  agility,
+}: {
+  finalStats: Stats;
+  setFinalStats: (stats: Stats) => void;
+  selectedClass: string;
+  name: string;
+  pushups: number;
+  runTime: number;
+  agility: number;
+}) {
+  useEffect(() => {
+    const baseStats =
+      BASE_STATS_BY_CLASS[selectedClass as keyof typeof BASE_STATS_BY_CLASS];
 
-    {
-        finalStats: any,
-        setFinalStats: (stats: any) => void,
-        selectedClass: string,
-        name: string,
-        pushups: number,
-        runTime: number,
-        agility: number
-    }) {
+    const finalStats = { ...baseStats };
 
-    useEffect(() => {
-        const baseStats = BASE_STATS_BY_CLASS[selectedClass as keyof typeof BASE_STATS_BY_CLASS];
+    finalStats.strength =
+      baseStats.strength + (pushups ? Math.floor(pushups / 10) : 0);
+    finalStats.constitution = baseStats.constitution; //+ (runTime ? Math.floor((300 - runTime) / 30) : 0);
+    finalStats.dexterity =
+      baseStats.dexterity + (agility ? Math.floor(agility / 5) : 0);
+    finalStats.intelligence = baseStats.intelligence;
+    finalStats.wisdom = baseStats.wisdom;
+    finalStats.charisma = baseStats.charisma;
 
-        const finalStats = { ...baseStats };
+    setFinalStats(finalStats);
+    console.log("Final stats updated:", finalStats);
+  }, [pushups, runTime, agility, selectedClass]);
 
-        finalStats.strength = baseStats.strength + (pushups ? Math.floor(pushups / 10) : 0);
-        finalStats.constitution = baseStats.constitution //+ (runTime ? Math.floor((300 - runTime) / 30) : 0);
-        finalStats.dexterity = baseStats.dexterity + (agility ? Math.floor(agility / 5) : 0);
-        finalStats.intelligence = baseStats.intelligence;
-        finalStats.wisdom = baseStats.wisdom;
-        finalStats.charisma = baseStats.charisma;
+  const stats = finalStats ?? {
+    strength: 0,
+    constitution: 0,
+    dexterity: 0,
+    intelligence: 0,
+    wisdom: 0,
+    charisma: 0,
+  };
 
-        setFinalStats(finalStats);
-        console.log("Final stats updated:", finalStats);
-    }, [pushups, runTime, agility, selectedClass]);
+  const StatRow = ({ label, value }: { label: string; value: number }) => (
+    <View style={creation_styles.statRow}>
+      <Text style={creation_styles.statLabel}>{label}</Text>
 
-    const stats = finalStats ?? {
-        strength: 0,
-        constitution: 0,
-        dexterity: 0,
-        intelligence: 0,
-        wisdom: 0,
-        charisma: 0
-    };
+      <View style={creation_styles.barBackground}>
+        <View
+          style={[creation_styles.barFill, { width: `${(value / 20) * 100}%` }]}
+        />
+      </View>
 
-    const StatRow = ({ label, value }: { label: string; value: number }) => (
-        <View style={creation_styles.statRow}>
-            <Text style={creation_styles.statLabel}>{label}</Text>
-
-            <View style={creation_styles.barBackground}>
-                <View style={[creation_styles.barFill, { width: `${value/20 *100}%` }]} />
-            </View>
-
-            <Text style={creation_styles.statValue}>{value}</Text>
-        </View>
-    );
+      <Text style={creation_styles.statValue}>{value}</Text>
+    </View>
+  );
 
   return (
     <View style={creation_styles.container}>

@@ -6,16 +6,14 @@ import { colors } from "../../styles/colors";
 export const XPBar = ({ level, xp }: { level: number; xp: number }) => {
   const currentLevelXP = XP_LEVELS[level] ?? 0;
   const nextLevelXP = XP_LEVELS[level + 1] ?? currentLevelXP;
-  const progress = Math.min(Math.max((xp - currentLevelXP) / (nextLevelXP - currentLevelXP), 0), 1);
+  const progress = Math.min(
+    Math.max((xp - currentLevelXP) / (nextLevelXP - currentLevelXP), 0),
+    1,
+  );
 
   return (
     <View style={styles.container}>
-      <View
-        style={[
-          styles.fill,
-          { width: `${progress * 100}%` },
-        ]}
-      />
+      <View style={[styles.fill, { width: `${progress * 100}%` }]} />
 
       <Text style={styles.text}>
         {xp}/{nextLevelXP} XP

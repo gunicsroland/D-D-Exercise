@@ -17,7 +17,7 @@ export const exercise_styles = StyleSheet.create({
     fontFamily: "Cinzel_600SemiBold",
     marginBottom: 8,
     borderColor: colors.gold,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
 
   subtitle: {
@@ -30,7 +30,7 @@ export const exercise_styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginVertical: 8,
-    padding: 5
+    padding: 5,
   },
 
   filterButton: {

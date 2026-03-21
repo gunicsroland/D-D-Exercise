@@ -1,11 +1,32 @@
 export const BASE_STATS_BY_CLASS = {
-  Barbarian: { strength: 12, dexterity: 10, constitution: 12, intelligence: 8, wisdom: 10, charisma: 10 },
-  Wizard: { strength: 6, dexterity: 11, constitution: 8, intelligence: 12, wisdom: 12, charisma: 10 },
-  Bard: { strength: 6, dexterity: 12, constitution: 8, intelligence: 10, wisdom: 10, charisma: 12 },
+  Barbarian: {
+    strength: 12,
+    dexterity: 10,
+    constitution: 12,
+    intelligence: 8,
+    wisdom: 10,
+    charisma: 10,
+  },
+  Wizard: {
+    strength: 6,
+    dexterity: 11,
+    constitution: 8,
+    intelligence: 12,
+    wisdom: 12,
+    charisma: 10,
+  },
+  Bard: {
+    strength: 6,
+    dexterity: 12,
+    constitution: 8,
+    intelligence: 10,
+    wisdom: 10,
+    charisma: 12,
+  },
 };
 
-export const API_URL = "https://dndne.blog"
-export const TOKEN_KEY = "token"
+export const API_URL = "https://dndne.blog";
+export const TOKEN_KEY = "token";
 
 export const XP_LEVELS: Record<number, number> = {
   1: 0,
@@ -28,8 +49,8 @@ export const XP_LEVELS: Record<number, number> = {
   18: 265000,
   19: 305000,
   20: 355000,
-}
-export const MAX_LEVEL = 20
+};
+export const MAX_LEVEL = 20;
 
 export const DIFFICULTY_ORDER = {
   very_easy: 1,

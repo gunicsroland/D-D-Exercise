@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { colors } from "./colors";
 
 export const exerciseModal_styles = StyleSheet.create({
-
   overlay: {
     flex: 1,
     backgroundColor: "#00000088",

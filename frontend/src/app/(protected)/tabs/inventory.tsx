@@ -10,29 +10,29 @@ export default function InventoryScreen() {
   const { token } = useAuthContext();
   const { inventory, refreshAll } = useGameContext();
 
-  if (!token) return(
-     <View style={inventory_styles.loader}>
+  if (!token)
+    return (
+      <View style={inventory_styles.loader}>
         <ActivityIndicator size="large" color={colors.gold} />
       </View>
-  )
-
+    );
 
   const paddedItems = [...inventory];
   while (paddedItems.length % 3 !== 0) {
-  paddedItems.push({
-    id: -paddedItems.length,
-    user_id: 0,
-    quantity: 0,
-    item: {
-      id: -1,
-      name: "",
-      description: "",
-      item_type: "empty",
-      image_url: "",
-      effects: [],
-    },
-  });
-}
+    paddedItems.push({
+      id: -paddedItems.length,
+      user_id: 0,
+      quantity: 0,
+      item: {
+        id: -1,
+        name: "",
+        description: "",
+        item_type: "empty",
+        image_url: "",
+        effects: [],
+      },
+    });
+  }
 
   return (
     <View style={inventory_styles.container}>

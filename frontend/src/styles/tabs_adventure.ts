@@ -60,7 +60,7 @@ export const adventure_styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: colors.gold
+    borderColor: colors.gold,
   },
 
   buttonSmall: {
@@ -71,7 +71,7 @@ export const adventure_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: colors.gold
+    borderColor: colors.gold,
   },
 
   chooseButton: {
@@ -79,7 +79,7 @@ export const adventure_styles = StyleSheet.create({
   },
 
   renameButton: {
-    backgroundColor: colors.mana
+    backgroundColor: colors.mana,
   },
 
   deleteButton: {

@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { ScrollView, TextInput, Text, TouchableOpacity, View } from "react-native";
+import {
+  ScrollView,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useRouter } from "expo-router";
 import React from "react";
 import { useAuthContext } from "../../context/AuthContext";
@@ -60,7 +66,10 @@ export default function Register() {
           style={auth_styles.input}
         />
 
-        <TouchableOpacity style={auth_styles.submitButton} onPress={handleSubmit}>
+        <TouchableOpacity
+          style={auth_styles.submitButton}
+          onPress={handleSubmit}
+        >
           <Text style={auth_styles.submitText}>Karakter létrehozása</Text>
         </TouchableOpacity>
 

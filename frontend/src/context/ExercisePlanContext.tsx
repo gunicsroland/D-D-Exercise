@@ -10,16 +10,19 @@ type ExercisePlanContextType = {
   startPlan: () => void;
 };
 
-const ExercisePlanContext = createContext<ExercisePlanContextType | undefined>(undefined);
+const ExercisePlanContext = createContext<ExercisePlanContextType | undefined>(
+  undefined,
+);
 
 export function useExercisePlanContext() {
-    const context : ExercisePlanContextType | undefined = useContext(ExercisePlanContext);
+  const context: ExercisePlanContextType | undefined =
+    useContext(ExercisePlanContext);
 
-    if (context === undefined) {
-        throw new Error("useUserContext must be used with a Provider");
-    }
+  if (context === undefined) {
+    throw new Error("useUserContext must be used with a Provider");
+  }
 
-    return context;
+  return context;
 }
 
 export const ExercisePlanProvider = ({ children }: { children: ReactNode }) => {
@@ -27,10 +30,10 @@ export const ExercisePlanProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   const addExercise = (ex: Exercise) => {
-    const newPlan: ExercisePlan={
+    const newPlan: ExercisePlan = {
       exercise: ex,
-      uuid: Date.now() + Math.random()
-    }
+      uuid: Date.now() + Math.random(),
+    };
 
     setPlan((prev) => [...prev, newPlan]);
   };
@@ -43,10 +46,12 @@ export const ExercisePlanProvider = ({ children }: { children: ReactNode }) => {
 
   const startPlan = () => {
     router.push("/exerciseRunner");
-  }
+  };
 
   return (
-    <ExercisePlanContext.Provider value={{ plan, addExercise, removeExercise, clearPlan, startPlan }}>
+    <ExercisePlanContext.Provider
+      value={{ plan, addExercise, removeExercise, clearPlan, startPlan }}
+    >
       {children}
     </ExercisePlanContext.Provider>
   );

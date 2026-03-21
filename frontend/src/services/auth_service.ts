@@ -21,7 +21,11 @@ export async function loginRequest(username: string, password: string) {
   return res.json();
 }
 
-export async function registerRequest(username: string, email: string, password: string) {
+export async function registerRequest(
+  username: string,
+  email: string,
+  password: string,
+) {
   if (username.length <= 0 || email.length <= 0 || password.length <= 0) {
     throw new Error("Minden mező kitöltése kötelező");
   }
