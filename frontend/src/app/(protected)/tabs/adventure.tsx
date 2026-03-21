@@ -1,5 +1,12 @@
-import { View, Text, Alert, Button, FlatList, TextInput, StyleSheet, Pressable } from "react-native";
-import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  Alert,
+  FlatList,
+  TextInput,
+  Pressable,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { API_URL } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
 import { Session } from "../../../types/types";
@@ -7,11 +14,9 @@ import { useRouter } from "expo-router";
 import { adventure_styles } from "../../../styles/tabs_adventure";
 import { colors } from "../../../styles/colors";
 
-
 export default function KalandScreen() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [title, setTitle] = useState("");
-  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
 
   const { token } = useAuthContext();
   const router = useRouter();
@@ -34,10 +39,13 @@ export default function KalandScreen() {
 
   const startAdventure = async () => {
     try {
-      const res = await fetch(`${API_URL}/adventure/start?title=${encodeURIComponent(title)}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        `${API_URL}/adventure/start?title=${encodeURIComponent(title)}`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       const data = await res.json();
       Alert.alert("Adventure Started!", `Session ID: ${data.session_id}`);
       setTitle("");
@@ -47,7 +55,6 @@ export default function KalandScreen() {
       Alert.alert("Error starting adventure");
     }
   };
-
 
   const deleteSession = async (sessionId: number) => {
     try {
@@ -65,10 +72,13 @@ export default function KalandScreen() {
 
   const updateTitle = async (sessionId: number, newTitle: string) => {
     try {
-      await fetch(`${API_URL}/adventure/${sessionId}/title?new_title=${encodeURIComponent(newTitle)}`, {
-        method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await fetch(
+        `${API_URL}/adventure/${sessionId}/title?new_title=${encodeURIComponent(newTitle)}`,
+        {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       Alert.alert("Title Updated");
       fetchSessions();
     } catch (err) {
@@ -89,7 +99,10 @@ export default function KalandScreen() {
           style={adventure_styles.input}
         />
         <Pressable
-          style={[adventure_styles.button, title === "" && adventure_styles.buttonDisabled]}
+          style={[
+            adventure_styles.button,
+            title === "" && adventure_styles.buttonDisabled,
+          ]}
           onPress={startAdventure}
           disabled={title === ""}
         >
@@ -106,7 +119,10 @@ export default function KalandScreen() {
             <Text style={adventure_styles.sessionTitle}>{item.title}</Text>
             <View style={adventure_styles.buttonCol}>
               <Pressable
-                style={[adventure_styles.buttonSmall, adventure_styles.chooseButton]}
+                style={[
+                  adventure_styles.buttonSmall,
+                  adventure_styles.chooseButton,
+                ]}
                 onPress={() =>
                   router.push({
                     pathname: "/[sessionId]",
@@ -121,7 +137,10 @@ export default function KalandScreen() {
               </Pressable>
 
               <Pressable
-                style={[adventure_styles.buttonSmall, adventure_styles.renameButton]}
+                style={[
+                  adventure_styles.buttonSmall,
+                  adventure_styles.renameButton,
+                ]}
                 onPress={() => {
                   const newTitle = prompt("Add meg az új címet:", item.title);
                   if (newTitle) updateTitle(item.id, newTitle);
@@ -131,7 +150,10 @@ export default function KalandScreen() {
               </Pressable>
 
               <Pressable
-                style={[adventure_styles.buttonSmall, adventure_styles.deleteButton]}
+                style={[
+                  adventure_styles.buttonSmall,
+                  adventure_styles.deleteButton,
+                ]}
                 onPress={() => deleteSession(item.id)}
               >
                 <Text style={adventure_styles.buttonText}>Törlés</Text>

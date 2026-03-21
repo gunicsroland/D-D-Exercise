@@ -1,11 +1,14 @@
-import React from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { creation_styles } from '../../styles/creation';
+import React from "react";
+import { View, Text, TextInput } from "react-native";
+import { creation_styles } from "../../styles/creation";
 
-export default function StepRun({ runTime, setRunTime }:
-    { runTime: number, setRunTime: (value: number) => void }
-) {
-
+export default function StepRun({
+  runTime,
+  setRunTime,
+}: {
+  runTime: number;
+  setRunTime: (value: number) => void;
+}) {
   return (
     <View style={creation_styles.container}>
       <Text style={creation_styles.title}>🏃 Állóképesség felmérése</Text>

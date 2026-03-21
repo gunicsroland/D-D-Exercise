@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import { colors } from "./colors";
 
 export const exerciseRunner_styles = StyleSheet.create({
-
   screen: {
     flex: 1,
     backgroundColor: colors.background,
@@ -49,7 +48,7 @@ export const exerciseRunner_styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.gold
+    borderColor: colors.gold,
   },
 
   greenButton: {

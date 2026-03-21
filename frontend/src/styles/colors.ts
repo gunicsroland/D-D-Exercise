@@ -14,5 +14,5 @@ export const colors = {
   gold: "#D4AF37",
   health: "#2E8B57",
   mana: "#3B6EA5",
-  damage: "#C0392B"
-}
+  damage: "#C0392B",
+};

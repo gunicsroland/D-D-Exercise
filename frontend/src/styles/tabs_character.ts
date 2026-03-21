@@ -37,6 +37,8 @@ export const character_styles = StyleSheet.create({
 
   name: {
     fontSize: 28,
+    flex: 1,
+    flexShrink: 1,
     color: colors.gold,
     fontFamily: "Cinzel_600SemiBold",
     marginBottom: 10,
@@ -118,7 +120,7 @@ export const character_styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-    card: {
+  card: {
     flex: 1,
     margin: 6,
     padding: 14,
@@ -154,5 +156,5 @@ export const character_styles = StyleSheet.create({
 
   disabledButton: {
     opacity: 0.4,
-  }
+  },
 });

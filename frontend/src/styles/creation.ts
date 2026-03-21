@@ -54,7 +54,7 @@ export const creation_styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#333",
     color: colors.text,
-    padding: 5
+    padding: 5,
   },
   stepCard: {
     backgroundColor: colors.surface,
@@ -103,7 +103,7 @@ export const creation_styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 10,
   },
-    characterName: {
+  characterName: {
     fontSize: 22,
     fontWeight: "bold",
     color: colors.text,

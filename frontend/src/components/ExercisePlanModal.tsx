@@ -1,35 +1,42 @@
-import { useState } from "react";
-import { Exercise } from "../types/types";
 import { Modal, View, Text, FlatList, TouchableOpacity } from "react-native";
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
-import { useRouter } from "expo-router";
 import { exerciseModal_styles } from "../styles/exerciseModal";
 
-export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-    const { plan, removeExercise, clearPlan, startPlan } = useExercisePlanContext();
-    const router = useRouter();
+export default function ExercisePlanModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const { plan, removeExercise, clearPlan, startPlan } =
+    useExercisePlanContext();
 
-    return (
-        <Modal
-            visible={isOpen}
-            animationType="fade"
-            transparent
-            onRequestClose={onClose}
-        >
-            <View style={exerciseModal_styles.overlay}>
+  return (
+    <Modal
+      visible={isOpen}
+      animationType="fade"
+      transparent
+      onRequestClose={onClose}
+    >
+      <View style={exerciseModal_styles.overlay}>
         <View style={exerciseModal_styles.modal}>
-
           <View style={exerciseModal_styles.header}>
             <Text style={exerciseModal_styles.title}>⚔ Edzés Terv</Text>
 
-            <TouchableOpacity onPress={onClose} style={exerciseModal_styles.closeButton}>
+            <TouchableOpacity
+              onPress={onClose}
+              style={exerciseModal_styles.closeButton}
+            >
               <Text style={exerciseModal_styles.closeText}>✕</Text>
             </TouchableOpacity>
           </View>
 
           {plan.length === 0 ? (
-            <Text style={exerciseModal_styles.empty}>Nincs még gyakorlat a tervben</Text>
+            <Text style={exerciseModal_styles.empty}>
+              Nincs még gyakorlat a tervben
+            </Text>
           ) : (
             <FlatList
               data={plan}
@@ -37,7 +44,7 @@ export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean
               renderItem={({ item }) => (
                 <View style={exerciseModal_styles.exerciseRow}>
                   <Text style={exerciseModal_styles.exerciseText}>
-                    {item.exercise.name}  x {item.exercise.quantity}
+                    {item.exercise.name} x {item.exercise.quantity}
                   </Text>
 
                   <TouchableOpacity
@@ -63,16 +70,20 @@ export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean
               ]}
               disabled={plan.length === 0}
             >
-              <Text style={exerciseModal_styles.startText}>▶ Edzés Kezdése</Text>
+              <Text style={exerciseModal_styles.startText}>
+                ▶ Edzés Kezdése
+              </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={clearPlan} style={exerciseModal_styles.clearButton}>
+            <TouchableOpacity
+              onPress={clearPlan}
+              style={exerciseModal_styles.clearButton}
+            >
               <Text style={exerciseModal_styles.clearText}>✖ Terv Ürítése</Text>
             </TouchableOpacity>
           </View>
-
         </View>
       </View>
-        </Modal>
-    )
+    </Modal>
+  );
 }

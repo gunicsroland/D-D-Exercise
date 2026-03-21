@@ -53,7 +53,7 @@ export const session_styles = StyleSheet.create({
     padding: 12,
     borderTopWidth: 1,
     borderColor: colors.secondary,
-    backgroundColor: colors.surface,
+    backgroundColor: colors.background,
   },
 
   input: {

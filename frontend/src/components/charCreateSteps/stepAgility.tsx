@@ -1,10 +1,14 @@
-import React from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { creation_styles } from '../../styles/creation';
+import React from "react";
+import { View, Text, TextInput } from "react-native";
+import { creation_styles } from "../../styles/creation";
 
-export default function StepAgility({ agility, setAgility }:
-    { agility: number, setAgility: (value: number) => void }
-) {
+export default function StepAgility({
+  agility,
+  setAgility,
+}: {
+  agility: number;
+  setAgility: (value: number) => void;
+}) {
   return (
     <View style={creation_styles.container}>
       <Text style={creation_styles.title}>Agilitás felmérése</Text>

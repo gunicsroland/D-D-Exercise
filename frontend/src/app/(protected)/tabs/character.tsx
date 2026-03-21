@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, ActivityIndicator, Button, AppState, Modal, TextInput, Pressable, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Modal,
+  TextInput,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { useAuthContext } from "../../../context/AuthContext";
@@ -8,10 +16,14 @@ import { useActiveTimer } from "../../../hooks/useActiveTimer";
 import { XPBar } from "../../../components/character/XPBar";
 import { ActiveEffects } from "../../../components/character/ActiveEffects";
 import { AbilityList } from "../../../components/character/AbilityList";
-import { lvlUpAbility, updateCharacter } from "../../../services/character_service";
+import {
+  lvlUpAbility,
+  updateCharacter,
+} from "../../../services/character_service";
 import { character_styles } from "../../../styles/tabs_character";
-import { CLASS_LABELS_HU } from "../../../constants";
+import { CLASS_LABELS_HU } from "../../../text_labels";
 import { colors } from "../../../styles/colors";
+import { AbilityType } from "../../../types/types";
 
 export default function CharacterScreen() {
   const { token } = useAuthContext();
@@ -21,7 +33,7 @@ export default function CharacterScreen() {
   const [error, setError] = useState("");
   const now = useActiveTimer();
 
-  const handleUpgrade = async (ability: any) => {
+  const handleUpgrade = async (ability: AbilityType) => {
     if (!token) return;
     await lvlUpAbility(token, ability);
     await refreshCharacter();
@@ -33,8 +45,10 @@ export default function CharacterScreen() {
       await updateCharacter(token, { name: newName });
       await refreshCharacter();
       setModalVisible(false);
-    } catch (err: any) {
-      setError(err.message || "Nem sikerült a név változtatása");
+    } catch (err: unknown) {
+      if (err instanceof Error)
+        setError(err.message || "Nem sikerült a név változtatása");
+      else setError(String(err) || "Nem sikerült a név változtatása");
     }
   };
 
@@ -82,12 +96,16 @@ export default function CharacterScreen() {
               value={newName}
               onChangeText={setNewName}
               placeholder="Adj meg egy nevet"
-              style={character_styles.input} />
+              style={character_styles.input}
+            />
 
             {error ? <Text style={character_styles.error}>{error}</Text> : null}
 
             <View style={character_styles.modalButtons}>
-              <Pressable style={character_styles.button} onPress={handleChangeName}>
+              <Pressable
+                style={character_styles.button}
+                onPress={handleChangeName}
+              >
                 <Text style={character_styles.buttonText}>Mentés</Text>
               </Pressable>
 
