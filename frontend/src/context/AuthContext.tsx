@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, use, useContext, useEffect, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { User } from "../types/types";
 import { storage } from '../services/storage_service';
 import { loginRequest, registerRequest, getMe } from '../services/auth_service';
@@ -21,7 +21,7 @@ export function useAuthContext() {
     if (context === undefined) {
         throw new Error("useUserContext must be used with a Provider");
     }
-    for (let child in context) {
+    for (const child in context) {
         if (child === null) {
             throw new Error("useUserContext must be used with a Provider");
         }
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children, }: { children: ReactNode }) => {
             const userData = await getMe(storedToken);
             setUser(userData);
         }
-        catch (error) {
+        catch {
             await storage.removeToken();
             setUser(null);
             setToken(null);

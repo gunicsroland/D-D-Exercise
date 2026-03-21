@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { View, ActivityIndicator } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { checkCharacter } from "../services/character_service";
 import React from 'react';

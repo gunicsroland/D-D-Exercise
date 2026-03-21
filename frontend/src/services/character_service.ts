@@ -88,7 +88,11 @@ export async function updateCharacter(token:string, updateData: CharacterUpdateP
 
     return res;
 
-  } catch (err: any){
-    return err.message;
+  } catch (err: unknown){
+    if(err instanceof Error)
+      return err.message;
+    else {
+      return String(err)
+    }
   }
 }

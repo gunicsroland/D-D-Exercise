@@ -1,13 +1,12 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { Quest, QuestProgress } from "../types/types";
-import { Bar } from 'react-native-progress';
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
 import { exerciseCard_styles } from "../styles/exerciseCard";
 import { DIFFICULTY_LABELS_HU } from "../text_labels";
 
 export function QuestCard({ quest, progress }: { quest: Quest, progress: QuestProgress | undefined }) {
-    const { plan, addExercise, startPlan } = useExercisePlanContext();
+    const { addExercise } = useExercisePlanContext();
 
     return (
         <View

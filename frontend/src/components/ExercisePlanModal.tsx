@@ -1,14 +1,10 @@
-import { useState } from "react";
-import { Exercise } from "../types/types";
 import { Modal, View, Text, FlatList, TouchableOpacity } from "react-native";
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
-import { useRouter } from "expo-router";
 import { exerciseModal_styles } from "../styles/exerciseModal";
 
 export default function ExercisePlanModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     const { plan, removeExercise, clearPlan, startPlan } = useExercisePlanContext();
-    const router = useRouter();
 
     return (
         <Modal

@@ -6,7 +6,7 @@ import { exerciseCard_styles } from "../styles/exerciseCard";
 import { DIFFICULTY_LABELS_HU, EXERCISE_TYPE_LABELS_HU } from "../text_labels";
 
 export function ExerciseCard({ exercise }: { exercise: Exercise}) {
-    const { plan, addExercise, startPlan } = useExercisePlanContext();
+    const { addExercise, startPlan } = useExercisePlanContext();
 
     const  startSingleExercise = (exercise: Exercise) => {
         addExercise(exercise);

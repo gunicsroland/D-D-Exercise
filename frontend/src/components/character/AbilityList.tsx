@@ -1,4 +1,4 @@
-import { View, Text, Button, FlatList, Pressable } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import { Character, CharacterAbility, AbilityType } from "../../types/types";
 import { getAbilityBonus } from "../../hooks/useAbilityBonus";
 import React from "react";

@@ -1,5 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
-import { View, Text, Button, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { BASE_STATS_BY_CLASS } from "../../../constants";
 import StepName from "../../../components/charCreateSteps/stepName"
@@ -27,13 +27,33 @@ export default function CreateCharacter() {
     const { user, token } = useAuthContext();
     const router = useRouter();
 
-    const steps: ReactElement[] = [
-        <StepName charName={name} setCharName={setName} selectedClass={selectedClass} setSelectedClass={setSelectedClass} />,
-        <StepPushups pushups={pushups} setPushups={setPushups} />,
-        <StepRun runTime={runTime} setRunTime={setRunTime} />,
-        <StepAgility agility={agility} setAgility={setAgility} />,
-        <StepFinal finalStats={finalStats} setFinalStats={setFinalStats} selectedClass={selectedClass}
-            name={name} pushups={pushups} runTime={runTime} agility={agility} />
+    type Step = {
+        id: string;
+        element: ReactElement;
+    };
+
+    const steps: Step[] = [
+        {
+            id: "step-name",
+            element: <StepName charName={name} setCharName={setName} selectedClass={selectedClass} setSelectedClass={setSelectedClass} />,
+        },
+        {
+            id: "step-pushups",
+            element: <StepPushups pushups={pushups} setPushups={setPushups} />,
+        },
+        {
+            id: "step-run",
+            element: <StepRun runTime={runTime} setRunTime={setRunTime} />,
+        },
+        {
+            id: "step-agility",
+            element: <StepAgility agility={agility} setAgility={setAgility} />,
+        },
+        {
+            id: "ste-final",
+            element: <StepFinal finalStats={finalStats} setFinalStats={setFinalStats} selectedClass={selectedClass}
+                name={name} pushups={pushups} runTime={runTime} agility={agility} />
+        }
     ]
 
     useEffect(() => {
@@ -66,8 +86,12 @@ export default function CreateCharacter() {
                 if (res?.ok) {
                     router.replace("/tabs/character");
                 }
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError(String(err));
+                }
             }
         }
     }
@@ -81,7 +105,7 @@ export default function CreateCharacter() {
     return (
         <View style={creation_styles.screen}>
             <View style={creation_styles.stepCard}>
-                {steps[step]}
+                {steps[step].element}
             </View>
 
             {error ? <Text style={creation_styles.error}>{error}</Text> : null}

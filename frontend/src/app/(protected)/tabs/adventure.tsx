@@ -1,4 +1,4 @@
-import { View, Text, Alert, Button, FlatList, TextInput, StyleSheet, Pressable } from "react-native";
+import { View, Text, Alert, FlatList, TextInput, Pressable } from "react-native";
 import React, { useEffect, useState } from 'react';
 import { API_URL } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
@@ -11,7 +11,6 @@ import { colors } from "../../../styles/colors";
 export default function KalandScreen() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [title, setTitle] = useState("");
-  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
 
   const { token } = useAuthContext();
   const router = useRouter();

@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from "react";
-import { View, Text, FlatList, ActivityIndicator, AppState } from "react-native";
+import React from "react";
+import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import { useAuthContext } from "../../../context/AuthContext";
 import { InventoryItem } from "../../../components/InventoryItem";
 import { useGameContext } from "../../../context/GameContext";
@@ -8,7 +8,7 @@ import { colors } from "../../../styles/colors";
 
 export default function InventoryScreen() {
   const { token } = useAuthContext();
-  const { inventory, loading, refreshAll } = useGameContext();
+  const { inventory, refreshAll } = useGameContext();
 
   if (!token) return(
      <View style={inventory_styles.loader}>
@@ -16,10 +16,23 @@ export default function InventoryScreen() {
       </View>
   )
 
+
   const paddedItems = [...inventory];
   while (paddedItems.length % 3 !== 0) {
-    paddedItems.push({ id: `empty-${paddedItems.length}`, isEmpty: true } as any);
-  }
+  paddedItems.push({
+    id: -paddedItems.length,
+    user_id: 0,
+    quantity: 0,
+    item: {
+      id: -1,
+      name: "",
+      description: "",
+      item_type: "empty",
+      image_url: "",
+      effects: [],
+    },
+  });
+}
 
   return (
     <View style={inventory_styles.container}>
@@ -30,7 +43,7 @@ export default function InventoryScreen() {
         columnWrapperStyle={inventory_styles.row}
         contentContainerStyle={inventory_styles.grid}
         renderItem={({ item }) =>
-          "isEmpty" in item ? (
+          item.id < 0 ? (
             <View style={inventory_styles.emptySlot} />
           ) : (
             <InventoryItem

@@ -2,7 +2,7 @@ import { API_URL } from "../constants";
 
 export async function consumeItem(token:string, item_id: number) {
     try {
-        const res = await fetch(`${API_URL}/inventory/consume/${item_id}`, {
+        await fetch(`${API_URL}/inventory/consume/${item_id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

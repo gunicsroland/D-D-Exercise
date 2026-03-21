@@ -3,8 +3,6 @@ import { BASE_STATS_BY_CLASS } from '../../constants';
 import { CLASS_LABELS_HU } from "../../text_labels";
 import { useEffect } from 'react';
 import React from 'react';
-import { useAuthContext } from '../../context/AuthContext';
-import { useRouter } from 'expo-router';
 import { creation_styles } from '../../styles/creation';
 
 export default function StepFinal({
@@ -22,11 +20,8 @@ export default function StepFinal({
         agility: number
     }) {
 
-    const { loading, token } = useAuthContext();
-    const router = useRouter()
-
     useEffect(() => {
-        let baseStats = BASE_STATS_BY_CLASS[selectedClass as keyof typeof BASE_STATS_BY_CLASS];
+        const baseStats = BASE_STATS_BY_CLASS[selectedClass as keyof typeof BASE_STATS_BY_CLASS];
 
         const finalStats = { ...baseStats };
 

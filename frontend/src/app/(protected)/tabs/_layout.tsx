@@ -11,7 +11,7 @@ import { colors } from "../../../styles/colors";
 export default function TabsLayout() {
 
     const { token } = useAuthContext();
-    const [fontsLoaded] = useFonts({ Cinzel_600SemiBold });
+    useFonts({ Cinzel_600SemiBold });
 
     useEffect(() => {
         const unsubscribe = NetInfo.addEventListener((state) => {

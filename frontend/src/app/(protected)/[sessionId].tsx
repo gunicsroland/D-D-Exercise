@@ -3,13 +3,13 @@ import { API_URL } from "../../constants";
 import { useAuthContext } from "../../context/AuthContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { Message } from "../../types/types";
-import { View, Text, StyleSheet, KeyboardAvoidingView, FlatList, Platform, TextInput, TouchableOpacity, Button, Pressable } from "react-native";
+import { View, Text, KeyboardAvoidingView, FlatList, TextInput, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import { colors } from "../../styles/colors";
 import { session_styles } from "../../styles/session";
 
 export default function AdventureChatScreen() {
-    const { sessionId, title } = useLocalSearchParams();
+    const { sessionId } = useLocalSearchParams();
     const id = Number(sessionId);
 
     const [error, setError] = useState("");
@@ -31,7 +31,7 @@ export default function AdventureChatScreen() {
 
             const data = await res.json();
             setMessages(data);
-        } catch (err) {
+        } catch {
             setError("Nem elérhető a beszélgetési előzményed");
         }
     };
@@ -55,7 +55,7 @@ export default function AdventureChatScreen() {
             if (!res.ok) {
                 throw new Error();
             }
-            const data = await res.json();
+            await res.json();
 
             setNewMessage("");
             fetchMessages();

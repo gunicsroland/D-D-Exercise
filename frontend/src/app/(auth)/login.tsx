@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { ScrollView, Button, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { useRouter } from "expo-router";
 import { useAuthContext } from '../../context/AuthContext';
 import { colors } from '../../styles/colors';

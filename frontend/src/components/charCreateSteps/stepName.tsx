@@ -3,9 +3,6 @@ import { Picker } from "@react-native-picker/picker";
 import { BASE_STATS_BY_CLASS } from '../../constants';
 import { CLASS_LABELS_HU } from "../../text_labels";
 import React from 'react';
-import { useRouter } from 'expo-router';
-import { useEffect } from 'react';
-import { useAuthContext } from '../../context/AuthContext'
 import { colors } from '../../styles/colors';
 import { creation_styles } from '../../styles/creation';
 

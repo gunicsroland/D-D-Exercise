@@ -1,23 +1,15 @@
 import React, { useState, useMemo, useCallback } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import {View, Text, FlatList, ScrollView, TouchableOpacity} from "react-native";
 import { Exercise, ExerciseCategories, ExerciseDifficulty, Quest, QuestProgress } from "../../../types/types";
 import { getDailyQuests, getExercises, getQuestProgress, setQuestDifficulty } from "../../../services/quest_service";
 import { useAuthContext } from "../../../context/AuthContext";
 import { DIFFICULTY_ORDER } from "../../../constants";
 import { QuestCard } from "../../../components/QuestCard";
 import { ExerciseCard } from "../../../components/ExerciseCard";
-import { useExercisePlanContext } from "../../../context/ExercisePlanContext";
 import ExercisePlanModal from "../../../components/ExercisePlanModal";
 import { useFocusEffect } from "@react-navigation/native";
 import { exercise_styles } from "../../../styles/tabs_exercise";
 import { DIFFICULTY_LABELS_HU, EXERCISE_TYPE_LABELS_HU } from "../../../text_labels";
-import { colors } from "../../../styles/colors";
 
 export default function ExerciseScreen() {
   const [dailyQuests, setDailyQuests] = useState<Quest[]>([]);

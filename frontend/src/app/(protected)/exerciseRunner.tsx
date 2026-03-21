@@ -78,7 +78,7 @@ export default function ExerciseRunner() {
         for (const exercisePlan of completed) {
             try {
                 await finishExercise(token, exercisePlan.exercise.id);
-            } catch (err) {
+            } catch {
                 console.error("Failed exercise:", exercisePlan.exercise.id);
             }
         }

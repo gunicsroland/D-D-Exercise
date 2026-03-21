@@ -1,29 +1,32 @@
 import { useState } from "react";
-import { ScrollView, TextInput, Button, Text, Alert, TouchableOpacity, View } from "react-native";
+import { ScrollView, TextInput, Text, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
-import { registerRequest } from "../../services/auth_service";
 import React from "react";
 import { useAuthContext } from "../../context/AuthContext";
 import { auth_styles } from "../../styles/auth";
 import { colors } from "../../styles/colors";
 
 export default function Register() {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    const { register } = useAuthContext();
-    const router = useRouter();
+  const { register } = useAuthContext();
+  const router = useRouter();
 
-    const handleSubmit = async () => {
-        try {
-            await register(username, email, password);
-            router.replace("/");
-        } catch (err: any) {
-            setError(err.message);
-        }
-    };
+  const handleSubmit = async () => {
+    try {
+      await register(username, email, password);
+      router.replace("/");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError(String(err));
+      }
+    }
+  };
 
   return (
     <ScrollView contentContainerStyle={auth_styles.container}>
