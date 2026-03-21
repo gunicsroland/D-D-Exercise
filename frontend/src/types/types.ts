@@ -6,7 +6,6 @@ export interface User {
 
 export interface ActiveEffect {
   id: number,
-  user_id: number,
   expires_at: string,
   attribute: AbilityType,
   increase: boolean,

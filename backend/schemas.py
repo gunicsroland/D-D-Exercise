@@ -43,7 +43,7 @@ class ActiveEffectBase(BaseSchema):
     value: int
 
 class ActiveEffectRead(ActiveEffectBase):
-    pass
+    id: int
 
 class ActiveEffectCreate(ActiveEffectBase):
     pass
