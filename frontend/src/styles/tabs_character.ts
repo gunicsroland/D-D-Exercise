@@ -37,6 +37,8 @@ export const character_styles = StyleSheet.create({
 
   name: {
     fontSize: 28,
+    flex: 1,
+    flexShrink: 1,
     color: colors.gold,
     fontFamily: "Cinzel_600SemiBold",
     marginBottom: 10,
