@@ -13,10 +13,16 @@ def create_access_token(data: dict):
     
     if "sub" not in to_encode:
         raise ValueError("Token data must include 'sub' field")
+    if not SECRET_KEY or not ALGORITHM:
+        raise RuntimeError("SECRET_KEY amd ALGORITHM environment variable must be set")
+
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 def decode_access_token(token: str):
+    if not SECRET_KEY or not ALGORITHM:
+        raise RuntimeError("SECRET_KEY amd ALGORITHM environment variable must be set")
+        
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     return payload
 

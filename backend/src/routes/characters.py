@@ -194,7 +194,7 @@ def add_xp(
         logging.info(f"Unauthorized XP addition attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
     
-    message = character_service.award_xp(current_user.id, xp_gain, db)
+    message = character_service.add_xp(current_user.id, xp_gain, db)
     logging.info(f"XP added successfully for user_id={current_user.id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}")
     return message
     
@@ -206,7 +206,7 @@ def upgrade_ability(
 ):
     logging.info(f"Upgrading ability for user_id={current_user.id}, ability={ability.value}")
     
-    return character_service.upgrade_ability(current_user.id, ability, db)
+    return character_service.upgrade_ability(current_user.id, ability.value, db)
     
 @app.put("/me")
 def update_charecter(

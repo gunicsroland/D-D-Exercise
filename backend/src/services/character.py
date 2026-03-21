@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from src.models import Character, CharacterAbility
-import src.constants
+import src.constants as constants
 
 def calculate_level(xp: int) -> int:
     level = 1
@@ -54,16 +54,16 @@ def upgrade_ability(user_id: int, ability: str, db: Session):
         raise HTTPException(status_code=404, detail="Character not found")
     
     if character.ability_points <= 0:
-        logging.warning(f"User {user_id} does not have enough ability points to upgrade {ability.value}")
+        logging.warning(f"User {user_id} does not have enough ability points to upgrade {ability}")
         raise HTTPException(status_code=400, detail="Not enough ability points")
     
     char_ability = db.query(CharacterAbility).filter(CharacterAbility.character_id == character.id, CharacterAbility.ability == ability).first()
     if not char_ability:
-        logging.warning(f"Ability {ability.value} not found for character_id={character.id}")
+        logging.warning(f"Ability {ability} not found for character_id={character.id}")
         raise HTTPException(status_code=404, detail="Ability not found")
     
     if char_ability.score >= 20:
-        logging.warning(f"Ability {ability.value} is already at max score for character_id={character.id}")
+        logging.warning(f"Ability {ability} is already at max score for character_id={character.id}")
         raise HTTPException(status_code=400, detail="Ability score is already at maximum")
     
     char_ability.score += 1
@@ -72,10 +72,10 @@ def upgrade_ability(user_id: int, ability: str, db: Session):
     db.commit()
     db.refresh(character)
     
-    logging.info(f"Ability {ability.value} upgraded successfully for character_id={character.id}. New score: {char_ability.score}, Remaining ability points: {character.ability_points}")
+    logging.info(f"Ability {ability} upgraded successfully for character_id={character.id}. New score: {char_ability.score}, Remaining ability points: {character.ability_points}")
     
     return {
-        "message": f"{ability.value} upgraded successfully",
+        "message": f"{ability} upgraded successfully",
         "new_score": char_ability.score,
         "remaining_ability_points": character.ability_points
     }

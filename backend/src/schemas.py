@@ -108,7 +108,7 @@ class ItemBase(BaseSchema):
     name: str
     description: str
     item_type: str
-    image_url: str = None
+    image_url: str = ""
 
 class ItemCreate(ItemBase):
     pass

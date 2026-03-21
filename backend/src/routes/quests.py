@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 import logging
+from typing import cast
 
 from src.database import get_db
 from src.models import Quest, User, Item, UserQuestProgress, Exercise
@@ -22,7 +23,7 @@ def get_quests(
     return (db.query(Quest)
         .options(
             joinedload(Quest.exercise),
-            joinedload(Quest.item).joinedload(Item.effects)
+            joinedload(cast("Item", Quest.item)).joinedload(Item.effects)
         )
     .all())
 
@@ -56,7 +57,7 @@ def get_quest(
     db.query(Quest)
     .options(
         joinedload(Quest.exercise),
-        joinedload(Quest.item).joinedload(Item.effects)
+        joinedload(cast("Item", Quest.item)).joinedload(Item.effects)
     )
     .first()
 )
@@ -73,17 +74,18 @@ def create_quest(
 ):
     logging.info(f"Admin user {admin_user.id} is creating a new quest with name '{quest.name}'")
 
-    quest = db.query(Exercise).filter(Exercise.id == quest.exercise_id).first()
+    exercise = db.query(Exercise).filter(Exercise.id == quest.exercise_id).first()
 
-    if not quest:
+    if not exercise:
         logging.warning(f"Exercise with id={quest.exercise_id} not found")
         raise HTTPException(status_code=404, detail="Exercise not found")
 
-    item = db.query(Item).filter(Item.id == quest.item_reward).first()
+    if quest.item_reward:
+        item = db.query(Item).filter(Item.id == quest.item_reward).first()
 
-    if not item:
-        logging.warning(f"Item with id={quest.item_reward} not found")
-        raise HTTPException(status_code=404, detail="Item not found")
+        if not item:
+            logging.warning(f"Item with id={quest.item_reward} not found")
+            raise HTTPException(status_code=404, detail="Item not found")
 
     new_quest = Quest(
         name=quest.name,
@@ -112,6 +114,8 @@ def complete_quest(
     db: Session = Depends(get_db)
 ):
     quest = db.query(Quest).filter(Quest.id == quest_id).first()
+    if not quest:
+        raise HTTPException(status_code=404, detail="Quest not found")
 
     return quest_service.complete_quest(current_user.id, quest, db)
 
