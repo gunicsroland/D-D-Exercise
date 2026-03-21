@@ -204,7 +204,7 @@ class ItemEffect(Base):
 class ActiveEffect(Base):
     __tablename__ = "active_effects"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
     expires_at: Mapped[datetime] = mapped_column(DateTime)
     attribute: Mapped[AbilityType] = mapped_column("ability", Enum(AbilityType))
