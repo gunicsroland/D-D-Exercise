@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session
 
-from models import AdventureMessage, AdventureSession
-import services.character as character_service
-from constants import MODEL_NAME
+from src.models import AdventureMessage, AdventureSession
+import src.services.character as character_service
+from src.constants import MODEL_NAME
+
 from google import genai
 from google.genai import types
 

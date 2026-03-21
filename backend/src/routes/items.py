@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import logging
 
-from database import get_db
-from models import Item, ItemEffect, User, ItemType
-import schemas
-from dependencies import get_admin_user
-from services import seeded_generation
-from services import item as item_service
+from src.database import get_db
+from src.models import Item, ItemEffect, User, ItemType
+import src.schemas as schemas
+from src.dependencies import get_admin_user
+from src.services import seeded_generation
+from src.services import item as item_service
 
 app = APIRouter(
     prefix="/items",

@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Boolean, String, ForeignKey, Enum, TIMESTAMP, func, Table, DateTime
 from sqlalchemy.orm import relationship
-from database import Base
+
+from src.database import Base
 import enum
 
 class CharacterClass(enum.Enum):

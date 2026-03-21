@@ -3,13 +3,12 @@ from sqlalchemy.orm import Session
 import logging
 from typing import List
 
-from database import get_db
-from models import User, AdventureMessage, AdventureSession, ChatRole
-import schemas
-from dependencies import get_current_user
-
-import services.messages as messages_service
-from services import chat as chat_service
+from src.database import get_db
+from src.models import User, AdventureMessage, AdventureSession, ChatRole
+import src.schemas as schemas
+from src.dependencies import get_current_user
+import src.services.messages as messages_service
+from src.services import chat as chat_service
 
 app = APIRouter(
     prefix="/messages",

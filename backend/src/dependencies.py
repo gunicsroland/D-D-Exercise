@@ -5,9 +5,9 @@ from fastapi.security import OAuth2PasswordBearer, APIKeyHeader
 from sqlalchemy.orm import Session
 from jose import JWTError
 
-from database import get_db
-from models import User
-from services.auth import decode_access_token
+from src.database import get_db
+from src.models import User
+from src.services.auth import decode_access_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/form_login")
 api_key_header = APIKeyHeader(name="X-Admin-Key")

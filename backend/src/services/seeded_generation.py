@@ -4,8 +4,8 @@ import os
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
-from models import Exercise, ExerciseCategory, ExerciseDifficulty, AbilityType, ItemEffect, Item, ItemType, Quest
-from services import item as item_service
+from src.models import Exercise, ExerciseCategory, ExerciseDifficulty, AbilityType, ItemEffect, Item, ItemType, Quest
+from src.services import item as item_service
 
 def seed_exercises(db: Session):
 

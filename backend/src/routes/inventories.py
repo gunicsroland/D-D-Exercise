@@ -4,11 +4,11 @@ import logging
 from typing import List
 from datetime import datetime, timedelta, timezone
 
-from database import get_db
-from models import Inventory, User, ActiveEffect
-import schemas
-from dependencies import get_current_user
-from services import inventory as inventory_service
+from src.database import get_db
+from src.models import Inventory, User, ActiveEffect
+import src.schemas as schemas
+from src.dependencies import get_current_user
+from src.services import inventory as inventory_service
 
 app = APIRouter(
     prefix="/inventory",

@@ -1,4 +1,4 @@
-from models import ExerciseCategory
+from src.models import ExerciseCategory
 
 
 XP_LEVELS = {

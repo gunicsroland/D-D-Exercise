@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 import logging
 from typing import List
 
-from database import get_db
-from models import  User
-import schemas
-from dependencies import get_admin_user, get_current_user
+from src.database import get_db
+from src.models import  User
+import src.schemas as schemas
+from src.dependencies import get_admin_user, get_current_user
 
 app = APIRouter(
     prefix="/user",

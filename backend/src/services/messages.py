@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from models import AdventureMessage, AdventureSession   , ChatRole
+from src.models import AdventureMessage, AdventureSession   , ChatRole
 
 def save_message(
     user_id: int,

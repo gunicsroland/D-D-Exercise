@@ -1,10 +1,10 @@
 import logging
 
-import constants
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from models import Character, CharacterAbility
+from src.models import Character, CharacterAbility
+import src.constants
 
 def calculate_level(xp: int) -> int:
     level = 1

@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 import logging
 
-from models import Item, Inventory
+from src.models import Item, Inventory
 
 def add_item(user_id: int, item_id: int, quantity: int, db: Session):
     item = db.query(Item).filter(Item.id == item_id).first()

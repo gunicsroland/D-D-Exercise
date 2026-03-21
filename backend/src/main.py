@@ -1,15 +1,14 @@
-from routes import characters, inventories
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime, timezone
 
-from database import Base, engine
-import schemas
-from models import User, ActiveEffect
-from dependencies import get_current_user, get_db
+from src.database import Base, engine
+import src.schemas as schemas
+from src.models import User, ActiveEffect
+from src.dependencies import get_current_user, get_db
 
-from routes import auth, users, items, effects, exercises, quests, adventures, messages
+from src.routes import auth, users, items, effects, exercises, quests, adventures, messages, characters, inventories
 
 app = FastAPI()
 

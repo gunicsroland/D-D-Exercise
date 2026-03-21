@@ -2,14 +2,14 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import logging
 
-from database import get_db
-from models import Exercise, User, ExerciseCategory, ExerciseDifficulty
-import schemas
-from dependencies import get_admin_user, get_current_user
-from services import character as character_service
-from services import log as log_service
-from services import quests as quest_service
-from services import seeded_generation
+from src.database import get_db
+from src.models import Exercise, User, ExerciseCategory, ExerciseDifficulty
+import src.schemas as schemas
+from src.dependencies import get_admin_user, get_current_user
+from src.services import character as character_service
+from src.services import log as log_service
+from src.services import quests as quest_service
+from src.services import seeded_generation
 
 app = APIRouter(
     prefix="/exercises",

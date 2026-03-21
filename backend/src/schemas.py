@@ -1,7 +1,8 @@
 from typing import List, Optional
 from datetime import datetime
 from pydantic import BaseModel, model_validator
-from models import AbilityType, ExerciseCategory, ExerciseDifficulty, ChatRole
+
+from src.models import AbilityType, ExerciseCategory, ExerciseDifficulty, ChatRole
 
 class BaseSchema(BaseModel):
     class Config:

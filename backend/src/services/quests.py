@@ -1,14 +1,13 @@
 import logging
 from datetime import date
 import random
-from constants import DAY_CATEGORY_MAP
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from models import ExerciseCategory, Quest, UserQuestProgress, User, Exercise
-from services import character as character_service
-from services import inventory as inventory_service
-from constants import DAILY_QUEST_COUNT
+from src.models import ExerciseCategory, Quest, UserQuestProgress, User, Exercise
+from src.services import character as character_service
+from src.services import inventory as inventory_service
+from src.constants import DAILY_QUEST_COUNT, DAY_CATEGORY_MAP
 
 def get_or_create_progress(user_id: int, quest_id: int, db: Session):
     today = date.today()
