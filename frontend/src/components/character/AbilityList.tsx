@@ -12,6 +12,7 @@ export const AbilityList = ({ character, handleUpgrade }: { character: Character
     <FlatList<CharacterAbility>
       data={sortedAbilities}
       keyExtractor={item => item.ability}
+      scrollEnabled={false}
       numColumns={2}
       renderItem={({ item }) => {
         const bonus = getAbilityBonus(character, item.ability);
@@ -26,16 +27,12 @@ export const AbilityList = ({ character, handleUpgrade }: { character: Character
 
             <Text style={character_styles.value}>
               <Text style={{ color: bonusColor }}>{total}</Text>
-
               {bonus !== 0 && (
                 <Text style={character_styles.bonus}>
-                  {" "}
-                  ({item.score} {bonus > 0 ? "+" : ""}
-                  {bonus})
+                  {` (${item.score}${bonus > 0 ? "+" : ""}${bonus})`}
                 </Text>
               )}
             </Text>
-
 
             <Pressable
               style={[
@@ -46,7 +43,8 @@ export const AbilityList = ({ character, handleUpgrade }: { character: Character
               disabled={character.ability_points <= 0}
             >
               <Text style={character_styles.buttonText}>+</Text>
-            </Pressable>          </View>
+            </Pressable>
+          </View>
         );
       }}
     />

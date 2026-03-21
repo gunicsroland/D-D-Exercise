@@ -139,6 +139,7 @@ export default function ExerciseScreen() {
 
           <FlatList
             data={dailyQuests}
+            scrollEnabled={false}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <QuestCard
