@@ -28,8 +28,8 @@ export default function TabsLayout() {
     return (
         <Tabs screenOptions={{
             headerShown: true,
-            tabBarAllowFontScaling: false,
-            headerTitleAllowFontScaling: false,
+            tabBarAllowFontScaling: true,
+            headerTitleAllowFontScaling: true,
             headerStyle: {
                 backgroundColor: colors.surface,
                 borderColor: colors.secondary,
