@@ -86,6 +86,8 @@ export interface Message {
 export type ExerciseCategory = "strength" | "cardio" | "flexibility"
  | "core"
 
+export const ExerciseCategories = ["strength", "cardio", "flexibility", "core"]
+
 export type ExerciseDifficulty = "very_easy" | "easy"
   | "medium" | "hard" | "very_hard"
   | "nearly_impossible"

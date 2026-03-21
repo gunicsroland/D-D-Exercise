@@ -4,6 +4,7 @@ import { Bar } from 'react-native-progress';
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
 import { exerciseCard_styles } from "../styles/exerciseCard";
+import { DIFFICULTY_LABELS_HU } from "../text_labels";
 
 export function QuestCard({ quest, progress }: { quest: Quest, progress: QuestProgress | undefined }) {
     const { plan, addExercise, startPlan } = useExercisePlanContext();
@@ -18,7 +19,7 @@ export function QuestCard({ quest, progress }: { quest: Quest, progress: QuestPr
             }}
         >
             <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
-                {quest.name} ({quest.exercise.difficulty})
+                {quest.name} ({DIFFICULTY_LABELS_HU[quest.exercise.difficulty]})
             </Text>
 
             <Text style={{ color: "#ddd" }}>

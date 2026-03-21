@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { Exercise, ExerciseDifficulty, Quest, QuestProgress } from "../../../types/types";
+import { Exercise, ExerciseCategories, ExerciseDifficulty, Quest, QuestProgress } from "../../../types/types";
 import { getDailyQuests, getExercises, getQuestProgress, setQuestDifficulty } from "../../../services/quest_service";
 import { useAuthContext } from "../../../context/AuthContext";
 import { DIFFICULTY_ORDER } from "../../../constants";
@@ -16,6 +16,8 @@ import { useExercisePlanContext } from "../../../context/ExercisePlanContext";
 import ExercisePlanModal from "../../../components/ExercisePlanModal";
 import { useFocusEffect } from "@react-navigation/native";
 import { exercise_styles } from "../../../styles/tabs_exercise";
+import { DIFFICULTY_LABELS_HU, EXERCISE_TYPE_LABELS_HU } from "../../../text_labels";
+import { colors } from "../../../styles/colors";
 
 export default function ExerciseScreen() {
   const [dailyQuests, setDailyQuests] = useState<Quest[]>([]);
@@ -121,6 +123,10 @@ export default function ExerciseScreen() {
             Napi küldetések
           </Text>
 
+          <Text style={exercise_styles.subtitle}>
+            Nehézség:
+          </Text>
+
           <View style={exercise_styles.filterRow}>
             {Object.keys(DIFFICULTY_ORDER).map((diff) => (
               <TouchableOpacity
@@ -128,7 +134,7 @@ export default function ExerciseScreen() {
                 onPress={() => updateQuestDifficulty(token, diff as ExerciseDifficulty)}
                 style={[exercise_styles.filterButton, questDifficulty === diff && exercise_styles.filterActive]}
               >
-                <Text style={exercise_styles.filterText}>{diff}</Text>
+                <Text style={exercise_styles.filterText}>{DIFFICULTY_LABELS_HU[diff]}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -155,7 +161,7 @@ export default function ExerciseScreen() {
           <Text style={exercise_styles.subtitle}>Szűrők</Text>
 
           <View style={exercise_styles.filterRow}>
-            {["strength", "cardio", "flexibility", "core"].map((cat) => (
+            {ExerciseCategories.map((cat) => (
               <TouchableOpacity
                 key={cat}
                 onPress={() =>
@@ -166,7 +172,7 @@ export default function ExerciseScreen() {
                   selectedCategory === cat && exercise_styles.filterActive,
                 ]}
               >
-                <Text style={exercise_styles.filterText}>{cat}</Text>
+                <Text style={exercise_styles.filterText}>{EXERCISE_TYPE_LABELS_HU[cat]}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -185,18 +191,18 @@ export default function ExerciseScreen() {
                   selectedDifficulty === diff && exercise_styles.filterActive,
                 ]}
               >
-                <Text style={exercise_styles.filterText}>{diff}</Text>
+                <Text style={exercise_styles.filterText}>{DIFFICULTY_LABELS_HU[diff]}</Text>
               </TouchableOpacity>
             ))}
           </View>
 
           <View style={exercise_styles.sortRow}>
             <TouchableOpacity onPress={() => setSortBy("difficulty")}>
-              <Text style={exercise_styles.sortText}>Sort by Difficulty</Text>
+              <Text style={exercise_styles.sortText}>Nehézség szerint</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setSortBy("category")}>
-              <Text style={exercise_styles.sortText}>Sort by Category</Text>
+              <Text style={exercise_styles.sortText}>Kategória szerint</Text>
             </TouchableOpacity>
           </View>
         </View>

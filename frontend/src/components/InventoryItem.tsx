@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, Modal, Pressable } from "react-native";
 import { InventoryEntry } from "../types/types";
 import { ITEM_IMAGES } from "../../assets/itemImages";
-import { ABILITY_LABELS_HU } from "../constants";
+import { ABILITY_LABELS_HU } from "../text_labels";
 import { consumeItem } from "../services/inventory_service";
 import { inventory_styles } from "../styles/tabs_inventory";
 

@@ -10,7 +10,7 @@ import { ActiveEffects } from "../../../components/character/ActiveEffects";
 import { AbilityList } from "../../../components/character/AbilityList";
 import { lvlUpAbility, updateCharacter } from "../../../services/character_service";
 import { character_styles } from "../../../styles/tabs_character";
-import { CLASS_LABELS_HU } from "../../../constants";
+import { CLASS_LABELS_HU } from "../../../text_labels";
 import { colors } from "../../../styles/colors";
 
 export default function CharacterScreen() {

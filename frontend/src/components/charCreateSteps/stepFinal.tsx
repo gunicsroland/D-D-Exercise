@@ -1,5 +1,6 @@
 import { View, Text } from 'react-native';
-import { BASE_STATS_BY_CLASS, CLASS_LABELS_HU } from '../../constants';
+import { BASE_STATS_BY_CLASS } from '../../constants';
+import { CLASS_LABELS_HU } from "../../text_labels";
 import { useEffect } from 'react';
 import React from 'react';
 import { useAuthContext } from '../../context/AuthContext';
