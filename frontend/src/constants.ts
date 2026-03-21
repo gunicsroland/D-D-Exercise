@@ -19,7 +19,7 @@ export const ABILITY_LABELS_HU: Record<string, string> = {
   "charisma": "Karizma"
 }
 
-export const API_URL = "http://16.171.52.203:8000"
+export const API_URL = "https://dndne.blog"
 export const TOKEN_KEY = "token"
 
 export const XP_LEVELS: Record<number, number> = {
