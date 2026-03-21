@@ -1,9 +1,13 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Quest, QuestProgress } from "../types/types";
 import { Bar } from 'react-native-progress';
 import React from "react";
+import { useExercisePlanContext } from "../context/ExercisePlanContext";
+import { exerciseCard_styles } from "../styles/exerciseCard";
 
 export function QuestCard({ quest, progress }: { quest: Quest, progress: QuestProgress | undefined }) {
+    const { plan, addExercise, startPlan } = useExercisePlanContext();
+
     return (
         <View
             style={{
@@ -34,6 +38,13 @@ export function QuestCard({ quest, progress }: { quest: Quest, progress: QuestPr
             <Text style={{ color: "#ffd700" }}>
                 XP Jutalom: {quest.xp_reward}
             </Text>
+
+            <TouchableOpacity
+                onPress={() => addExercise(quest.exercise)}
+                style={[exerciseCard_styles.addButton, {width: "50%", marginTop: 5}]}
+            >
+                <Text style={exerciseCard_styles.buttonText}>+ Tervhez</Text>
+            </TouchableOpacity>
 
             {quest.item && (
                 <View style={{ marginTop: 10 }}>
