@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 import logging
 
 from database import get_db
-from models import Item, ItemEffect, User
+from models import ItemEffect, User
 import schemas
 from dependencies import get_admin_user
 from services import seeded_generation

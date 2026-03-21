@@ -4,11 +4,9 @@ import logging
 from typing import List
 
 from database import get_db
-from models import *
+from models import User, Character, AdventureSession
 import schemas
 from dependencies import get_current_user, get_admin_user
-from services import chat as chat_service
-from services import messages as messages_service
 
 app = APIRouter(
     prefix="/adventure",

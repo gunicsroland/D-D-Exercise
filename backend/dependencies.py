@@ -4,7 +4,6 @@ import secrets
 from fastapi.security import OAuth2PasswordBearer, APIKeyHeader
 from sqlalchemy.orm import Session
 from jose import JWTError
-import logging
 
 from database import get_db
 from models import User
@@ -35,9 +34,9 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
         if user_id is None:
             raise credentials_exception
-    except JWTError as e:
+    except JWTError:
         raise credentials_exception
-    except Exception as e:
+    except Exception:
         raise credentials_exception
 
     try:
@@ -47,7 +46,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
             raise credentials_exception
         
         return user
-    except Exception as e: 
+    except Exception: 
         raise credentials_exception
     
 def get_admin_user(current_user: User = Depends(get_current_user)):

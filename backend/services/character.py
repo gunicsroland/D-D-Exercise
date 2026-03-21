@@ -4,7 +4,7 @@ import constants
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from models import Character, CharacterAbility, User
+from models import Character, CharacterAbility
 
 def calculate_level(xp: int) -> int:
     level = 1

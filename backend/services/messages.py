@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
-import logging
 
 from models import AdventureMessage, AdventureSession   , ChatRole
 

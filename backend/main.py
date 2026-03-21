@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 
 from database import Base, engine
 import schemas
-from models import *
+from models import User, ActiveEffect
 from dependencies import get_current_user, get_db
 
 from routes import auth, users, items, effects, exercises, quests, adventures, messages

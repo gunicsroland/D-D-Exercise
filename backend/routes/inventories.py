@@ -5,7 +5,7 @@ from typing import List
 from datetime import datetime, timedelta, timezone
 
 from database import get_db
-from models import *
+from models import Inventory, User, ActiveEffect
 import schemas
 from dependencies import get_current_user
 from services import inventory as inventory_service
@@ -19,7 +19,7 @@ app = APIRouter(
 def get_all_inventories(
     db: Session = Depends(get_db)
 ):
-    logging.info(f"Fetching all inventories")
+    logging.info("Fetching all inventories")
     return db.query(Inventory).all()
 
 @app.get("/me", response_model=List[schemas.InventoryRead])

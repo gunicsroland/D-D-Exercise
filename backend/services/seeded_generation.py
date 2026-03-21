@@ -4,7 +4,6 @@ import os
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
-from database import get_db
 from models import Exercise, ExerciseCategory, ExerciseDifficulty, AbilityType, ItemEffect, Item, ItemType, Quest
 from services import item as item_service
 

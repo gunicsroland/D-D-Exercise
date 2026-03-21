@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from database import get_db
-from models import *
+from models import User
 import schemas
 from dependencies import require_admin_key
 from services.auth import hash_password, verify_password, create_access_token
@@ -58,7 +58,7 @@ def login(loginRequest: schemas.UserLogin, db: Session = Depends(get_db)):
     return {"access_token": token, "token_type": "bearer"}
 
 @app.post("/form_login")
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+def form_login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     username = form_data.username
     password = form_data.password
 

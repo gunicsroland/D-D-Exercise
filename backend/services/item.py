@@ -1,6 +1,5 @@
 import logging
 
-import constants
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 

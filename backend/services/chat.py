@@ -1,6 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-import logging
 
 from models import AdventureMessage, AdventureSession
 import services.character as character_service
@@ -77,7 +75,6 @@ def apply_dm_response_to_game_state(response, session, db):
     if not response:
         return
     
-    user_id = session.user_id
     character = session.character
     
     if xp := response.get("xp"):

@@ -1,11 +1,9 @@
-from datetime import date
-from constants import DAY_CATEGORY_MAP
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
 import logging
 
 from database import get_db
-from models import Quest, User, Item, ItemEffect, UserQuestProgress
+from models import Quest, User, Item, UserQuestProgress, Exercise
 import schemas
 from dependencies import get_admin_user, get_current_user
 from services import quests as quest_service

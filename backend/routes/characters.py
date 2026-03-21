@@ -5,7 +5,7 @@ from typing import List
 from datetime import datetime
 
 from database import get_db
-from models import *
+from models import User, Character, CharacterAbility, ActiveEffect, AbilityType
 import schemas
 from dependencies import get_current_user
 from services import character as character_service
@@ -71,7 +71,7 @@ def get_user_character(
     return character
 
 @app.get("/me", response_model=schemas.CharacterRead)
-def get_user_character(
+def get_own_character(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
@@ -217,7 +217,7 @@ def update_charecter(
     character = db.query(Character).filter(Character.user_id == current_user.id).first()
     
     if not character:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Character not found")
+        raise HTTPException(status_code=404, detail="Character not found")
     
     update_data = data.dict(exclude_unset=True)
     for key, value in update_data.items():
