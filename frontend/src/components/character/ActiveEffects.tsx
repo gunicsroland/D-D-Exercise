@@ -4,6 +4,7 @@ import { getRemainingTime } from "../../hooks/useRemainngTime";
 import React from "react";
 import { effect_styles } from "../../styles/active_effect";
 import { colors } from "../../styles/colors";
+import { ABILITY_LABELS_HU } from "../../text_labels";
 
 export const ActiveEffects = ({
   character,
@@ -25,7 +26,7 @@ export const ActiveEffects = ({
         </Text>
       )}
 
-      {activeEffects.map((effect) => {
+      {activeEffects.map((effect, index) => {
         const expires = new Date(effect.expires_at).getTime();
         const remainingDuration = expires - now;
 
@@ -37,11 +38,13 @@ export const ActiveEffects = ({
 
         const isBuff = effect.increase;
 
+        const key = `${character.id}-${effect.id}-${index}`;
+
         return (
-          <View key={effect.id} style={effect_styles.card}>
+          <View key={key} style={effect_styles.card}>
             <Text style={effect_styles.effectText}>
               {effect.increase ? "+" : "-"}
-              {effect.value} {effect.attribute}
+              {effect.value} {ABILITY_LABELS_HU[effect.attribute]}
             </Text>
 
             <Text style={effect_styles.timer}>

@@ -49,7 +49,7 @@ export const AbilityList = ({
               style={[
                 character_styles.upgradeButton,
                 character.ability_points <= 0 &&
-                  character_styles.disabledButton,
+                character_styles.disabledButton,
               ]}
               onPress={() => handleUpgrade(item.ability)}
               disabled={character.ability_points <= 0}
