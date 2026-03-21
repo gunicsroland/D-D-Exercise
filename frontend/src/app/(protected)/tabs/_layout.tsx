@@ -33,13 +33,13 @@ export default function TabsLayout() {
             headerStyle: {
                 backgroundColor: colors.surface,
                 borderColor: colors.secondary,
-                height: 60
+                height: 40
             },
             headerTitleStyle: {
                 color: colors.gold,
                 fontFamily: "Cinzel_600SemiBold",
                 fontSize: 25,
-                height: 60
+                height: 70
             },
             tabBarStyle: {
                 backgroundColor: colors.surface,
