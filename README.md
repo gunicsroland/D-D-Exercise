@@ -41,7 +41,7 @@ MODEL_NAME=gemini-2.5-flash
 A file in /fronend/ fro the frontend
 
 ```
-EXPI_PUBLIC_API_URL=http://localhost:8000
+EXPO_PUBLIC_API_URL=http://localhost:8000
 ```
 
 ## Starting it
