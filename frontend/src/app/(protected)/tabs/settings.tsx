@@ -10,7 +10,6 @@ export default function SettingsScreen() {
 
   return (
     <View style={settings_styles.container}>
-      <Text style={settings_styles.title}>Beállítások</Text>
       <Pressable
         style={settings_styles.button}
         onPress={logout}>
