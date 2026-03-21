@@ -1,3 +1,4 @@
+import os
 from src.models import ExerciseCategory
 
 XP_LEVELS = {
@@ -34,6 +35,6 @@ DAY_CATEGORY_MAP = {
     6: ExerciseCategory.Cardio,  # Sunday
 }
 
-MODEL_NAME = "gemini-2.5-flash"
+MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
 
 DAILY_QUEST_COUNT = 3

@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import os
 
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends
@@ -37,10 +38,7 @@ app.include_router(messages.app)
 
 Base.metadata.create_all(bind=engine)
 
-origins = [
-    "http://16.171.52.203:8081",
-    "http://localhost:8081",
-]
+origins = os.getenv("CORS_ORIGINS", "").split(",")
 
 app.add_middleware(
     CORSMiddleware,

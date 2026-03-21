@@ -25,7 +25,7 @@ export const BASE_STATS_BY_CLASS = {
   },
 };
 
-export const API_URL = "https://dndne.blog";
+export const API_URL = process.env.EXPO_PUBLIC_API_URL;
 export const TOKEN_KEY = "token";
 
 export const XP_LEVELS: Record<number, number> = {
