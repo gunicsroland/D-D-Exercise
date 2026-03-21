@@ -4,59 +4,72 @@ from pydantic import BaseModel, model_validator
 
 from src.models import AbilityType, ExerciseCategory, ExerciseDifficulty, ChatRole
 
+
 class BaseSchema(BaseModel):
     class Config:
         orm_mode = True
+
 
 class UserBase(BaseSchema):
     username: str
     email: str
 
+
 class UserCreate(UserBase):
     password: str
+
 
 class UserRead(UserBase):
     id: int
     is_admin: bool
 
+
 class UserLogin(BaseSchema):
     username: str
     password: str
 
+
 class UserUpdate(BaseModel):
     quest_difficulty: ExerciseDifficulty
-    
+
+
 class AbilityBase(BaseSchema):
     ability: AbilityType
     score: int
+
 
 class AbilityCreate(BaseSchema):
     ability: AbilityType
     score: int
 
+
 class AbilityRead(AbilityBase):
     pass
-    
+
+
 class ActiveEffectBase(BaseSchema):
     expires_at: datetime
     attribute: AbilityType
     increase: bool
     value: int
 
+
 class ActiveEffectRead(ActiveEffectBase):
     id: int
 
+
 class ActiveEffectCreate(ActiveEffectBase):
     pass
+
 
 class CharacterBase(BaseSchema):
     name: str
     class_: str
 
-    
+
 class CharacterCreate(CharacterBase):
     abilities: dict[AbilityType, int]
-    
+
     @model_validator(mode="after")
     def check_all_abilities_present(self):
         required = {a for a in AbilityType}
@@ -64,7 +77,9 @@ class CharacterCreate(CharacterBase):
 
         missing = required - received
         if missing:
-            raise ValueError(f"Missing abilities: {', '.join(m.value for m in missing)}")
+            raise ValueError(
+                f"Missing abilities: {', '.join(m.value for m in missing)}"
+            )
 
         for ability, score in self.abilities.items():
             if not 1 <= score <= 20:
@@ -72,69 +87,83 @@ class CharacterCreate(CharacterBase):
 
         return self
 
+
 class CharacterRead(CharacterBase):
     id: int
     level: int
     xp: int
-    ability_points: int    
+    ability_points: int
     abilities: List[AbilityRead]
-    
+
     active_effects: list[ActiveEffectRead] = []
+
 
 class CharacterUpdate(BaseSchema):
     name: Optional[str] = None
     xp: Optional[int] = None
     ability_points: Optional[int] = None
-    
+
+
 class ItemEffectBase(BaseSchema):
     attribute: AbilityType
     increase: bool
     value: int
     duration: int
-    
+
+
 class ItemEffectCreate(ItemEffectBase):
     pass
-        
+
+
 class ItemEffectRead(ItemEffectBase):
     id: int
-    
+
+
 class ItemEffectUpdate(BaseSchema):
     attribute: Optional[str] = None
     increase: Optional[str] = None
     value: Optional[int] = None
     duration: Optional[int] = None
-    
+
+
 class ItemBase(BaseSchema):
     name: str
     description: str
     item_type: str
     image_url: str = ""
 
+
 class ItemCreate(ItemBase):
     pass
-        
+
+
 class ItemRead(ItemBase):
     id: int
     effects: List[ItemEffectRead] = []
-    
+
+
 class ItemUpdate(BaseSchema):
     name: Optional[str] = None
     description: Optional[str] = None
     item_type: Optional[str] = None
     image_url: Optional[str] = None
-        
+
+
 class InventoryBase(BaseSchema):
     quantity: int
-    
+
+
 class InventoryCreate(InventoryBase):
     item_id: int
     user_id: int
-    
+
+
 class InventoryRead(InventoryBase):
     id: int
     user_id: int
     item: ItemRead
-    
+
+
 class ExerciseBase(BaseSchema):
     name: str
     category: ExerciseCategory
@@ -142,13 +171,16 @@ class ExerciseBase(BaseSchema):
     quantity: int = 1
     xp_reward: int
     media_url: Optional[str] = None
-    
+
+
 class ExerciseCreate(ExerciseBase):
     pass
 
+
 class ExerciseRead(ExerciseBase):
     id: int
-    
+
+
 class ExerciseUpdate(BaseSchema):
     name: Optional[str] = None
     category: Optional[ExerciseCategory] = None
@@ -156,22 +188,26 @@ class ExerciseUpdate(BaseSchema):
     quantity: Optional[int] = None
     xp_reward: Optional[int] = None
     media_url: Optional[str] = None
-    
+
+
 class QuestBase(BaseSchema):
     name: str
 
     amount: int
     xp_reward: int
-    
+
+
 class QuestCreate(QuestBase):
     exercise_id: int
     item_reward: Optional[int] = None
+
 
 class QuestRead(QuestBase):
     id: int
     exercise: ExerciseRead
     item: Optional[ItemRead] = None
-    
+
+
 class QuestUpdate(BaseSchema):
     name: Optional[str] = None
     exercise_id: Optional[int] = None
@@ -179,35 +215,43 @@ class QuestUpdate(BaseSchema):
     xp_reward: Optional[int] = None
     item_reward: Optional[int] = None
 
+
 class UserQuestProgressRead(BaseModel):
     id: int
     quest_id: int
     progress: int
     completed: bool
 
+
 class AdventureSessionBase(BaseSchema):
     character_id: int
     user_id: int
     title: str
-    
+
+
 class AdventureSessionCreate(AdventureSessionBase):
     pass
 
+
 class AdventureSessionRead(AdventureSessionBase):
     id: int
-    
+
+
 class AdventureSessionUpdate(BaseSchema):
     character_id: Optional[int] = None
     user_id: Optional[int] = None
     title: Optional[str] = None
-    
+
+
 class AdventureMessageBase(BaseSchema):
     session_id: int
     role: ChatRole
     content: str
-    
+
+
 class AdventureMessageCreate(AdventureMessageBase):
     pass
+
 
 class AdventureMessageRead(AdventureMessageBase):
     id: int

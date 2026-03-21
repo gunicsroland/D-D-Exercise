@@ -1,14 +1,26 @@
+from datetime import datetime, timezone
+
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from datetime import datetime, timezone
 
 from src.database import Base, engine
 import src.schemas as schemas
 from src.models import User, ActiveEffect
 from src.dependencies import get_current_user, get_db
 
-from src.routes import auth, users, items, effects, exercises, quests, adventures, messages, characters, inventories
+from src.routes import (
+    auth,
+    users,
+    items,
+    effects,
+    exercises,
+    quests,
+    adventures,
+    messages,
+    characters,
+    inventories,
+)
 
 app = FastAPI()
 
@@ -35,21 +47,29 @@ app.add_middleware(
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],         
+    allow_headers=["*"],
 )
+
 
 @app.get("/me/effects", response_model=list[schemas.ActiveEffectRead])
 def get_active_effects(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)):
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
+):
     print(current_user)
 
-    effects = db.query(ActiveEffect).filter(
-        ActiveEffect.user_id == current_user.id,
-        ActiveEffect.expires_at > datetime.now(timezone.utc)
-    ).all()
-    return effects
+    own_effects = (
+        db.query(ActiveEffect)
+        .filter(
+            ActiveEffect.user_id == current_user.id,
+            ActiveEffect.expires_at > datetime.now(timezone.utc),
+        )
+        .all()
+    )
+    return own_effects
 
-@app.get("/me")
-def get_me(current_user: User = Depends(get_current_user), response_model=schemas.UserRead):
+
+@app.get("/me",  response_model=schemas.UserRead)
+def get_me(
+    current_user: User = Depends(get_current_user)
+):
     return current_user

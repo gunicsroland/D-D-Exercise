@@ -8,18 +8,18 @@ from src.models import User, Character, AdventureSession
 import src.schemas as schemas
 from src.dependencies import get_current_user, get_admin_user
 
-app = APIRouter(
-    prefix="/adventure",
-    tags=["adventure"]
-)
+app = APIRouter(prefix="/adventure", tags=["adventure"])
+
 
 @app.post("/start")
 def start_adventure(
     title: str,
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    logging.info(f"Starting adventure for user_id={current_user.id} with title='{title}'")
+    logging.info(
+        f"Starting adventure for user_id={current_user.id} with title='{title}'"
+    )
 
     character = db.query(Character).filter(Character.user_id == current_user.id).first()
 
@@ -28,42 +28,56 @@ def start_adventure(
         raise HTTPException(status_code=404, detail="Character not found")
 
     session = AdventureSession(
-        user_id=current_user.id,
-        character_id=character.id,
-        title=title
+        user_id=current_user.id, character_id=character.id, title=title
     )
     db.add(session)
     db.commit()
     db.refresh(session)
 
-    logging.info(f"Adventure session created with id={session.id} for user_id={current_user.id}")
+    logging.info(
+        f"Adventure session created with id={session.id} for user_id={current_user.id}"
+    )
 
     return {"session_id": session.id}
 
+
 @app.get("/", response_model=List[schemas.AdventureSessionRead])
 def get_adventure_sessions(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
-    return db.query(AdventureSession).filter(AdventureSession.user_id == current_user.id).all()
+    return (
+        db.query(AdventureSession)
+        .filter(AdventureSession.user_id == current_user.id)
+        .all()
+    )
+
 
 @app.get("/all", response_model=List[schemas.AdventureSessionRead])
 def get_all_adventure_sessions(
-    current_user: User = Depends(get_admin_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_admin_user), db: Session = Depends(get_db)
 ):
     return db.query(AdventureSession).all()
+
 
 @app.delete("/{session_id}")
 def delete_adventure_session(
     session_id: int,
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    session = db.query(AdventureSession).filter(AdventureSession.id == session_id, AdventureSession.user_id == current_user.id).first()
+    session = (
+        db.query(AdventureSession)
+        .filter(
+            AdventureSession.id == session_id,
+            AdventureSession.user_id == current_user.id,
+        )
+        .first()
+    )
 
     if not session:
-        logging.warning(f"Adventure session not found with id={session_id} for deletion")
+        logging.warning(
+            f"Adventure session not found with id={session_id} for deletion"
+        )
         raise HTTPException(status_code=404, detail="Adventure session not found")
 
     db.delete(session)
@@ -73,23 +87,35 @@ def delete_adventure_session(
 
     return {"detail": "Adventure session deleted"}
 
+
 @app.put("/{session_id}/title")
 def update_adventure_title(
     session_id: int,
     new_title: str,
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    session = db.query(AdventureSession).filter(AdventureSession.id == session_id, AdventureSession.user_id == current_user.id).first()
+    session = (
+        db.query(AdventureSession)
+        .filter(
+            AdventureSession.id == session_id,
+            AdventureSession.user_id == current_user.id,
+        )
+        .first()
+    )
 
     if not session:
-        logging.warning(f"Adventure session not found with id={session_id} for title update")
+        logging.warning(
+            f"Adventure session not found with id={session_id} for title update"
+        )
         raise HTTPException(status_code=404, detail="Adventure session not found")
 
     session.title = new_title
     db.commit()
     db.refresh(session)
 
-    logging.info(f"Updated title of adventure session with id={session_id} to '{new_title}'")
+    logging.info(
+        f"Updated title of adventure session with id={session_id} to '{new_title}'"
+    )
 
     return {"detail": "Adventure title updated", "new_title": session.title}

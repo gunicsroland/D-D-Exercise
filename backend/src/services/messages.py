@@ -1,23 +1,22 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from src.models import AdventureMessage, AdventureSession   , ChatRole
+from src.models import AdventureMessage, AdventureSession, ChatRole
+
 
 def save_message(
-    user_id: int,
-    session_id: int,
-    role: ChatRole,
-    content: str,
-    db: Session
+    user_id: int, session_id: int, role: ChatRole, content: str, db: Session
 ):
-    session = db.query(AdventureSession).filter(AdventureSession.id == session_id, AdventureSession.user_id == user_id).first()
+    session = (
+        db.query(AdventureSession)
+        .filter(AdventureSession.id == session_id, AdventureSession.user_id == user_id)
+        .first()
+    )
     if not session:
         raise HTTPException(status_code=404, detail="Adventure session not found")
 
     message = adventure_message = AdventureMessage(
-        session_id=session.id,
-        role=role,
-        content=content
+        session_id=session.id, role=role, content=content
     )
     db.add(adventure_message)
     db.commit()

@@ -10,30 +10,31 @@ import src.schemas as schemas
 from src.dependencies import get_current_user
 from src.services import inventory as inventory_service
 
-app = APIRouter(
-    prefix="/inventory",
-    tags=["inventory"]
-)
+app = APIRouter(prefix="/inventory", tags=["inventory"])
+
 
 @app.get("/", response_model=List[schemas.InventoryRead])
-def get_all_inventories(
-    db: Session = Depends(get_db)
-):
+def get_all_inventories(db: Session = Depends(get_db)):
     logging.info("Fetching all inventories")
     return db.query(Inventory).all()
 
+
 @app.get("/me", response_model=List[schemas.InventoryRead])
 def get_inventory(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
     logging.info(f"Fetching inventory for user_id={current_user.id}")
 
-    inventory_items = (db.query(Inventory).filter(Inventory.user_id == current_user.id).all())
+    inventory_items = (
+        db.query(Inventory).filter(Inventory.user_id == current_user.id).all()
+    )
 
-    logging.info(f"Found {len(inventory_items)} items in inventory for user_id={current_user.id}")
+    logging.info(
+        f"Found {len(inventory_items)} items in inventory for user_id={current_user.id}"
+    )
 
     return inventory_items
+
 
 @app.post("/{item_id}/")
 def add_item(
@@ -42,11 +43,14 @@ def add_item(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    logging.info(f"Adding item_id={item_id} (quantity={quantity}) to inventory for user_id={current_user.id}")
-    
+    logging.info(
+        f"Adding item_id={item_id} (quantity={quantity}) to inventory for user_id={current_user.id}"
+    )
+
     inventory_service.add_item(current_user.id, item_id, quantity, db)
-    
+
     return {"message": "Item added to inventory"}
+
 
 @app.delete("/consume/{item_id}")
 def consume_item(
@@ -55,12 +59,15 @@ def consume_item(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    logging.info(f"Consumin item_id={item_id} (quantity={quantity}) from inventory for user_id={current_user.id}")
-    
-    inventory_item = db.query(Inventory).filter(
-        Inventory.user_id == current_user.id,
-        Inventory.item_id == item_id
-    ).first()
+    logging.info(
+        f"Consumin item_id={item_id} (quantity={quantity}) from inventory for user_id={current_user.id}"
+    )
+
+    inventory_item = (
+        db.query(Inventory)
+        .filter(Inventory.user_id == current_user.id, Inventory.item_id == item_id)
+        .first()
+    )
 
     if not inventory_item:
         raise HTTPException(status_code=404, detail="Item not in inventory")
@@ -79,7 +86,7 @@ def consume_item(
             attribute=effect.attribute,
             value=effect.value,
             increase=effect.increase,
-            expires_at=expires
+            expires_at=expires,
         )
 
         db.add(active_effect)
@@ -88,8 +95,11 @@ def consume_item(
         db.delete(inventory_item)
 
     db.commit()
-    logging.info(f"Item consumed successfully from inventory for user_id={current_user.id}")
+    logging.info(
+        f"Item consumed successfully from inventory for user_id={current_user.id}"
+    )
     return {"message": "Item consumed from inventory"}
+
 
 @app.delete("/{item_id}/")
 def remove_item(
@@ -98,12 +108,15 @@ def remove_item(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    logging.info(f"Removing item_id={item_id} (quantity={quantity}) from inventory for user_id={current_user.id}")
-    
-    inventory_item = db.query(Inventory).filter(
-        Inventory.user_id == current_user.id,
-        Inventory.item_id == item_id
-    ).first()
+    logging.info(
+        f"Removing item_id={item_id} (quantity={quantity}) from inventory for user_id={current_user.id}"
+    )
+
+    inventory_item = (
+        db.query(Inventory)
+        .filter(Inventory.user_id == current_user.id, Inventory.item_id == item_id)
+        .first()
+    )
 
     if not inventory_item:
         raise HTTPException(status_code=404, detail="Item not in inventory")
@@ -117,5 +130,7 @@ def remove_item(
         db.delete(inventory_item)
 
     db.commit()
-    logging.info(f"Item removed successfully from inventory for user_id={current_user.id}")
+    logging.info(
+        f"Item removed successfully from inventory for user_id={current_user.id}"
+    )
     return {"message": "Item removed from inventory"}

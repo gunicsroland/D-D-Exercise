@@ -8,23 +8,18 @@ import src.schemas as schemas
 from src.dependencies import get_admin_user
 from src.services import seeded_generation
 
-app = APIRouter(
-    prefix="/effects",
-    tags=["effects"]
-)
+app = APIRouter(prefix="/effects", tags=["effects"])
+
 
 @app.post("/seed")
 def seed_item_effects(
-    db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user)
+    db: Session = Depends(get_db), admin_user: User = Depends(get_admin_user)
 ):
     return seeded_generation.seed_item_effects(db)
 
+
 @app.get("/{effect_id}", response_model=schemas.ItemEffectRead)
-def get_item_effect(
-    effect_id: int,
-    db: Session = Depends(get_db)
-):
+def get_item_effect(effect_id: int, db: Session = Depends(get_db)):
     logging.info(f"Fetching item effect with id={effect_id}")
 
     effect = db.query(ItemEffect).filter(ItemEffect.id == effect_id).first()
@@ -37,16 +32,18 @@ def get_item_effect(
 
     return effect
 
+
 @app.get("/", response_model=list[schemas.ItemEffectRead])
 def get_all_item_effects(db: Session = Depends(get_db)):
     logging.info("Fetching all item effects")
     return db.query(ItemEffect).all()
 
+
 @app.post("/", response_model=schemas.ItemEffectRead)
 def add_item_effect(
     effect_data: schemas.ItemEffectCreate,
     db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user)
+    admin_user: User = Depends(get_admin_user),
 ):
     logging.info(f"Admin {admin_user.id} creating effect")
 
@@ -63,12 +60,13 @@ def add_item_effect(
 
     return effect
 
+
 @app.put("/{effect_id}")
 def update_item_effect(
     effect_id: int,
     effect_data: schemas.ItemEffectUpdate,
     db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user)
+    admin_user: User = Depends(get_admin_user),
 ):
     logging.info(f"Admin {admin_user.id} updating item effect id={effect_id}")
 
@@ -87,11 +85,12 @@ def update_item_effect(
 
     return effect
 
+
 @app.delete("/{effect_id}")
 def delete_item_effect(
     effect_id: int,
     db: Session = Depends(get_db),
-    admin_user: User = Depends(get_admin_user)
+    admin_user: User = Depends(get_admin_user),
 ):
     logging.info(f"Admin {admin_user.id} deleting effect id={effect_id}")
 

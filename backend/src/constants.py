@@ -1,6 +1,5 @@
 from src.models import ExerciseCategory
 
-
 XP_LEVELS = {
     1: 0,
     2: 300,
@@ -26,13 +25,13 @@ XP_LEVELS = {
 MAX_LEVEL = 20
 
 DAY_CATEGORY_MAP = {
-    0: ExerciseCategory.Strength,       #Monday
-    1: ExerciseCategory.Strength,       #Tuesday
-    2: ExerciseCategory.Flexibility,    #Wednesday
-    3: ExerciseCategory.Flexibility,    #Thursday
-    4: ExerciseCategory.Core,           #Friday
-    5: ExerciseCategory.Core,           #Saturday
-    6: ExerciseCategory.Cardio          #Sunday
+    0: ExerciseCategory.Strength,  # Monday
+    1: ExerciseCategory.Strength,  # Tuesday
+    2: ExerciseCategory.Flexibility,  # Wednesday
+    3: ExerciseCategory.Flexibility,  # Thursday
+    4: ExerciseCategory.Core,  # Friday
+    5: ExerciseCategory.Core,  # Saturday
+    6: ExerciseCategory.Cardio,  # Sunday
 }
 
 MODEL_NAME = "gemini-2.5-flash"

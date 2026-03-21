@@ -10,15 +10,12 @@ import src.schemas as schemas
 from src.dependencies import get_current_user
 from src.services import character as character_service
 
-app = APIRouter(
-    prefix="/character",
-    tags=["character"]
-)
+app = APIRouter(prefix="/character", tags=["character"])
+
 
 @app.get("/has_character/{user_id}")
 def user_has_character(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
     logging.info(f"Checking character existence for user_id={current_user.id}")
 
@@ -27,11 +24,10 @@ def user_has_character(
     logging.info(f"Character exists: {bool(character)} for user_id={current_user.id}")
     return {"has_character": bool(character)}
 
-    
+
 @app.get("/{user_id}", response_model=schemas.CharacterRead)
 def get_user_character(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
     logging.info(f"Fetching character for user_id={current_user.id}")
 
@@ -49,31 +45,35 @@ def get_user_character(
             "level": character.level,
             "class": character.class_,
             "xp": character.xp,
-            "ability_points": character.ability_points
-        }
+            "ability_points": character.ability_points,
+        },
     )
 
-    active_effects = db.query(ActiveEffect).filter(
-        ActiveEffect.user_id == current_user.id,
-        ActiveEffect.expires_at > datetime.utcnow()
-    ).all()
+    active_effects = (
+        db.query(ActiveEffect)
+        .filter(
+            ActiveEffect.user_id == current_user.id,
+            ActiveEffect.expires_at > datetime.utcnow(),
+        )
+        .all()
+    )
 
     character.active_effects = [
         {
             "attribute": ae.attribute,
             "increase": ae.increase,
             "value": ae.value,
-            "expires_at": ae.expires_at
+            "expires_at": ae.expires_at,
         }
         for ae in active_effects
     ]
 
     return character
+
 
 @app.get("/me", response_model=schemas.CharacterRead)
 def get_own_character(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
     logging.info(f"Fetching character for user_id={current_user.id}")
 
@@ -83,10 +83,14 @@ def get_own_character(
         logging.info(f"No character found for user_id={current_user.id}")
         raise HTTPException(status_code=404, detail="Character not found")
 
-    active_effects = db.query(ActiveEffect).filter(
-        ActiveEffect.user_id == current_user.id,
-        ActiveEffect.expires_at > datetime.utcnow()
-    ).all()
+    active_effects = (
+        db.query(ActiveEffect)
+        .filter(
+            ActiveEffect.user_id == current_user.id,
+            ActiveEffect.expires_at > datetime.utcnow(),
+        )
+        .all()
+    )
 
     logging.info(
         "Character found",
@@ -96,8 +100,8 @@ def get_own_character(
             "level": character.level,
             "class": character.class_,
             "xp": character.xp,
-            "ability_points": character.ability_points
-        }
+            "ability_points": character.ability_points,
+        },
     )
 
     character.active_effects = [
@@ -105,12 +109,13 @@ def get_own_character(
             "attribute": ae.attribute,
             "increase": ae.increase,
             "value": ae.value,
-            "expires_at": ae.expires_at
+            "expires_at": ae.expires_at,
         }
         for ae in active_effects
     ]
 
     return character
+
 
 @app.get("/", response_model=List[schemas.CharacterRead])
 def get_all_characters(db: Session = Depends(get_db)):
@@ -126,7 +131,9 @@ def create_character(
 ):
     logging.info(f"Creating character for user_id={current_user.id}")
 
-    existing_character = db.query(Character).filter(Character.user_id == current_user.id).first()
+    existing_character = (
+        db.query(Character).filter(Character.user_id == current_user.id).first()
+    )
     if existing_character:
         logging.info(f"User {current_user.id} already has a character")
         raise HTTPException(status_code=400, detail="Character already exists")
@@ -139,7 +146,7 @@ def create_character(
         class_=character_data.class_,
         level=1,
         xp=0,
-        user_id=current_user.id
+        user_id=current_user.id,
     )
 
     character.abilities = [
@@ -151,22 +158,23 @@ def create_character(
     db.commit()
     db.refresh(character)
 
-    logging.info(f"Character created successfully with id={character.id} for user_id={current_user.id}")
+    logging.info(
+        f"Character created successfully with id={character.id} for user_id={current_user.id}"
+    )
 
-    return {
-        "message": "Character created successfully",
-        "character_id": character.id
-    }
+    return {"message": "Character created successfully", "character_id": character.id}
+
 
 @app.delete("/{user_id}")
 def delete_character(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
     logging.info(f"Deleting character for user_id={current_user.id}")
 
     if current_user.id != current_user.id:
-        logging.info(f"Unauthorized character deletion attempt by user {current_user.id}")
+        logging.info(
+            f"Unauthorized character deletion attempt by user {current_user.id}"
+        )
         raise HTTPException(status_code=403, detail="Not authorized")
 
     character = db.query(Character).filter(Character.user_id == current_user.id).first()
@@ -182,47 +190,54 @@ def delete_character(
 
     return {"message": "Character deleted successfully"}
 
+
 @app.put("/add_xp")
 def add_xp(
     xp_gain: int,
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     logging.info(f"Adding XP for user={current_user.id}, xp_gain={xp_gain}")
-    
+
     if current_user.id != current_user.id:
         logging.info(f"Unauthorized XP addition attempt by user {current_user.id}")
         raise HTTPException(status_code=403, detail="Not authorized")
-    
+
     message = character_service.add_xp(current_user.id, xp_gain, db)
-    logging.info(f"XP added successfully for user_id={current_user.id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}")
+    logging.info(
+        f"XP added successfully for user_id={current_user.id}. Total XP: {message['total_xp']}, New Level: {message['new_level']}"
+    )
     return message
-    
+
+
 @app.put("/upgrade_ability")
 def upgrade_ability(
     ability: AbilityType,
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
-    logging.info(f"Upgrading ability for user_id={current_user.id}, ability={ability.value}")
-    
+    logging.info(
+        f"Upgrading ability for user_id={current_user.id}, ability={ability.value}"
+    )
+
     return character_service.upgrade_ability(current_user.id, ability.value, db)
-    
+
+
 @app.put("/me")
 def update_charecter(
     data: schemas.CharacterUpdate,
     current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
 ):
     character = db.query(Character).filter(Character.user_id == current_user.id).first()
-    
+
     if not character:
         raise HTTPException(status_code=404, detail="Character not found")
-    
+
     update_data = data.dict(exclude_unset=True)
     for key, value in update_data.items():
         setattr(character, key, value)
-    
+
     db.add(character)
     db.commit()
     db.refresh(character)

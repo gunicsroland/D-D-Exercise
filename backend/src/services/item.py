@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from src.models import Item, ItemEffect
 
+
 def link_item_with_effect(item_id: int, effect_id: int, db: Session):
     item = db.query(Item).filter(Item.id == item_id).first()
     if not item:

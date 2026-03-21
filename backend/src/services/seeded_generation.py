@@ -4,8 +4,18 @@ import os
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 
-from src.models import Exercise, ExerciseCategory, ExerciseDifficulty, AbilityType, ItemEffect, Item, ItemType, Quest
+from src.models import (
+    Exercise,
+    ExerciseCategory,
+    ExerciseDifficulty,
+    AbilityType,
+    ItemEffect,
+    Item,
+    ItemType,
+    Quest,
+)
 from src.services import item as item_service
+
 
 def seed_exercises(db: Session):
 
@@ -40,14 +50,12 @@ def seed_exercises(db: Session):
     except Exception as e:
         db.rollback()
         print("Error seeding exercises:", e)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error seeding items: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Error seeding items: {str(e)}")
     finally:
         db.close()
 
     return "Success"
+
 
 def generate_item_effects_file():
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -57,13 +65,13 @@ def generate_item_effects_file():
     for ability in AbilityType:
         for value in range(-3, 4):
             if value == 0:
-                continue 
+                continue
 
             effect = {
                 "attribute": ability.value,
                 "increase": value > 0,
                 "value": abs(value),
-                "duration": max(1, 6 // abs(value))
+                "duration": max(1, 6 // abs(value)),
             }
 
             effects.append(effect)
@@ -72,6 +80,7 @@ def generate_item_effects_file():
         json.dump(effects, f, indent=4)
 
     print(f"Generated {len(effects)} item effects into {output_path}")
+
 
 def seed_item_effects(db: Session):
     try:
@@ -115,14 +124,12 @@ def seed_item_effects(db: Session):
     except Exception as e:
         db.rollback()
         print("Error seeding item effects:", e)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error seeding items: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Error seeding items: {str(e)}")
     finally:
         db.close()
 
     return "Success"
+
 
 def seed_items(db: Session):
 
@@ -143,7 +150,7 @@ def seed_items(db: Session):
                 name=item_data["name"],
                 description=item_data["description"],
                 image_url=item_data.get("image_url"),
-                item_type=ItemType(item_data["item_type"])
+                item_type=ItemType(item_data["item_type"]),
             )
 
             db.add(item)
@@ -155,15 +162,13 @@ def seed_items(db: Session):
     except Exception as e:
         db.rollback()
         print("Error seeding items:", e)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error seeding items: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Error seeding items: {str(e)}")
 
     finally:
         db.close()
 
     return "Success"
+
 
 def seed_link_effects(db: Session):
 
@@ -187,15 +192,15 @@ def seed_link_effects(db: Session):
         db.rollback()
         print("Error seeding item-effect links:", e)
         raise HTTPException(
-            status_code=500,
-            detail=f"Error seeding item-effect links: {str(e)}"
+            status_code=500, detail=f"Error seeding item-effect links: {str(e)}"
         )
 
     finally:
         db.close()
 
     return "Success"
-            
+
+
 def seed_quests(db: Session):
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -210,14 +215,20 @@ def seed_quests(db: Session):
                 logging.info(f"Skipping existing quest: {q['name']}")
                 continue
 
-            exercise = db.query(Exercise).filter(Exercise.id == q["exercise_id"]).first()
+            exercise = (
+                db.query(Exercise).filter(Exercise.id == q["exercise_id"]).first()
+            )
             if not exercise:
-                logging.warning(f"Exercise with id={q['exercise_id']} not found. Skipping quest '{q['name']}'")
+                logging.warning(
+                    f"Exercise with id={q['exercise_id']} not found. Skipping quest '{q['name']}'"
+                )
                 continue
 
             item = db.query(Item).filter(Item.id == q["item_reward"]).first()
             if not item:
-                logging.warning(f"Item with id={q['item_reward']} not found. Skipping quest '{q['name']}'")
+                logging.warning(
+                    f"Item with id={q['item_reward']} not found. Skipping quest '{q['name']}'"
+                )
                 continue
 
             new_quest = Quest(
@@ -225,7 +236,7 @@ def seed_quests(db: Session):
                 exercise_id=q["exercise_id"],
                 amount=q["amount"],
                 xp_reward=q["xp_reward"],
-                item_reward=q["item_reward"]
+                item_reward=q["item_reward"],
             )
 
             db.add(new_quest)
@@ -237,9 +248,6 @@ def seed_quests(db: Session):
     except Exception as e:
         db.rollback()
         print("Error seeding quests:", e)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error seeding quests: {str(e)}"
-        )
+        raise HTTPException(status_code=500, detail=f"Error seeding quests: {str(e)}")
     finally:
         db.close()

@@ -9,13 +9,10 @@ from google.genai import types
 
 client = genai.Client()
 
-def generate_dm_response(
-    session: AdventureSession,
-    user_message: str,
-    db: Session
-):
+
+def generate_dm_response(session: AdventureSession, user_message: str, db: Session):
     character = session.character
-    
+
     system_prompt = f"""
     You are a Dungeon Master.
     The player character is:
@@ -27,7 +24,7 @@ def generate_dm_response(
     Respond in immersive D&D style.
     It is a simplified game, we don't have items or spells.
     """
-    
+
     history = (
         db.query(AdventureMessage)
         .filter(AdventureMessage.session_id == session.id)
@@ -35,30 +32,21 @@ def generate_dm_response(
         .all()
     )
     contents = []
-    
-    contents.append(
-        types.Content(
-            role="user",
-            parts=[types.Part(text=system_prompt)]
-        )
-    )
+
+    contents.append(types.Content(role="user", parts=[types.Part(text=system_prompt)]))
     for m in history:
         contents.append(
             types.Content(
                 role="user" if m.role == "user" else "model",
-                parts=[types.Part(text=m.content)]
+                parts=[types.Part(text=m.content)],
             )
         )
-    contents.append(
-        types.Content(
-            role="user",
-            parts=[types.Part(text=user_message)]
-        )
-    )
-    
+    contents.append(types.Content(role="user", parts=[types.Part(text=user_message)]))
+
     response = call_chat_model(contents)
-    
+
     return response.text
+
 
 def call_chat_model(contents):
     response = client.models.generate_content(
@@ -72,11 +60,12 @@ def call_chat_model(contents):
     )
     return response
 
+
 def apply_dm_response_to_game_state(response, session, db):
     if not response:
         return
-    
+
     character = session.character
-    
+
     if xp := response.get("xp"):
         character_service.add_experience(character, xp, db)
