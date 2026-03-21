@@ -85,7 +85,7 @@ export default function AdventureChatScreen() {
     return (
         <KeyboardAvoidingView
             style={{ flex: 1, backgroundColor: colors.background }}
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            behavior={"padding"}
             keyboardVerticalOffset={80}
         >
             <View style={session_styles.header}>
@@ -102,24 +102,26 @@ export default function AdventureChatScreen() {
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={renderItem}
                     contentContainerStyle={{ padding: 10 }}
+                    style={session_styles.container}
                 />
-
-                <View style={session_styles.inputContainer}>
-                    <TextInput
-                        value={newMessage}
-                        onChangeText={setNewMessage}
-                        placeholder="Írj üzenetet..."
-                        style={session_styles.input}
-                    />
-                    <Pressable
-                        style={[session_styles.sendButton, talking && session_styles.disabledButton]}
-                        onPress={sendMessage}
-                        disabled={talking}
-                    >
-                        <Text style={session_styles.sendText}>Küldés</Text>
-                    </Pressable>
-                </View>
             </View>
+
+            <View style={session_styles.inputContainer}>
+                <TextInput
+                    value={newMessage}
+                    onChangeText={setNewMessage}
+                    placeholder="Írj üzenetet..."
+                    style={session_styles.input}
+                />
+                <Pressable
+                    style={[session_styles.sendButton, talking && session_styles.disabledButton]}
+                    onPress={sendMessage}
+                    disabled={talking}
+                >
+                    <Text style={session_styles.sendText}>Küldés</Text>
+                </Pressable>
+            </View>
+
         </KeyboardAvoidingView>
     );
 
