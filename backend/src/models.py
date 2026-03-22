@@ -94,6 +94,9 @@ class Character(Base):
     abilities: Mapped[list["CharacterAbility"]] = relationship(
         "CharacterAbility", back_populates="character", cascade="all, delete"
     )
+    active_effects: Mapped[list["ActiveEffect"]] = relationship(
+        "ActiveEffect", back_populates="active_effects", cascade="all, delete"
+    )
     user: Mapped["User"] = relationship("User", back_populates="characters")
 
 
@@ -233,6 +236,7 @@ class AdventureSession(Base):
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.now())
+    summary: Mapped[str | None] = mapped_column(String, nullable=True)
 
     character: Mapped["Character"] = relationship("Character")
     user: Mapped["User"] = relationship("User")
@@ -251,5 +255,6 @@ class AdventureMessage(Base):
     role: Mapped[ChatRole] = mapped_column(Enum(ChatRole), nullable=False)
     content: Mapped[str] = mapped_column(String, nullable=False)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.now())
+    summarized: Mapped[bool] = mapped_column(Boolean, default=False)
 
     session: Mapped["AdventureSession"] = relationship("AdventureSession")
