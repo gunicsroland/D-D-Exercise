@@ -2,36 +2,55 @@
   "expo": {
     "name": "DnDnE",
     "slug": "DnDnE",
+    "scheme": "dndne",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons/ios-light.png",
     "userInterfaceStyle": "light",
     "jsEngine": "hermes",
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.groland20.DnDnE"
+      "bundleIdentifier": "com.groland20.DnDnE",
+      "icon": {
+        "dark": "./assets/icons/ios-dark.png",
+        "light": "./assets/icons/ios-light.png",
+        "tinted": "./assets/icons/ios-tinted.png"
+      }
     },
+
     "android": {
+      "package": "com.groland20.DnDnE",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.groland20.DnDnE"
+        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "monochromeImage": "./assets/icons/adaptive-icon.png",
+        "backgroundColor": "#1C1A1A"
+      }
     },
+
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icons/ios-light.png"
     },
+
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/icon/splash-icon-light.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#F4E9D8",
+          "dark": {
+            "image": "./assets/icon/splash-icon-dark.png",
+            "backgroundColor": "#1C1A1A"
+          }
+        }
+      ]
     ],
+
     "extra": {
-      "router": {},
       "eas": {
         "projectId": "461abc5c-1ea9-4027-a7fc-136d16f45eac"
       }
