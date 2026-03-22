@@ -119,7 +119,7 @@ def seed_item_effects(db: Session):
             )
 
             if existing_effect:
-                existing_effect.attribute = effect["attibute"]
+                existing_effect.attribute = effect["attribute"]
                 existing_effect.increase = effect["increase"]
                 existing_effect.value = effect["value"]
                 existing_effect.duration = effect["duration"]
