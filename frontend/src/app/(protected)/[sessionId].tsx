@@ -39,6 +39,7 @@ export default function AdventureChatScreen() {
       }
 
       const data = await res.json();
+
       setMessages(data);
     } catch {
       setError("Nem elérhető a beszélgetési előzményed");
@@ -54,7 +55,25 @@ export default function AdventureChatScreen() {
 
     try {
       setTalking(true);
-      setNewDMMessage("");
+
+      const tempDMId = Date.now();
+      const userMsg: Message = {
+        id: tempDMId - 1,
+        session_id: -1,
+        role: "user",
+        content: newMessage,
+      };
+      setMessages((prev) => [...prev, userMsg]);
+
+      const tempDM: Message = {
+        id: tempDMId,
+        session_id: -1,
+        role: "dm",
+        content: "",
+      };
+      setMessages((prev) => [...prev, tempDM]);
+
+      setNewMessage("");
 
       const res = await fetch(
         `${API_URL}/messages/${id}?message=${encodeURIComponent(newMessage)}`,
@@ -81,13 +100,22 @@ export default function AdventureChatScreen() {
         if (result.done)
           break;
 
-        const chunk = decoder.decode(result.value);
+        const chunk = decoder.decode(result.value, { stream: true });
         partialMessage += chunk;
 
         setNewDMMessage(partialMessage);
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === tempDMId ? { ...m, content: partialMessage } : m
+          )
+        );
       }
 
-      setNewMessage("");
+      setNewDMMessage("");
+      setMessages((prev) =>
+        prev.filter((m) => m.id !== tempDMId)
+      );
       fetchMessages();
     } catch (err) {
       console.error(err);
@@ -138,12 +166,6 @@ export default function AdventureChatScreen() {
           contentContainerStyle={{ padding: 10 }}
           style={session_styles.container}
         />
-
-        {newDMMessage ? (
-          <View style={session_styles.dmContainer}>
-            <Text style={session_styles.messageText}>{newDMMessage}</Text>
-          </View>
-        ) : null}
       </View>
 
       <View style={session_styles.inputContainer}>

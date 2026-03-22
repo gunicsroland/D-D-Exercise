@@ -47,7 +47,6 @@ export default function KalandScreen() {
         },
       );
       const data = await res.json();
-      Alert.alert("Adventure Started!", `Session ID: ${data.session_id}`);
       setTitle("");
       fetchSessions();
     } catch (err) {

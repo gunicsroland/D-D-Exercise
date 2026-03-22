@@ -61,4 +61,4 @@ def send_adventure_message(
 
     generator = chat_service.generate_dm_response_stream(session, message, db)
 
-    return StreamingResponse(generator, media_type="text/plain")
+    return StreamingResponse(generator, media_type="text/plain; charset=utf-8")

@@ -160,9 +160,15 @@ def generate_dm_response_stream(session: AdventureSession, user_message: str, db
         for chunk in stream:
             if chunk.text:
                 full_response += chunk.text
-                yield chunk.text
+                yield chunk.text.encode("utf-8")
     except Exception:
         return
+
+    db.add(AdventureMessage(
+        session_id=session.id,
+        role=ChatRole.User,
+        content=user_message
+    ))
 
     db.add(AdventureMessage(
         session_id=session.id,
@@ -170,11 +176,7 @@ def generate_dm_response_stream(session: AdventureSession, user_message: str, db
         content=full_response
     ))
 
-    db.add(AdventureMessage(
-        session_id=session.id,
-        role=ChatRole.User,
-        content=user_message
-    ))
+
     db.commit()
 
 

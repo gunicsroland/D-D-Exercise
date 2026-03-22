@@ -135,17 +135,8 @@ export default function ExerciseRunner() {
     );
   }
 
-  function getYoutubeUrlForExercise(name: string) {
-    const query = encodeURIComponent(name + " exercise");
-    return `https://www.youtube.com/results?search_query=${query}`;
-  }
-
   return (
     <View style={exerciseRunner_styles.screen}>
-      <View style={exerciseRunner_styles.media}>
-        <WebView source={{ uri: getYoutubeUrlForExercise(exercise.name) }} />
-      </View>
-
       <View style={exerciseRunner_styles.info}>
         <View>
           <Text style={exerciseRunner_styles.title}>{exercise.name}</Text>
