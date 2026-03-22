@@ -82,7 +82,7 @@ def consume_item(
         expires = datetime.now(timezone.utc) + timedelta(minutes=effect.duration)
 
         active_effect = ActiveEffect(
-            user_id=current_user.id,
+            character_id=current_user.characters[0].id,
             attribute=effect.attribute,
             value=effect.value,
             increase=effect.increase,
