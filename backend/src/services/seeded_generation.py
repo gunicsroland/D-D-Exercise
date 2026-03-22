@@ -18,6 +18,8 @@ from src.services import item as item_service
 
 
 def seed_exercises(db: Session):
+    generated = 0
+    updated = 0
 
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -35,6 +37,7 @@ def seed_exercises(db: Session):
                 exercise.xp_reward = ex["xp_reward"]
                 exercise.media_url = ex.get("media_url", exercise.media_url)
                 logging.info(f"Updated existing exercise: {ex['name']}")
+                updated += 1
                 continue
 
             new_exercise = Exercise(
@@ -45,6 +48,7 @@ def seed_exercises(db: Session):
                 xp_reward=ex["xp_reward"],
                 media_url=ex.get("media_url"),
             )
+            generated += 1
 
             db.add(new_exercise)
             logging.info(f"Added exercise: {ex['name']}")
@@ -59,7 +63,7 @@ def seed_exercises(db: Session):
     finally:
         db.close()
 
-    return "Success"
+    return f"Success, generated: {generated}, updated: {updated}"
 
 
 def generate_item_effects_file():
@@ -88,6 +92,9 @@ def generate_item_effects_file():
 
 
 def seed_item_effects(db: Session):
+    generated = 0
+    updated = 0
+
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "jsons", "item_effects.json")
@@ -117,6 +124,7 @@ def seed_item_effects(db: Session):
                 existing_effect.value = effect["value"]
                 existing_effect.duration = effect["duration"]
                 logging.info(f"Updated effect: {effect}")
+                updated += 1
                 continue
 
             new_effect = ItemEffect(
@@ -125,6 +133,7 @@ def seed_item_effects(db: Session):
                 value=effect["value"],
                 duration=effect["duration"],
             )
+            generated += 1
 
             db.add(new_effect)
 
@@ -138,10 +147,12 @@ def seed_item_effects(db: Session):
     finally:
         db.close()
 
-    return "Success"
+    return f"Success, generated {generated}, updated: {updated}"
 
 
 def seed_items(db: Session):
+    generated = 0
+    updated = 0
 
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -158,6 +169,7 @@ def seed_items(db: Session):
                 item.image_url = item_data.get("image_url", item.image_url)
                 item.item_type = ItemType(item_data["item_type"])
                 logging.info(f"Updated existing item: {item_data['name']}")
+                updated += 1
                 continue
 
             item = Item(
@@ -166,6 +178,7 @@ def seed_items(db: Session):
                 image_url=item_data.get("image_url"),
                 item_type=ItemType(item_data["item_type"]),
             )
+            generated += 0
 
             db.add(item)
             logging.info(f"Added item: {item_data['name']}")
@@ -181,7 +194,7 @@ def seed_items(db: Session):
     finally:
         db.close()
 
-    return "Success"
+    return f"Success generated {generated}, updated: {updated}"
 
 
 def seed_link_effects(db: Session):
@@ -216,6 +229,9 @@ def seed_link_effects(db: Session):
 
 
 def seed_quests(db: Session):
+    generated = 0
+    updated = 0
+
     try:
         current_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(current_dir, "jsons", "quests.json")
@@ -231,6 +247,7 @@ def seed_quests(db: Session):
                 exists.amount=q["amount"]
                 exists.xp_reward = q["xp_reward"]
                 exists.item_reward = q["item_reward"]
+                updated += 1
                 continue
 
             exercise = (
@@ -256,12 +273,13 @@ def seed_quests(db: Session):
                 xp_reward=q["xp_reward"],
                 item_reward=q["item_reward"],
             )
+            generated += 1
 
             db.add(new_quest)
             logging.info(f"Added quest: {q['name']}")
 
         db.commit()
-        return "Success"
+        return f"Success, generated {generated}, updated: {updated}"
 
     except Exception as e:
         db.rollback()
