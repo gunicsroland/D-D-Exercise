@@ -164,10 +164,10 @@ def seed_items(db: Session):
         for item_data in data:
             exists = db.query(Item).filter(Item.name == item_data["name"]).first()
             if exists:
-                item.name = item_data["name"]
-                item.description = item_data["description"]
-                item.image_url = item_data.get("image_url", item.image_url)
-                item.item_type = ItemType(item_data["item_type"])
+                exists.name = item_data["name"]
+                exists.description = item_data["description"]
+                exists.image_url = item_data.get("image_url", item.image_url)
+                exists.item_type = ItemType(item_data["item_type"])
                 logging.info(f"Updated existing item: {item_data['name']}")
                 updated += 1
                 continue
