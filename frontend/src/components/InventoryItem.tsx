@@ -8,18 +8,17 @@ import {
   Pressable,
 } from "react-native";
 import { InventoryEntry } from "../types/types";
-import { ITEM_IMAGES } from "../../assets/itemImages";
 import { ABILITY_LABELS_HU } from "../text_labels";
 import { consumeItem } from "../services/inventory_service";
 import { inventory_styles } from "../styles/tabs_inventory";
 
 type Props = {
-  item: InventoryEntry;
+  entry: InventoryEntry;
   onInventoryChange: () => void;
   token: string;
 };
 
-export const InventoryItem = ({ item, onInventoryChange, token }: Props) => {
+export const InventoryItem = ({ entry, onInventoryChange, token }: Props) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -29,13 +28,13 @@ export const InventoryItem = ({ item, onInventoryChange, token }: Props) => {
         onPress={() => setModalVisible(true)}
       >
         <Image
-          source={ITEM_IMAGES[item.item.image_url] || ITEM_IMAGES["default"]}
+          source={{uri: entry.item.image_url}}
           style={inventory_styles.image}
           resizeMode="contain"
         />
 
-        <Text style={inventory_styles.name}>{item.item.name}</Text>
-        <Text style={inventory_styles.quantity}>x{item.quantity}</Text>
+        <Text style={inventory_styles.name}>{entry.item.name}</Text>
+        <Text style={inventory_styles.quantity}>x{entry.quantity}</Text>
       </TouchableOpacity>
 
       <Modal
@@ -54,24 +53,22 @@ export const InventoryItem = ({ item, onInventoryChange, token }: Props) => {
             </Pressable>
 
             <Image
-              source={
-                ITEM_IMAGES[item.item.image_url] || ITEM_IMAGES["default"]
-              }
+              source={{uri: entry.item.image_url}}
               style={inventory_styles.modalImage}
               resizeMode="contain"
             />
 
-            <Text style={inventory_styles.modalTitle}>{item.item.name}</Text>
+            <Text style={inventory_styles.modalTitle}>{entry.item.name}</Text>
 
             <Text style={inventory_styles.description}>
-              {item.item.description || "Leírás nem elérhető"}
+              {entry.item.description || "Leírás nem elérhető"}
             </Text>
 
-            {item.item.effects && item.item.effects.length > 0 && (
+            {entry.item.effects && entry.item.effects.length > 0 && (
               <View style={inventory_styles.effects}>
                 <Text style={inventory_styles.effectsTitle}>Hatások</Text>
 
-                {item.item.effects.map((effect, idx) => (
+                {entry.item.effects.map((effect, idx) => (
                   <Text key={idx} style={inventory_styles.effectText}>
                     • {ABILITY_LABELS_HU[effect.attribute]}:{" "}
                     {effect.increase ? "+" : "-"}
@@ -84,7 +81,7 @@ export const InventoryItem = ({ item, onInventoryChange, token }: Props) => {
             <Pressable
               style={inventory_styles.consumeButton}
               onPress={async () => {
-                await consumeItem(token, item.item.id);
+                await consumeItem(token, entry.item.id);
                 await onInventoryChange();
               }}
             >

@@ -47,7 +47,7 @@ export default function InventoryScreen() {
             <View style={inventory_styles.emptySlot} />
           ) : (
             <InventoryItem
-              item={item}
+              entry={item}
               token={token}
               onInventoryChange={refreshAll}
             />
