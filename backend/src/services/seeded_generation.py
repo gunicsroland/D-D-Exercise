@@ -166,7 +166,7 @@ def seed_items(db: Session):
             if exists:
                 exists.name = item_data["name"]
                 exists.description = item_data["description"]
-                exists.image_url = item_data.get("image_url", item.image_url)
+                exists.image_url = item_data["image_url"]
                 exists.item_type = ItemType(item_data["item_type"])
                 logging.info(f"Updated existing item: {item_data['name']}")
                 updated += 1
