@@ -205,7 +205,7 @@ class ActiveEffect(Base):
     __tablename__ = "active_effects"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    character_id: Mapped[int] = mapped_column(ForeignKey("characters.id"))
     expires_at: Mapped[datetime] = mapped_column(DateTime)
     attribute: Mapped[AbilityType] = mapped_column("ability", Enum(AbilityType))
     increase: Mapped[bool] = mapped_column(Boolean)

@@ -58,7 +58,7 @@ def get_active_effects(
     own_effects = (
         db.query(ActiveEffect)
         .filter(
-            ActiveEffect.user_id == current_user.id,
+            ActiveEffect.character_id == current_user.characters[0].id,
             ActiveEffect.expires_at > datetime.now(timezone.utc),
         )
         .all()
