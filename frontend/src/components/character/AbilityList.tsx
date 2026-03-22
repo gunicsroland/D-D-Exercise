@@ -9,9 +9,11 @@ import { ABILITY_LABELS_HU } from "../../text_labels";
 export const AbilityList = ({
   character,
   handleUpgrade,
+  now
 }: {
   character: Character;
   handleUpgrade: (ability: AbilityType) => void;
+  now: number;
 }) => {
   const [sortedAbilities, setSortedAbilities] = useState<CharacterAbility[]>([]);
 
@@ -28,11 +30,11 @@ export const AbilityList = ({
       scrollEnabled={false}
       numColumns={2}
       renderItem={({ item }) => {
-        const bonus = getAbilityBonus(character, item.ability);
+        const bonus = getAbilityBonus(character, item.ability, now);
         const total = item.score + bonus;
 
         const bonusColor =
-          bonus > 0 ? colors.health : bonus < 0 ? "#C0392B" : colors.text;
+          bonus > 0 ? colors.health : bonus < 0 ? colors.damage : colors.text;
 
         return (
           <View style={character_styles.card}>

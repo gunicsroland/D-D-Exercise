@@ -84,7 +84,7 @@ export default function CharacterScreen() {
       </View>
 
       <View style={character_styles.panel}>
-        <AbilityList character={character} handleUpgrade={handleUpgrade} />
+        <AbilityList character={character} handleUpgrade={handleUpgrade} now={now}/>
       </View>
 
       <Modal visible={modalVisible} transparent animationType="fade">
