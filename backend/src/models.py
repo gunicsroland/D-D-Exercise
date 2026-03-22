@@ -84,7 +84,7 @@ class Character(Base):
     __tablename__ = "characters"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id" , ondelete="CASCADE"))
     name: Mapped[str] = mapped_column(String)
     class_: Mapped[CharacterClass] = mapped_column("class", Enum(CharacterClass))
     level: Mapped[int] = mapped_column(Integer, default=1)
@@ -95,7 +95,7 @@ class Character(Base):
         "CharacterAbility", back_populates="character", cascade="all, delete"
     )
     active_effects: Mapped[list["ActiveEffect"]] = relationship(
-        "ActiveEffect", back_populates="active_effects", cascade="all, delete"
+        "ActiveEffect", back_populates="character", cascade="all, delete"
     )
     user: Mapped["User"] = relationship("User", back_populates="characters")
 
@@ -104,7 +104,7 @@ class CharacterAbility(Base):
     __tablename__ = "character_abilities"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    character_id: Mapped[int] = mapped_column(ForeignKey("characters.id"))
+    character_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))
     ability: Mapped[AbilityType] = mapped_column(Enum(AbilityType))
     score: Mapped[int] = mapped_column(Integer, default=10)
 
@@ -132,11 +132,11 @@ class Quest(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String)
-    exercise_id: Mapped[int] = mapped_column(ForeignKey("exercises.id"))
+    exercise_id: Mapped[int] = mapped_column(ForeignKey("exercises.id", ondelete="CASCADE"))
     amount: Mapped[int] = mapped_column(Integer)
     xp_reward: Mapped[int] = mapped_column(Integer)
     item_reward: Mapped[Optional[int]] = mapped_column(
-        ForeignKey("items.id"), nullable=True
+        ForeignKey("items.id", ondelete="SET NULL"), nullable=True
     )
 
     exercise: Mapped["Exercise"] = relationship("Exercise", back_populates="quests")
@@ -147,8 +147,8 @@ class UserQuestProgress(Base):
     __tablename__ = "user_quest_progress"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    quest_id: Mapped[int] = mapped_column(ForeignKey("quests.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    quest_id: Mapped[int] = mapped_column(ForeignKey("quests.id", ondelete="CASCADE"))
     progress: Mapped[int] = mapped_column(Integer, default=0)
     completed: Mapped[bool] = mapped_column(Boolean, default=False)
     date: Mapped[datetime] = mapped_column(TIMESTAMP)
@@ -158,8 +158,8 @@ class WorkoutLog(Base):
     __tablename__ = "workout_logs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    exercise_id: Mapped[int] = mapped_column(ForeignKey("exercises.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
+    exercise_id: Mapped[int] = mapped_column(ForeignKey("exercises.id", ondelete="SET NULL"))
     quantity: Mapped[int] = mapped_column(Integer)
     xp_gained: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.now())
@@ -171,8 +171,8 @@ class WorkoutLog(Base):
 item_effect_link = Table(
     "item_effect_link",
     Base.metadata,
-    Column("item_id", ForeignKey("items.id"), primary_key=True),
-    Column("effect_id", ForeignKey("item_effects.id"), primary_key=True),
+    Column("item_id", ForeignKey("items.id", ondelete="CASCADE"), primary_key=True),
+    Column("effect_id", ForeignKey("item_effects.id", ondelete="CASCADE"), primary_key=True),
 )
 
 
@@ -208,19 +208,20 @@ class ActiveEffect(Base):
     __tablename__ = "active_effects"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    character_id: Mapped[int] = mapped_column(ForeignKey("characters.id"))
+    character_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))
     expires_at: Mapped[datetime] = mapped_column(DateTime)
     attribute: Mapped[AbilityType] = mapped_column("ability", Enum(AbilityType))
     increase: Mapped[bool] = mapped_column(Boolean)
     value: Mapped[int] = mapped_column(Integer)
 
+    character: Mapped["Character"] = relationship("Character", back_populates="active_effects")
 
 class Inventory(Base):
     __tablename__ = "inventory"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    item_id: Mapped[int] = mapped_column(ForeignKey("items.id"))
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    item_id: Mapped[int] = mapped_column(ForeignKey("items.id", ondelete="SET NULL"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     quantity: Mapped[int] = mapped_column(Integer)
 
     item: Mapped["Item"] = relationship("Item")
@@ -230,9 +231,9 @@ class AdventureSession(Base):
     __tablename__ = "adventure_sessions"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     character_id: Mapped[int] = mapped_column(
-        ForeignKey("characters.id"), nullable=False
+        ForeignKey("characters.id", ondelete="CASCADE"), nullable=False
     )
     title: Mapped[str] = mapped_column(String, nullable=False)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.now())
@@ -250,7 +251,7 @@ class AdventureMessage(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     session_id: Mapped[int] = mapped_column(
-        ForeignKey("adventure_sessions.id"), nullable=False
+        ForeignKey("adventure_sessions.id", ondelete="CASCADE"), nullable=False
     )
     role: Mapped[ChatRole] = mapped_column(Enum(ChatRole), nullable=False)
     content: Mapped[str] = mapped_column(String, nullable=False)

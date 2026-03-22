@@ -38,10 +38,8 @@ export const ActiveEffects = ({
 
         const isBuff = effect.increase;
 
-        const key = `${character.id}-${effect.id}-${index}`;
-
         return (
-          <View key={key} style={effect_styles.card}>
+          <View key={effect.id} style={effect_styles.card}>
             <Text style={effect_styles.effectText}>
               {effect.increase ? "+" : "-"}
               {effect.value} {ABILITY_LABELS_HU[effect.attribute]}
