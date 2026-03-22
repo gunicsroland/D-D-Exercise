@@ -21,13 +21,13 @@
     "name": "vas kard",
     "description": "Egyszerű, de megbízható közelharci fegyver kalandozók számára.",
     "item_type": "weapon",
-    "image_url": "https://dde-app-bucket.s3.eu-north-1.amazonaws.com/assets/iron_sword.svg"
+    "image_url": "https://dde-app-bucket.s3.eu-north-1.amazonaws.com/assets/iron_sword.png"
   },
   {
     "name": "mágikus tölgyfa bot",
     "description": "Ősi rúnákkal vésett varázsbot, amely erősíti a varázslatokat.",
     "item_type": "weapon",
-    "image_url": "https://dde-app-bucket.s3.eu-north-1.amazonaws.com/assets/wood_staff.ai"
+    "image_url": "https://dde-app-bucket.s3.eu-north-1.amazonaws.com/assets/wooden_staff.png"
   },
   {
     "name": "bőrvért",
@@ -45,7 +45,7 @@
     "name": "láthatatlanság tekercs",
     "description": "Egyszer használatos mágikus tekercs, amely rövid időre láthatatlanná tesz.",
     "item_type": "potion",
-    "image_url": "https://dde-app-bucket.s3.eu-north-1.amazonaws.com/assets/invis_scroll.svg"
+    "image_url": "https://dde-app-bucket.s3.eu-north-1.amazonaws.com/assets/inv_scroll.png"
   },
   {
     "name": "tűzgyűrű",
