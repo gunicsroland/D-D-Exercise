@@ -12,7 +12,7 @@ from src.models import (
     ItemEffect,
     Item,
     ItemType,
-    Quest,
+    Quest
 )
 from src.services import item as item_service
 
@@ -27,9 +27,14 @@ def seed_exercises(db: Session):
             data = json.load(f)
 
         for ex in data:
-            exists = db.query(Exercise).filter(Exercise.name == ex["name"]).first()
-            if exists:
-                logging.info(f"Skipping existing exercise: {ex['name']}")
+            exercise = db.query(Exercise).filter(Exercise.name == ex["name"]).first()
+            if exercise:
+                exercise.category = ExerciseCategory(ex["category"])
+                exercise.difficulty = ExerciseDifficulty(ex["difficulty"])
+                exercise.quantity = ex.get("quantity", exercise.quantity)
+                exercise.xp_reward = ex["xp_reward"]
+                exercise.media_url = ex.get("media_url", exercise.media_url)
+                logging.info(f"Updated existing exercise: {ex['name']}")
                 continue
 
             new_exercise = Exercise(
@@ -95,7 +100,7 @@ def seed_item_effects(db: Session):
             data = json.load(f)
 
         for effect in data:
-            exists = (
+            existing_effect = (
                 db.query(ItemEffect)
                 .filter(
                     ItemEffect.attribute == AbilityType(effect["attribute"]),
@@ -106,7 +111,12 @@ def seed_item_effects(db: Session):
                 .first()
             )
 
-            if exists:
+            if existing_effect:
+                existing_effect.attribute = effect["attibute"]
+                existing_effect.increase = effect["increase"]
+                existing_effect.value = effect["value"]
+                existing_effect.duration = effect["duration"]
+                logging.info(f"Updated effect: {effect}")
                 continue
 
             new_effect = ItemEffect(
@@ -143,7 +153,11 @@ def seed_items(db: Session):
         for item_data in data:
             exists = db.query(Item).filter(Item.name == item_data["name"]).first()
             if exists:
-                logging.info(f"Skipping existing item: {item_data['name']}")
+                item.name = item_data["name"]
+                item.description = item_data["description"]
+                item.image_url = item_data.get("image_url", item.image_url)
+                item.item_type = ItemType(item_data["item_type"])
+                logging.info(f"Updated existing item: {item_data['name']}")
                 continue
 
             item = Item(
@@ -212,7 +226,11 @@ def seed_quests(db: Session):
         for q in data:
             exists = db.query(Quest).filter(Quest.name == q["name"]).first()
             if exists:
-                logging.info(f"Skipping existing quest: {q['name']}")
+                exists.name = q["name"]
+                exists.exercise_id = q["exercise_id"]
+                exists.amount=q["amount"]
+                exists.xp_reward = q["xp_reward"]
+                exists.item_reward = q["item_reward"]
                 continue
 
             exercise = (
