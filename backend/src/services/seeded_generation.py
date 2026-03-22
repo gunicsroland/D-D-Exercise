@@ -178,7 +178,7 @@ def seed_items(db: Session):
                 image_url=item_data.get("image_url"),
                 item_type=ItemType(item_data["item_type"]),
             )
-            generated += 0
+            generated += 1
 
             db.add(item)
             logging.info(f"Added item: {item_data['name']}")
