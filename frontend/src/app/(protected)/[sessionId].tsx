@@ -23,6 +23,7 @@ export default function AdventureChatScreen() {
   const [error, setError] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [newDMMessage, setNewDMMessage] = useState("");
   const [talking, setTalking] = useState(false);
 
   const { token } = useAuthContext();
@@ -53,6 +54,8 @@ export default function AdventureChatScreen() {
 
     try {
       setTalking(true);
+      setNewDMMessage("");
+
       const res = await fetch(
         `${API_URL}/messages/${id}?message=${encodeURIComponent(newMessage)}`,
         {
@@ -64,7 +67,25 @@ export default function AdventureChatScreen() {
       if (!res.ok) {
         throw new Error();
       }
-      await res.json();
+
+      const reader = res.body?.getReader();
+      if (!reader)
+        throw new Error("No reader available");
+
+      const decoder = new TextDecoder("utf-8");
+
+      let partialMessage = "";
+
+      while (true) {
+        const result = await reader.read();
+        if (result.done)
+          break;
+
+        const chunk = decoder.decode(result.value);
+        partialMessage += chunk;
+
+        setNewDMMessage(partialMessage);
+      }
 
       setNewMessage("");
       fetchMessages();
@@ -117,6 +138,12 @@ export default function AdventureChatScreen() {
           contentContainerStyle={{ padding: 10 }}
           style={session_styles.container}
         />
+
+        {newDMMessage ? (
+          <View style={session_styles.dmContainer}>
+            <Text style={session_styles.messageText}>{newDMMessage}</Text>
+          </View>
+        ) : null}
       </View>
 
       <View style={session_styles.inputContainer}>

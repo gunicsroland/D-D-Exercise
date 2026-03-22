@@ -24,7 +24,7 @@ export default function KalandScreen() {
   const fetchSessions = async () => {
     try {
       const res = await fetch(`${API_URL}/adventure/`, {
-        headers: { Authorization: `Bearer ${token}` }, // replace with real auth token
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
       setSessions(data);

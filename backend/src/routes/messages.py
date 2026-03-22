@@ -1,4 +1,5 @@
 from fastapi import HTTPException, Depends, APIRouter
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 import logging
 from typing import List
@@ -58,23 +59,6 @@ def send_adventure_message(
         logging.warning(f"Adventure session not found with id={session_id}")
         raise HTTPException(status_code=404, detail="Adventure session not found")
 
-    dm_response = chat_service.generate_dm_response(session, message, db)
+    generator = chat_service.generate_dm_response_stream(session, message, db)
 
-    messages_service.save_message(
-        user_id=current_user.id,
-        session_id=session.id,
-        role=ChatRole.User,
-        content=message,
-        db=db,
-    )
-    dm_message = messages_service.save_message(
-        user_id=current_user.id,
-        session_id=session.id,
-        role=ChatRole.DM,
-        content=dm_response,
-        db=db,
-    )
-
-    logging.info(f"Added user message and DM response to session_id={session_id}")
-
-    return dm_message
+    return StreamingResponse(generator, media_type="text/plain")

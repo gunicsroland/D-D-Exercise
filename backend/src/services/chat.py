@@ -103,7 +103,7 @@ def compact_session_history(db: Session, session: AdventureSession):
 
     db.commit()
 
-def generate_dm_response(session: AdventureSession, user_message: str, db: Session):
+def generate_dm_response_stream(session: AdventureSession, user_message: str, db: Session):
     character = session.character
 
     compact_session_history(db, session)
@@ -149,9 +149,33 @@ def generate_dm_response(session: AdventureSession, user_message: str, db: Sessi
         )
     contents.append(types.Content(role="user", parts=[types.Part(text=user_message)]))
 
-    response = call_chat_model(contents)
+    stream = client.models.generate_content_stream(
+        model=MODEL_NAME,
+        contents=contents,
+    )
 
-    return response.text
+    full_response = ""
+
+    try:
+        for chunk in stream:
+            if chunk.text:
+                full_response += chunk.text
+                yield chunk.text
+    except Exception:
+        return
+
+    db.add(AdventureMessage(
+        session_id=session.id,
+        role=ChatRole.DM,
+        content=full_response
+    ))
+
+    db.add(AdventureMessage(
+        session_id=session.id,
+        role=ChatRole.User,
+        content=user_message
+    ))
+    db.commit()
 
 
 def call_chat_model(contents):
