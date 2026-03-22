@@ -1,7 +1,7 @@
 import { View, Text, FlatList, Pressable } from "react-native";
 import { Character, CharacterAbility, AbilityType } from "../../types/types";
 import { getAbilityBonus } from "../../hooks/useAbilityBonus";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { character_styles } from "../../styles/tabs_character";
 import { colors } from "../../styles/colors";
 import { ABILITY_LABELS_HU } from "../../text_labels";
@@ -13,9 +13,13 @@ export const AbilityList = ({
   character: Character;
   handleUpgrade: (ability: AbilityType) => void;
 }) => {
-  const sortedAbilities = [...(character?.abilities ?? [])].sort((a, b) =>
+  const [sortedAbilities, setSortedAbilities] = useState<CharacterAbility[]>([]);
+
+  useEffect(() => {
+  setSortedAbilities([...(character?.abilities ?? [])].sort((a, b) =>
     a.ability.localeCompare(b.ability),
-  );
+  ));
+  }, [character])
 
   return (
     <FlatList<CharacterAbility>
