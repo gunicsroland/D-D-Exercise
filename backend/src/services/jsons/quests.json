@@ -1,106 +1,97 @@
 [
-  
+  { "name": "Kezdő Erő Küldetés I", "exercise_id": 1, "amount": 10, "xp_reward": 30, "item_reward": 1 },
+  { "name": "Kezdő Erő Küldetés II", "exercise_id": 6, "amount": 10, "xp_reward": 35, "item_reward": 1 },
+  { "name": "Kezdő Erő Küldetés III", "exercise_id": 8, "amount": 10, "xp_reward": 40, "item_reward": 2 },
 
-  { "name": "Kezdő Erő Küldetés I", "exercise_id": 1, "amount": 15, "xp_reward": 30, "item_reward": 1 },
-  { "name": "Kezdő Erő Küldetés II", "exercise_id": 6, "amount": 20, "xp_reward": 35, "item_reward": 1 },
-  { "name": "Kezdő Erő Küldetés III", "exercise_id": 8, "amount": 25, "xp_reward": 40, "item_reward": 2 },
+  { "name": "Alap Erő Próba I", "exercise_id": 2, "amount": 10, "xp_reward": 60, "item_reward": 2 },
+  { "name": "Alap Erő Próba II", "exercise_id": 7, "amount": 10, "xp_reward": 65, "item_reward": 2 },
+  { "name": "Alap Erő Próba III", "exercise_id": 11, "amount": 10, "xp_reward": 70, "item_reward": 3 },
 
-  { "name": "Alap Erő Próba I", "exercise_id": 2, "amount": 20, "xp_reward": 60, "item_reward": 2 },
-  { "name": "Alap Erő Próba II", "exercise_id": 7, "amount": 25, "xp_reward": 65, "item_reward": 2 },
-  { "name": "Alap Erő Próba III", "exercise_id": 11, "amount": 30, "xp_reward": 70, "item_reward": 3 },
+  { "name": "Haladó Erő Küldetés I", "exercise_id": 16, "amount": 10, "xp_reward": 120, "item_reward": 3 },
+  { "name": "Haladó Erő Küldetés II", "exercise_id": 17, "amount": 10, "xp_reward": 130, "item_reward": 3 },
+  { "name": "Haladó Erő Küldetés III", "exercise_id": 18, "amount": 10, "xp_reward": 140, "item_reward": 4 },
 
-  { "name": "Haladó Erő Küldetés I", "exercise_id": 16, "amount": 35, "xp_reward": 120, "item_reward": 3 },
-  { "name": "Haladó Erő Küldetés II", "exercise_id": 17, "amount": 40, "xp_reward": 130, "item_reward": 3 },
-  { "name": "Haladó Erő Küldetés III", "exercise_id": 18, "amount": 45, "xp_reward": 140, "item_reward": 4 },
-
-  { "name": "Kemény Erő Kihívás I", "exercise_id": 21, "amount": 15, "xp_reward": 220, "item_reward": 4 },
-  { "name": "Kemény Erő Kihívás II", "exercise_id": 22, "amount": 18, "xp_reward": 230, "item_reward": 4 },
-  { "name": "Kemény Erő Kihívás III", "exercise_id": 23, "amount": 20, "xp_reward": 240, "item_reward": 5 },
+  { "name": "Kemény Erő Kihívás I", "exercise_id": 21, "amount": 10, "xp_reward": 220, "item_reward": 4 },
+  { "name": "Kemény Erő Kihívás II", "exercise_id": 22, "amount": 10, "xp_reward": 230, "item_reward": 4 },
+  { "name": "Kemény Erő Kihívás III", "exercise_id": 23, "amount": 10, "xp_reward": 240, "item_reward": 5 },
 
   { "name": "Mester Erő Küldetés I", "exercise_id": 26, "amount": 8, "xp_reward": 320, "item_reward": 5 },
   { "name": "Mester Erő Küldetés II", "exercise_id": 27, "amount": 10, "xp_reward": 330, "item_reward": 5 },
-  { "name": "Mester Erő Küldetés III", "exercise_id": 28, "amount": 12, "xp_reward": 340, "item_reward": 6 },
+  { "name": "Mester Erő Küldetés III", "exercise_id": 28, "amount": 10, "xp_reward": 340, "item_reward": 6 },
 
   { "name": "Legenda Erő Kihívás I", "exercise_id": 31, "amount": 2, "xp_reward": 520, "item_reward": 6 },
   { "name": "Legenda Erő Kihívás II", "exercise_id": 32, "amount": 2, "xp_reward": 540, "item_reward": 6 },
   { "name": "Legenda Erő Kihívás III", "exercise_id": 33, "amount": 3, "xp_reward": 560, "item_reward": 7 },
 
+  { "name": "Kezdő Állóképesség I", "exercise_id": 36, "amount": 10, "xp_reward": 30, "item_reward": 1 },
+  { "name": "Kezdő Állóképesség II", "exercise_id": 37, "amount": 10, "xp_reward": 35, "item_reward": 1 },
+  { "name": "Kezdő Állóképesség III", "exercise_id": 38, "amount": 10, "xp_reward": 40, "item_reward": 2 },
 
+  { "name": "Alap Kardió I", "exercise_id": 41, "amount": 10, "xp_reward": 60, "item_reward": 2 },
+  { "name": "Alap Kardió II", "exercise_id": 42, "amount": 10, "xp_reward": 65, "item_reward": 2 },
+  { "name": "Alap Kardió III", "exercise_id": 43, "amount": 10, "xp_reward": 70, "item_reward": 3 },
 
-  { "name": "Kezdő Állóképesség I", "exercise_id": 36, "amount": 40, "xp_reward": 30, "item_reward": 1 },
-  { "name": "Kezdő Állóképesség II", "exercise_id": 37, "amount": 45, "xp_reward": 35, "item_reward": 1 },
-  { "name": "Kezdő Állóképesség III", "exercise_id": 38, "amount": 50, "xp_reward": 40, "item_reward": 2 },
+  { "name": "Haladó Kardió I", "exercise_id": 46, "amount": 10, "xp_reward": 120, "item_reward": 3 },
+  { "name": "Haladó Kardió II", "exercise_id": 47, "amount": 10, "xp_reward": 130, "item_reward": 3 },
+  { "name": "Haladó Kardió III", "exercise_id": 48, "amount": 10, "xp_reward": 140, "item_reward": 4 },
 
-  { "name": "Alap Kardió I", "exercise_id": 41, "amount": 50, "xp_reward": 60, "item_reward": 2 },
-  { "name": "Alap Kardió II", "exercise_id": 42, "amount": 55, "xp_reward": 65, "item_reward": 2 },
-  { "name": "Alap Kardió III", "exercise_id": 43, "amount": 60, "xp_reward": 70, "item_reward": 3 },
+  { "name": "Kemény Kardió I", "exercise_id": 51, "amount": 10, "xp_reward": 220, "item_reward": 4 },
+  { "name": "Kemény Kardió II", "exercise_id": 52, "amount": 10, "xp_reward": 230, "item_reward": 4 },
+  { "name": "Kemény Kardió III", "exercise_id": 53, "amount": 10, "xp_reward": 240, "item_reward": 5 },
 
-  { "name": "Haladó Kardió I", "exercise_id": 46, "amount": 70, "xp_reward": 120, "item_reward": 3 },
-  { "name": "Haladó Kardió II", "exercise_id": 47, "amount": 75, "xp_reward": 130, "item_reward": 3 },
-  { "name": "Haladó Kardió III", "exercise_id": 48, "amount": 80, "xp_reward": 140, "item_reward": 4 },
+  { "name": "Mester Kardió I", "exercise_id": 56, "amount": 10, "xp_reward": 320, "item_reward": 5 },
+  { "name": "Mester Kardió II", "exercise_id": 57, "amount": 10, "xp_reward": 330, "item_reward": 5 },
+  { "name": "Mester Kardió III", "exercise_id": 58, "amount": 10, "xp_reward": 340, "item_reward": 6 },
 
-  { "name": "Kemény Kardió I", "exercise_id": 51, "amount": 100, "xp_reward": 220, "item_reward": 4 },
-  { "name": "Kemény Kardió II", "exercise_id": 52, "amount": 110, "xp_reward": 230, "item_reward": 4 },
-  { "name": "Kemény Kardió III", "exercise_id": 53, "amount": 120, "xp_reward": 240, "item_reward": 5 },
+  { "name": "Legenda Kardió I", "exercise_id": 61, "amount": 10, "xp_reward": 520, "item_reward": 6 },
+  { "name": "Legenda Kardió II", "exercise_id": 62, "amount": 10, "xp_reward": 540, "item_reward": 6 },
+  { "name": "Legenda Kardió III", "exercise_id": 63, "amount": 10, "xp_reward": 560, "item_reward": 7 },
 
-  { "name": "Mester Kardió I", "exercise_id": 56, "amount": 130, "xp_reward": 320, "item_reward": 5 },
-  { "name": "Mester Kardió II", "exercise_id": 57, "amount": 140, "xp_reward": 330, "item_reward": 5 },
-  { "name": "Mester Kardió III", "exercise_id": 58, "amount": 150, "xp_reward": 340, "item_reward": 6 },
+  { "name": "Kezdő Mobilitás I", "exercise_id": 66, "amount": 10, "xp_reward": 30, "item_reward": 1 },
+  { "name": "Kezdő Mobilitás II", "exercise_id": 67, "amount": 10, "xp_reward": 35, "item_reward": 1 },
+  { "name": "Kezdő Mobilitás III", "exercise_id": 68, "amount": 10, "xp_reward": 40, "item_reward": 2 },
 
-  { "name": "Legenda Kardió I", "exercise_id": 61, "amount": 200, "xp_reward": 520, "item_reward": 6 },
-  { "name": "Legenda Kardió II", "exercise_id": 62, "amount": 210, "xp_reward": 540, "item_reward": 6 },
-  { "name": "Legenda Kardió III", "exercise_id": 63, "amount": 220, "xp_reward": 560, "item_reward": 7 },
+  { "name": "Alap Nyújtás I", "exercise_id": 71, "amount": 10, "xp_reward": 60, "item_reward": 2 },
+  { "name": "Alap Nyújtás II", "exercise_id": 72, "amount": 10, "xp_reward": 65, "item_reward": 2 },
+  { "name": "Alap Nyújtás III", "exercise_id": 73, "amount": 10, "xp_reward": 70, "item_reward": 3 },
 
+  { "name": "Haladó Mobilitás I", "exercise_id": 76, "amount": 10, "xp_reward": 120, "item_reward": 3 },
+  { "name": "Haladó Mobilitás II", "exercise_id": 77, "amount": 10, "xp_reward": 130, "item_reward": 3 },
+  { "name": "Haladó Mobilitás III", "exercise_id": 78, "amount": 10, "xp_reward": 140, "item_reward": 4 },
 
+  { "name": "Kemény Nyújtás I", "exercise_id": 81, "amount": 10, "xp_reward": 220, "item_reward": 4 },
+  { "name": "Kemény Nyújtás II", "exercise_id": 82, "amount": 10, "xp_reward": 230, "item_reward": 4 },
+  { "name": "Kemény Nyújtás III", "exercise_id": 83, "amount": 10, "xp_reward": 240, "item_reward": 5 },
 
-  { "name": "Kezdő Mobilitás I", "exercise_id": 66, "amount": 25, "xp_reward": 30, "item_reward": 1 },
-  { "name": "Kezdő Mobilitás II", "exercise_id": 67, "amount": 30, "xp_reward": 35, "item_reward": 1 },
-  { "name": "Kezdő Mobilitás III", "exercise_id": 68, "amount": 35, "xp_reward": 40, "item_reward": 2 },
+  { "name": "Mester Mobilitás I", "exercise_id": 86, "amount": 10, "xp_reward": 320, "item_reward": 5 },
+  { "name": "Mester Mobilitás II", "exercise_id": 87, "amount": 10, "xp_reward": 330, "item_reward": 5 },
+  { "name": "Mester Mobilitás III", "exercise_id": 88, "amount": 10, "xp_reward": 340, "item_reward": 6 },
 
-  { "name": "Alap Nyújtás I", "exercise_id": 71, "amount": 35, "xp_reward": 60, "item_reward": 2 },
-  { "name": "Alap Nyújtás II", "exercise_id": 72, "amount": 40, "xp_reward": 65, "item_reward": 2 },
-  { "name": "Alap Nyújtás III", "exercise_id": 73, "amount": 45, "xp_reward": 70, "item_reward": 3 },
+  { "name": "Legenda Nyújtás I", "exercise_id": 91, "amount": 10, "xp_reward": 520, "item_reward": 6 },
+  { "name": "Legenda Nyújtás II", "exercise_id": 92, "amount": 10, "xp_reward": 540, "item_reward": 6 },
+  { "name": "Legenda Nyújtás III", "exercise_id": 93, "amount": 10, "xp_reward": 560, "item_reward": 7 },
 
-  { "name": "Haladó Mobilitás I", "exercise_id": 76, "amount": 50, "xp_reward": 120, "item_reward": 3 },
-  { "name": "Haladó Mobilitás II", "exercise_id": 77, "amount": 55, "xp_reward": 130, "item_reward": 3 },
-  { "name": "Haladó Mobilitás III", "exercise_id": 78, "amount": 60, "xp_reward": 140, "item_reward": 4 },
+  { "name": "Kezdő Törzs I", "exercise_id": 96, "amount": 10, "xp_reward": 30, "item_reward": 1 },
+  { "name": "Kezdő Törzs II", "exercise_id": 97, "amount": 10, "xp_reward": 35, "item_reward": 1 },
+  { "name": "Kezdő Törzs III", "exercise_id": 98, "amount": 10, "xp_reward": 40, "item_reward": 2 },
 
-  { "name": "Kemény Nyújtás I", "exercise_id": 81, "amount": 65, "xp_reward": 220, "item_reward": 4 },
-  { "name": "Kemény Nyújtás II", "exercise_id": 82, "amount": 70, "xp_reward": 230, "item_reward": 4 },
-  { "name": "Kemény Nyújtás III", "exercise_id": 83, "amount": 75, "xp_reward": 240, "item_reward": 5 },
+  { "name": "Alap Törzsizom I", "exercise_id": 101, "amount": 10, "xp_reward": 60, "item_reward": 2 },
+  { "name": "Alap Törzsizom II", "exercise_id": 102, "amount": 10, "xp_reward": 65, "item_reward": 2 },
+  { "name": "Alap Törzsizom III", "exercise_id": 103, "amount": 10, "xp_reward": 70, "item_reward": 3 },
 
-  { "name": "Mester Mobilitás I", "exercise_id": 86, "amount": 95, "xp_reward": 320, "item_reward": 5 },
-  { "name": "Mester Mobilitás II", "exercise_id": 87, "amount": 100, "xp_reward": 330, "item_reward": 5 },
-  { "name": "Mester Mobilitás III", "exercise_id": 88, "amount": 110, "xp_reward": 340, "item_reward": 6 },
+  { "name": "Haladó Törzsizom I", "exercise_id": 106, "amount": 10, "xp_reward": 120, "item_reward": 3 },
+  { "name": "Haladó Törzsizom II", "exercise_id": 107, "amount": 10, "xp_reward": 130, "item_reward": 3 },
+  { "name": "Haladó Törzsizom III", "exercise_id": 108, "amount": 10, "xp_reward": 140, "item_reward": 4 },
 
-  { "name": "Legenda Nyújtás I", "exercise_id": 91, "amount": 130, "xp_reward": 520, "item_reward": 6 },
-  { "name": "Legenda Nyújtás II", "exercise_id": 92, "amount": 140, "xp_reward": 540, "item_reward": 6 },
-  { "name": "Legenda Nyújtás III", "exercise_id": 93, "amount": 150, "xp_reward": 560, "item_reward": 7 },
+  { "name": "Kemény Törzsizom I", "exercise_id": 111, "amount": 10, "xp_reward": 220, "item_reward": 4 },
+  { "name": "Kemény Törzsizom II", "exercise_id": 112, "amount": 10, "xp_reward": 230, "item_reward": 4 },
+  { "name": "Kemény Törzsizom III", "exercise_id": 113, "amount": 10, "xp_reward": 240, "item_reward": 5 },
 
+  { "name": "Mester Törzsizom I", "exercise_id": 116, "amount": 8, "xp_reward": 320, "item_reward": 5 },
+  { "name": "Mester Törzsizom II", "exercise_id": 117, "amount": 10, "xp_reward": 330, "item_reward": 5 },
+  { "name": "Mester Törzsizom III", "exercise_id": 118, "amount": 10, "xp_reward": 340, "item_reward": 6 },
 
-
-  { "name": "Kezdő Törzs I", "exercise_id": 96, "amount": 25, "xp_reward": 30, "item_reward": 1 },
-  { "name": "Kezdő Törzs II", "exercise_id": 97, "amount": 30, "xp_reward": 35, "item_reward": 1 },
-  { "name": "Kezdő Törzs III", "exercise_id": 98, "amount": 35, "xp_reward": 40, "item_reward": 2 },
-
-  { "name": "Alap Core I", "exercise_id": 101, "amount": 20, "xp_reward": 60, "item_reward": 2 },
-  { "name": "Alap Core II", "exercise_id": 102, "amount": 25, "xp_reward": 65, "item_reward": 2 },
-  { "name": "Alap Core III", "exercise_id": 103, "amount": 30, "xp_reward": 70, "item_reward": 3 },
-
-  { "name": "Haladó Core I", "exercise_id": 106, "amount": 35, "xp_reward": 120, "item_reward": 3 },
-  { "name": "Haladó Core II", "exercise_id": 107, "amount": 40, "xp_reward": 130, "item_reward": 3 },
-  { "name": "Haladó Core III", "exercise_id": 108, "amount": 45, "xp_reward": 140, "item_reward": 4 },
-
-  { "name": "Kemény Core I", "exercise_id": 111, "amount": 15, "xp_reward": 220, "item_reward": 4 },
-  { "name": "Kemény Core II", "exercise_id": 112, "amount": 18, "xp_reward": 230, "item_reward": 4 },
-  { "name": "Kemény Core III", "exercise_id": 113, "amount": 20, "xp_reward": 240, "item_reward": 5 },
-
-  { "name": "Mester Core I", "exercise_id": 116, "amount": 8, "xp_reward": 320, "item_reward": 5 },
-  { "name": "Mester Core II", "exercise_id": 117, "amount": 10, "xp_reward": 330, "item_reward": 5 },
-  { "name": "Mester Core III", "exercise_id": 118, "amount": 12, "xp_reward": 340, "item_reward": 6 },
-
-  { "name": "Legenda Core I", "exercise_id": 121, "amount": 2, "xp_reward": 520, "item_reward": 6 },
-  { "name": "Legenda Core II", "exercise_id": 122, "amount": 2, "xp_reward": 540, "item_reward": 6 },
-  { "name": "Legenda Core III", "exercise_id": 123, "amount": 3, "xp_reward": 560, "item_reward": 7 }
-
+  { "name": "Legenda Törzsizom I", "exercise_id": 121, "amount": 2, "xp_reward": 520, "item_reward": 6 },
+  { "name": "Legenda Törzsizom II", "exercise_id": 122, "amount": 2, "xp_reward": 540, "item_reward": 6 },
+  { "name": "Legenda Törzsizom III", "exercise_id": 123, "amount": 3, "xp_reward": 560, "item_reward": 7 }
 ]
