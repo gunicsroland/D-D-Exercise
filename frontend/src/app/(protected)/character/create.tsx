@@ -115,7 +115,7 @@ export default function CreateCharacter() {
           token,
         );
 
-        if (res?.ok) {
+        if (res && !res.error) {
           router.replace("/tabs/character");
         }
       } catch (err: unknown) {
