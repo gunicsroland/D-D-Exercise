@@ -9,4 +9,4 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 COPY . .
 EXPOSE 8000
 
-CMD sh -c "gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:${BACKEND_PORT} src.main:app"
+CMD sh -c "gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:${BACKEND_PORT} --access-logfile - --error-logfile - src.main:app"
