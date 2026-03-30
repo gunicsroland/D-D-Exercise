@@ -13,7 +13,7 @@ from src.services import character as character_service
 app = APIRouter(prefix="/character", tags=["character"])
 
 
-@app.get("/has_character/{user_id}")
+@app.get("/has_character/")
 def user_has_character(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
@@ -25,7 +25,7 @@ def user_has_character(
     return {"has_character": bool(character)}
 
 
-@app.get("/{user_id}", response_model=schemas.CharacterRead)
+@app.get("/", response_model=schemas.CharacterRead)
 def get_user_character(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
@@ -85,7 +85,7 @@ def get_all_characters(db: Session = Depends(get_db)):
     return db.query(Character).all()
 
 
-@app.post("/{user_id}")
+@app.post("/")
 def create_character(
     character_data: schemas.CharacterCreate,
     current_user: User = Depends(get_current_user),
@@ -127,7 +127,7 @@ def create_character(
     return {"message": "Character created successfully", "character_id": character.id}
 
 
-@app.delete("/{user_id}")
+@app.delete("/")
 def delete_character(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
