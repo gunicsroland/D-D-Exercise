@@ -36,7 +36,10 @@ app.include_router(quests.app)
 app.include_router(adventures.app)
 app.include_router(messages.app)
 
-Base.metadata.create_all(bind=engine)
+
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
 
 origins = os.getenv("CORS_ORIGINS", "").split(",")
 
