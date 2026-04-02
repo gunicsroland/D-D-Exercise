@@ -21,7 +21,7 @@ def start_adventure(
         f"Starting adventure for user_id={current_user.id} with title='{title}'"
     )
 
-    character = db.query(Character).filter(Character.user_id == current_user.id).first()
+    character = current_user.characters[0]
 
     if not character:
         logging.warning(f"No character found for user_id={current_user.id}")

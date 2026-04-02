@@ -29,10 +29,6 @@ class UserLogin(BaseSchema):
     password: str
 
 
-class UserUpdate(BaseModel):
-    quest_difficulty: ExerciseDifficulty
-
-
 class AbilityBase(BaseSchema):
     ability: AbilityType
     score: int
@@ -94,6 +90,7 @@ class CharacterRead(CharacterBase):
     xp: int
     ability_points: int
     abilities: List[AbilityRead]
+    quest_difficulty: ExerciseDifficulty
 
     active_effects: list[ActiveEffectRead] = []
 
@@ -102,6 +99,7 @@ class CharacterUpdate(BaseSchema):
     name: Optional[str] = None
     xp: Optional[int] = None
     ability_points: Optional[int] = None
+    quest_difficulty: Optional[ExerciseDifficulty] = None
 
 
 class ItemEffectBase(BaseSchema):
@@ -155,7 +153,7 @@ class InventoryBase(BaseSchema):
 
 class InventoryCreate(InventoryBase):
     item_id: int
-    user_id: int
+    char_id: int
 
 
 class InventoryRead(InventoryBase):
@@ -216,7 +214,7 @@ class QuestUpdate(BaseSchema):
     item_reward: Optional[int] = None
 
 
-class UserQuestProgressRead(BaseModel):
+class CharQuestProgressRead(BaseModel):
     id: int
     quest_id: int
     progress: int

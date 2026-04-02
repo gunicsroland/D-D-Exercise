@@ -26,7 +26,7 @@ def get_inventory(
     logging.info(f"Fetching inventory for user_id={current_user.id}")
 
     inventory_items = (
-        db.query(Inventory).filter(Inventory.user_id == current_user.id).all()
+        db.query(Inventory).filter(Inventory.char_id == current_user.characters[0].id).all()
     )
 
     logging.info(
@@ -47,7 +47,7 @@ def add_item(
         f"Adding item_id={item_id} (quantity={quantity}) to inventory for user_id={current_user.id}"
     )
 
-    inventory_service.add_item(current_user.id, item_id, quantity, db)
+    inventory_service.add_item(current_user.characters[0].id, item_id, quantity, db)
 
     return {"message": "Item added to inventory"}
 
@@ -65,7 +65,7 @@ def consume_item(
 
     inventory_item = (
         db.query(Inventory)
-        .filter(Inventory.user_id == current_user.id, Inventory.item_id == item_id)
+        .filter(Inventory.char_id == current_user.characters[0].id, Inventory.item_id == item_id)
         .first()
     )
 
@@ -114,7 +114,7 @@ def remove_item(
 
     inventory_item = (
         db.query(Inventory)
-        .filter(Inventory.user_id == current_user.id, Inventory.item_id == item_id)
+        .filter(Inventory.char_id == current_user.characters[0].id, Inventory.item_id == item_id)
         .first()
     )
 

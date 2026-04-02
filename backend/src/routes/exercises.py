@@ -148,19 +148,25 @@ def finish_exercise(
     logging.info(
         f"User {current_user.id} completed exercise with id={exercise_id}, awarding {exercise.xp_reward} XP"
     )
-    character_service.add_xp(current_user.id, exercise.xp_reward, db)
 
-    daily_quests = quest_service.get_daily_quests(db, current_user.id)
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
+    character_service.add_xp(character.id, exercise.xp_reward, db)
+
+    daily_quests = quest_service.get_daily_quests(db, character.id)
     for quest in daily_quests:
         if exercise_id == quest.exercise_id:
-            quest_service.update_quest_progress(current_user.id, quest.id, db)
+            quest_service.update_quest_progress(character.id, quest.id, db)
 
     logging.info(
         f"Rewards for exercise completion processed successfully for user {current_user.id}"
     )
 
     log_service.log_exercise_completion(
-        current_user.id, exercise_id, exercise.xp_reward, exercise.quantity, db
+        character.id, exercise_id, exercise.xp_reward, exercise.quantity, db
     )
 
     return {"message": "Exercise completed successfully, rewards processed"}

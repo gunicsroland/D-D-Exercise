@@ -5,11 +5,11 @@ from src.models import AdventureMessage, AdventureSession, ChatRole
 
 
 def save_message(
-    user_id: int, session_id: int, role: ChatRole, content: str, db: Session
+    session_id: int, role: ChatRole, content: str, db: Session
 ):
     session = (
         db.query(AdventureSession)
-        .filter(AdventureSession.id == session_id, AdventureSession.user_id == user_id)
+        .filter(AdventureSession.id == session_id)
         .first()
     )
     if not session:
