@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { WebView } from "react-native-webview";
 import { useExercisePlanContext } from "../../context/ExercisePlanContext";
 import { useRouter } from "expo-router";
 import { useAuthContext } from "../../context/AuthContext";
@@ -38,7 +37,7 @@ export default function ExerciseRunner() {
   if (plan.length === 0) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>No exercises in plan</Text>
+        <Text>Nincsen edzés kiválasztva</Text>
       </View>
     );
   }
@@ -128,7 +127,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.redButton,
             ]}
           >
-            <Text style={exerciseRunner_styles.buttonText}>Skip</Text>
+            <Text style={exerciseRunner_styles.buttonText}>Kihagyás</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -142,11 +141,17 @@ export default function ExerciseRunner() {
           <Text style={exerciseRunner_styles.title}>{exercise.name}</Text>
 
           <Text style={exerciseRunner_styles.text}>
-            Amount: {exercise.quantity}
+            Mennyiség: {exercise.quantity}
           </Text>
 
+          <View style={exerciseRunner_styles.descriptionBox}>
+          <Text style={exerciseRunner_styles.description}>
+            {exercise.media_url}
+          </Text>
+        </View>
+
           <Text style={exerciseRunner_styles.progress}>
-            Exercise {index + 1} / {plan.length}
+            Feladat: {index + 1} / {plan.length}
           </Text>
         </View>
 
@@ -168,7 +173,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.greenButton,
             ]}
           >
-            <Text style={exerciseRunner_styles.buttonText}>Finished</Text>
+            <Text style={exerciseRunner_styles.buttonText}>Befejezve</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -178,7 +183,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.redButton,
             ]}
           >
-            <Text style={exerciseRunner_styles.buttonText}>Skip</Text>
+            <Text style={exerciseRunner_styles.buttonText}>Kihagyás</Text>
           </TouchableOpacity>
         </View>
       </View>
