@@ -67,6 +67,7 @@ def get_quest(quest_id: int, db: Session = Depends(get_db)):
             joinedload(Quest.exercise),
             joinedload(cast("Item", Quest.item)).joinedload(Item.effects),
         )
+        .filter(Quest.id == quest_id)
         .first()
     )
     if not quest:
@@ -127,6 +128,11 @@ def complete_quest(
     current_user: User = Depends(get_admin_user),
     db: Session = Depends(get_db),
 ):
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
     quest = db.query(Quest).filter(Quest.id == quest_id).first()
     if not quest:
         raise HTTPException(status_code=404, detail="Quest not found")
