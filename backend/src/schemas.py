@@ -128,7 +128,7 @@ class ItemBase(BaseSchema):
     name: str
     description: str
     item_type: str
-    image_url: str = ""
+    image_url: str | None = ""
 
 
 class ItemCreate(ItemBase):
@@ -158,7 +158,7 @@ class InventoryCreate(InventoryBase):
 
 class InventoryRead(InventoryBase):
     id: int
-    user_id: int
+    char_id: int
     item: ItemRead
 
 
