@@ -102,4 +102,17 @@ export const exerciseRunner_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
+  descriptionBox: {
+  marginTop: 12,
+  padding: 12,
+  backgroundColor: "#f5f5f5",
+  borderRadius: 10,
+},
+
+description: {
+  fontSize: 14,
+  color: "#444",
+  lineHeight: 20,
+},
 });
