@@ -149,6 +149,7 @@ export default function CreateCharacter() {
             creation_styles.secondaryButton,
             step === 0 && creation_styles.disabledButton,
           ]}
+          testID="prev-button"
         >
           <Text style={creation_styles.buttonText}>◀ Previous</Text>
         </TouchableOpacity>
