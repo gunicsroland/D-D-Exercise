@@ -109,26 +109,11 @@ def test_delete_character():
 
 def test_update_character():
 
-    data = {
-        "name": "Hero",
-        "class_": "Bard",
-        "abilities": {
-            "strength": 10,
-            "dexterity": 10,
-            "constitution": 10,
-            "intelligence": 10,
-            "wisdom": 10,
-            "charisma": 10,
-        },
-    }
-
-    client.post("/character/", json=data)
-
     update = {
         "name": "SuperHero"
     }
 
-    response = client.put("/character/me", json=update)
+    response = client.put("/character/", json=update)
 
     assert response.status_code == 200
     assert response.json()["name"] == "SuperHero"
