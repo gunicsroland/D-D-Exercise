@@ -36,7 +36,8 @@ export default function ExerciseRunner() {
 
   if (plan.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        testID="empty-plan">
         <Text>Nincsen edzés kiválasztva</Text>
       </View>
     );
@@ -89,15 +90,15 @@ export default function ExerciseRunner() {
     const nextExercise = plan[index + 1].exercise;
 
     return (
-      <View style={exerciseRunner_styles.screen}>
+      <View style={exerciseRunner_styles.screen} testID="pause-screen">
         <View style={exerciseRunner_styles.pauseContainer}>
-          <Text style={exerciseRunner_styles.pauseTimer}>{pauseTime}s</Text>
+          <Text style={exerciseRunner_styles.pauseTimer} testID="pause-timer" >{pauseTime}s</Text>
 
-          <Text style={exerciseRunner_styles.pauseLabel}>
+          <Text style={exerciseRunner_styles.pauseLabel} testID="pause-next-label" >
             Következő feladat
           </Text>
 
-          <Text style={exerciseRunner_styles.pauseTitle}>
+          <Text style={exerciseRunner_styles.pauseTitle} testID="pause-next-name"> 
             {nextExercise.name}
           </Text>
 
@@ -113,6 +114,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.button,
               exerciseRunner_styles.blueButton,
             ]}
+            testID="pause-add-10"
           >
             <Text style={exerciseRunner_styles.buttonText}>+10s</Text>
           </TouchableOpacity>
@@ -126,6 +128,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.button,
               exerciseRunner_styles.redButton,
             ]}
+            testID="pause-skip"
           >
             <Text style={exerciseRunner_styles.buttonText}>Kihagyás</Text>
           </TouchableOpacity>
@@ -135,12 +138,12 @@ export default function ExerciseRunner() {
   }
 
   return (
-    <View style={exerciseRunner_styles.screen}>
+    <View style={exerciseRunner_styles.screen}  testID="exercise-runner-screen">
       <View style={exerciseRunner_styles.info}>
         <View>
-          <Text style={exerciseRunner_styles.title}>{exercise.name}</Text>
+          <Text style={exerciseRunner_styles.title} testID="exercise-name">{exercise.name}</Text>
 
-          <Text style={exerciseRunner_styles.text}>
+          <Text style={exerciseRunner_styles.text} testID="exercise-quantity">
             Mennyiség: {exercise.quantity}
           </Text>
 
@@ -150,7 +153,7 @@ export default function ExerciseRunner() {
           </Text>
         </View>
 
-          <Text style={exerciseRunner_styles.progress}>
+          <Text style={exerciseRunner_styles.progress} testID="exercise-progress">
             Feladat: {index + 1} / {plan.length}
           </Text>
         </View>
@@ -162,6 +165,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.button,
               exerciseRunner_styles.grayButton,
             ]}
+            testID="prev-button"
           >
             <Text style={exerciseRunner_styles.buttonText}>Prev</Text>
           </TouchableOpacity>
@@ -172,6 +176,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.button,
               exerciseRunner_styles.greenButton,
             ]}
+            testID="complete-button"
           >
             <Text style={exerciseRunner_styles.buttonText}>Befejezve</Text>
           </TouchableOpacity>
@@ -182,6 +187,7 @@ export default function ExerciseRunner() {
               exerciseRunner_styles.button,
               exerciseRunner_styles.redButton,
             ]}
+            testID="skip-button"
           >
             <Text style={exerciseRunner_styles.buttonText}>Kihagyás</Text>
           </TouchableOpacity>
