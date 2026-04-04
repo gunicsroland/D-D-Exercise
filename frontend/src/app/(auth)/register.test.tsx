@@ -29,34 +29,25 @@ describe("Register Screen", () => {
   });
 
   it("renders all inputs and buttons", () => {
-    const { getByPlaceholderText, getByText } = render(<Register />);
+    const { getByTestId } = render(<Register />);
 
-    expect(getByPlaceholderText("Felhasználónév")).toBeTruthy();
-    expect(getByPlaceholderText("Email")).toBeTruthy();
-    expect(getByPlaceholderText("Jelszó")).toBeTruthy();
-    expect(getByText("Karakter létrehozása")).toBeTruthy();
-    expect(getByText("Már van fiókom")).toBeTruthy();
+    expect(getByTestId("username-input")).toBeTruthy();
+    expect(getByTestId("email-input")).toBeTruthy();
+    expect(getByTestId("password-input")).toBeTruthy();
+    expect(getByTestId("register-submit-button")).toBeTruthy();
+    expect(getByTestId("go-to-login-button")).toBeTruthy();
   });
 
   it("registers successfully and navigates to home", async () => {
     mockRegister.mockResolvedValueOnce(undefined);
 
-    const { getByPlaceholderText, getByText } = render(<Register />);
+    const { getByTestId } = render(<Register />);
 
-    fireEvent.changeText(
-      getByPlaceholderText("Felhasználónév"),
-      "testuser"
-    );
-    fireEvent.changeText(
-      getByPlaceholderText("Email"),
-      "test@example.com"
-    );
-    fireEvent.changeText(
-      getByPlaceholderText("Jelszó"),
-      "password123"
-    );
+    fireEvent.changeText(getByTestId("username-input"), "testuser");
+    fireEvent.changeText(getByTestId("email-input"), "test@example.com");
+    fireEvent.changeText(getByTestId("password-input"), "password123");
 
-    fireEvent.press(getByText("Karakter létrehozása"));
+    fireEvent.press(getByTestId("register-submit-button"));
 
     await waitFor(() => {
       expect(mockRegister).toHaveBeenCalledWith(
@@ -71,24 +62,15 @@ describe("Register Screen", () => {
   it("shows error message when registration fails with Error", async () => {
     mockRegister.mockRejectedValueOnce(new Error("Registration failed"));
 
-    const { getByPlaceholderText, getByText, findByText } = render(<Register />);
+    const { getByTestId, findByTestId } = render(<Register />);
 
-    fireEvent.changeText(
-      getByPlaceholderText("Felhasználónév"),
-      "testuser"
-    );
-    fireEvent.changeText(
-      getByPlaceholderText("Email"),
-      "test@example.com"
-    );
-    fireEvent.changeText(
-      getByPlaceholderText("Jelszó"),
-      "password123"
-    );
+    fireEvent.changeText(getByTestId("username-input"), "testuser");
+    fireEvent.changeText(getByTestId("email-input"), "test@example.com");
+    fireEvent.changeText(getByTestId("password-input"), "password123");
 
-    fireEvent.press(getByText("Karakter létrehozása"));
+    fireEvent.press(getByTestId("register-submit-button"));
 
-    const error = await findByText("Registration failed");
+    const error = await findByTestId("register-error");
 
     expect(error).toBeTruthy();
   });
@@ -96,32 +78,23 @@ describe("Register Screen", () => {
   it("shows error message when registration fails with non-Error value", async () => {
     mockRegister.mockRejectedValueOnce("Unknown error");
 
-    const { getByPlaceholderText, getByText, findByText } = render(<Register />);
+    const { getByTestId, findByTestId } = render(<Register />);
 
-    fireEvent.changeText(
-      getByPlaceholderText("Felhasználónév"),
-      "testuser"
-    );
-    fireEvent.changeText(
-      getByPlaceholderText("Email"),
-      "test@example.com"
-    );
-    fireEvent.changeText(
-      getByPlaceholderText("Jelszó"),
-      "password123"
-    );
+    fireEvent.changeText(getByTestId("username-input"), "testuser");
+    fireEvent.changeText(getByTestId("email-input"), "test@example.com");
+    fireEvent.changeText(getByTestId("password-input"), "password123");
 
-    fireEvent.press(getByText("Karakter létrehozása"));
+    fireEvent.press(getByTestId("register-submit-button"));
 
-    const error = await findByText("Unknown error");
+    const error = await findByTestId("register-error");
 
     expect(error).toBeTruthy();
   });
 
   it("navigates to login screen", () => {
-    const { getByText } = render(<Register />);
+    const { getByTestId } = render(<Register />);
 
-    fireEvent.press(getByText("Már van fiókom"));
+    fireEvent.press(getByTestId("go-to-login-button"));
 
     expect(mockPush).toHaveBeenCalledWith("login");
   });
