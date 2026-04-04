@@ -43,6 +43,7 @@ app.include_router(messages.app)
 def startup():
     Base.metadata.create_all(bind=engine)
 
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ORIGINS,
@@ -69,8 +70,6 @@ def get_active_effects(
     return own_effects
 
 
-@app.get("/me",  response_model=schemas.UserRead)
-def get_me(
-    current_user: User = Depends(get_current_user)
-):
+@app.get("/me", response_model=schemas.UserRead)
+def get_me(current_user: User = Depends(get_current_user)):
     return current_user

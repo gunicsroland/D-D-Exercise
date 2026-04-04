@@ -7,6 +7,7 @@ from src.constants import ACCESS_TOKEN_EXPIRE_MINUTES
 from src.constants import ALGORITHM
 from src.constants import SECRET_KEY
 
+
 def create_access_token(data: dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + (timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))

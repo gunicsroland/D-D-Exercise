@@ -13,6 +13,7 @@ from src.utils import DAY_CATEGORY_MAP
 
 today = date.today()
 
+
 def get_or_create_progress(char_id: int, quest_id: int, db: Session):
     today = date.today()
 
@@ -21,7 +22,8 @@ def get_or_create_progress(char_id: int, quest_id: int, db: Session):
         .filter(
             CharQuestProgress.char_id == char_id,
             CharQuestProgress.quest_id == quest_id,
-            func.date(CharQuestProgress.date) == today,        )
+            func.date(CharQuestProgress.date) == today,
+        )
         .first()
     )
 

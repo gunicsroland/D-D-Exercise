@@ -10,7 +10,7 @@ from sqlalchemy import (
     Table,
     DateTime,
     Column,
-    UniqueConstraint
+    UniqueConstraint,
 )
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from src.database import Base
@@ -82,7 +82,7 @@ class Character(Base):
     __tablename__ = "characters"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id" , ondelete="CASCADE"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"))
     name: Mapped[str] = mapped_column(String)
     class_: Mapped[CharacterClass] = mapped_column("class", Enum(CharacterClass))
     level: Mapped[int] = mapped_column(Integer, default=1)
@@ -105,7 +105,9 @@ class CharacterAbility(Base):
     __tablename__ = "character_abilities"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    character_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))
+    character_id: Mapped[int] = mapped_column(
+        ForeignKey("characters.id", ondelete="CASCADE")
+    )
     ability: Mapped[AbilityType] = mapped_column(Enum(AbilityType))
     score: Mapped[int] = mapped_column(Integer, default=10)
 
@@ -133,7 +135,9 @@ class Quest(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     name: Mapped[str] = mapped_column(String)
-    exercise_id: Mapped[int] = mapped_column(ForeignKey("exercises.id", ondelete="CASCADE"))
+    exercise_id: Mapped[int] = mapped_column(
+        ForeignKey("exercises.id", ondelete="CASCADE")
+    )
     amount: Mapped[int] = mapped_column(Integer)
     xp_reward: Mapped[int] = mapped_column(Integer)
     item_reward: Mapped[Optional[int]] = mapped_column(
@@ -147,12 +151,12 @@ class Quest(Base):
 class CharQuestProgress(Base):
     __tablename__ = "char_quest_progress"
 
-    __table_args__ = (
-        UniqueConstraint("char_id", "quest_id", "date"),
-    )
+    __table_args__ = (UniqueConstraint("char_id", "quest_id", "date"),)
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    char_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))
+    char_id: Mapped[int] = mapped_column(
+        ForeignKey("characters.id", ondelete="CASCADE")
+    )
     quest_id: Mapped[int] = mapped_column(ForeignKey("quests.id", ondelete="CASCADE"))
     progress: Mapped[int] = mapped_column(Integer, default=0)
     completed: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -163,8 +167,12 @@ class WorkoutLog(Base):
     __tablename__ = "workout_logs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    char_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))
-    exercise_id: Mapped[int] = mapped_column(ForeignKey("exercises.id", ondelete="SET NULL"))
+    char_id: Mapped[int] = mapped_column(
+        ForeignKey("characters.id", ondelete="CASCADE")
+    )
+    exercise_id: Mapped[int] = mapped_column(
+        ForeignKey("exercises.id", ondelete="SET NULL")
+    )
     quantity: Mapped[int] = mapped_column(Integer)
     xp_gained: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(TIMESTAMP, server_default=func.now())
@@ -177,7 +185,9 @@ item_effect_link = Table(
     "item_effect_link",
     Base.metadata,
     Column("item_id", ForeignKey("items.id", ondelete="CASCADE"), primary_key=True),
-    Column("effect_id", ForeignKey("item_effects.id", ondelete="CASCADE"), primary_key=True),
+    Column(
+        "effect_id", ForeignKey("item_effects.id", ondelete="CASCADE"), primary_key=True
+    ),
 )
 
 
@@ -213,20 +223,27 @@ class ActiveEffect(Base):
     __tablename__ = "active_effects"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    character_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))
+    character_id: Mapped[int] = mapped_column(
+        ForeignKey("characters.id", ondelete="CASCADE")
+    )
     expires_at: Mapped[datetime] = mapped_column(DateTime)
     attribute: Mapped[AbilityType] = mapped_column("ability", Enum(AbilityType))
     increase: Mapped[bool] = mapped_column(Boolean)
     value: Mapped[int] = mapped_column(Integer)
 
-    character: Mapped["Character"] = relationship("Character", back_populates="active_effects")
+    character: Mapped["Character"] = relationship(
+        "Character", back_populates="active_effects"
+    )
+
 
 class Inventory(Base):
     __tablename__ = "inventory"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     item_id: Mapped[int] = mapped_column(ForeignKey("items.id", ondelete="SET NULL"))
-    char_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))
+    char_id: Mapped[int] = mapped_column(
+        ForeignKey("characters.id", ondelete="CASCADE")
+    )
     quantity: Mapped[int] = mapped_column(Integer)
 
     item: Mapped["Item"] = relationship("Item")
@@ -236,7 +253,9 @@ class AdventureSession(Base):
     __tablename__ = "adventure_sessions"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
     character_id: Mapped[int] = mapped_column(
         ForeignKey("characters.id", ondelete="CASCADE"), nullable=False
     )
