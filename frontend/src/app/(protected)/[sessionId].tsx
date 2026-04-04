@@ -151,8 +151,9 @@ export default function AdventureChatScreen() {
           session_styles.messageContainer,
           isUser ? session_styles.userContainer : session_styles.dmContainer,
         ]}
+        testID={`message-${item.id}`}
       >
-        <Text style={session_styles.messageText}>{item.content}</Text>
+        <Text style={session_styles.messageText} testID={`message-text-${item.id}`}>{item.content}</Text>
       </View>
     );
   };
@@ -162,15 +163,16 @@ export default function AdventureChatScreen() {
       style={{ flex: 1, backgroundColor: colors.background }}
       behavior={"padding"}
       keyboardVerticalOffset={80}
+      testID="chat-screen"
     >
       <View style={session_styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity onPress={() => router.back()} testID="back-button">
           <Text style={session_styles.backText}>Vissza</Text>
         </TouchableOpacity>
       </View>
 
       <View style={session_styles.container}>
-        {error ? <Text style={session_styles.error}>{error}</Text> : null}
+        {error ? <Text style={session_styles.error} testID="error-text">{error}</Text> : null}
 
         <FlatList
           ref={flatListRef}
@@ -182,6 +184,7 @@ export default function AdventureChatScreen() {
             flatListRef.current?.scrollToEnd({ animated: true })
           }
           style={session_styles.container}
+          testID="messages-list"
         />
       </View>
 
@@ -191,6 +194,7 @@ export default function AdventureChatScreen() {
           onChangeText={setNewMessage}
           placeholder="Írj üzenetet..."
           style={session_styles.input}
+          testID="message-input"
         />
 
         <Pressable
@@ -200,6 +204,7 @@ export default function AdventureChatScreen() {
           ]}
           onPress={sendMessage}
           disabled={talking}
+          testID="send-button"
         >
           <Text style={session_styles.sendText}>Küldés</Text>
         </Pressable>
