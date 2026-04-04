@@ -6,9 +6,11 @@ import { useAuthContext } from "../../context/AuthContext";
 import { finishExercise } from "../../services/quest_service";
 import { ExercisePlan } from "../../types";
 import { exerciseRunner_styles } from "../../styles/exerciseRunner";
+import { useGameContext } from "../../context/GameContext";
 
 export default function ExerciseRunner() {
   const { plan, clearPlan } = useExercisePlanContext();
+  const {refreshAll} = useGameContext();
   const { token } = useAuthContext();
   const router = useRouter();
 
@@ -83,6 +85,7 @@ export default function ExerciseRunner() {
     }
 
     clearPlan();
+    refreshAll();
     router.back();
   };
 
@@ -167,7 +170,7 @@ export default function ExerciseRunner() {
             ]}
             testID="prev-button"
           >
-            <Text style={exerciseRunner_styles.buttonText}>Prev</Text>
+            <Text style={exerciseRunner_styles.buttonText}>Előző</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
