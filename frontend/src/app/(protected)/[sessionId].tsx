@@ -47,6 +47,14 @@ export default function AdventureChatScreen() {
     if (id && token) fetchMessages();
   }, [id, token]);
 
+  useEffect(() => {
+    if (messages.length > 0) {
+      setTimeout(() => {
+        flatListRef.current?.scrollToEnd({ animated: true });
+      }, 100);
+    }
+  }, [messages]);
+
   const sendMessage = async () => {
     if (!newMessage.trim()) return;
 
