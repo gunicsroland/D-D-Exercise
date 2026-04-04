@@ -74,6 +74,7 @@ export default function AdventureChatScreen() {
 
       setMessages((prev) => [...prev, userMsg, tempDM]);
       setNewMessage("");
+      setError("");
 
       const res = await fetch(
         `${API_URL}/messages/${id}?message=${encodeURIComponent(messageToSend)}`,
@@ -86,6 +87,8 @@ export default function AdventureChatScreen() {
       if (!res.ok) {
         throw new Error("Request failed");
       }
+
+      const resClone = res.clone();
 
       try {
         if (res.body && typeof res.body.getReader === "function") {
@@ -121,14 +124,26 @@ export default function AdventureChatScreen() {
       } catch (streamError) {
         console.warn("Streaming failed, falling back:", streamError);
 
-        const data = await res.json();
-        const fullMessage = data.content || data.message;
+        try {
+          const text = await resClone.text();
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch {
+            // Not JSON → treat as plain text
+            data = { message: text };
+          }
 
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === tempDMId ? { ...m, content: fullMessage } : m,
-          ),
-        );
+          const fullMessage = data.content || data.message || text;
+
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === tempDMId ? { ...m, content: fullMessage } : m
+            )
+          );
+        } catch (jsonError) {
+          console.error("Fallback JSON parsing failed:", jsonError);
+        }
       }
 
       fetchMessages();
