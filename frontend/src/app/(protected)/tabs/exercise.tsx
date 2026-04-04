@@ -61,7 +61,7 @@ export default function ExerciseScreen() {
     try {
       const quests = await getDailyQuests(token);
 
-      const sortedQuests = [...dailyQuests].sort((a, b) =>
+      const sortedQuests = [...quests].sort((a, b) =>
         a.name.localeCompare(b.name)
       );
 
