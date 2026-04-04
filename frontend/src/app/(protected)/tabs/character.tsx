@@ -53,28 +53,29 @@ export default function CharacterScreen() {
   };
 
   if (!character || !token) {
-    return <ActivityIndicator size="large" color="#0000ff" />;
+    return <ActivityIndicator size="large" color="#0000ff" testID="loading-indicator"/>;
   }
 
   return (
     <ScrollView style={character_styles.container}>
       <View style={character_styles.panel}>
         <View style={character_styles.nameRow}>
-          <Text style={character_styles.name}>{character.name}</Text>
+          <Text style={character_styles.name} testID="character-name">{character.name}</Text>
 
           <Pressable
             style={character_styles.editButton}
             onPress={() => setModalVisible(true)}
+            testID="edit-name-button"
           >
             <Ionicons name="pencil" size={20} color={colors.gold} />
           </Pressable>
         </View>
-        <Text style={character_styles.classText}>
+        <Text style={character_styles.classText} testID="character-class">
           {character.level}. Szintű {CLASS_LABELS_HU[character.class_]}
         </Text>
 
         <XPBar level={character.level} xp={character.xp} />
-        <Text style={character_styles.abilityPoints}>
+        <Text style={character_styles.abilityPoints} testID="ability-points">
           Ability Points: {character.ability_points}
         </Text>
       </View>
@@ -87,7 +88,7 @@ export default function CharacterScreen() {
         <AbilityList character={character} handleUpgrade={handleUpgrade} now={now}/>
       </View>
 
-      <Modal visible={modalVisible} transparent animationType="fade">
+      <Modal visible={modalVisible} transparent animationType="fade" testID="name-modal">
         <View style={character_styles.modalOverlay}>
           <View style={character_styles.modalPanel}>
             <Text style={character_styles.modalTitle}>Új karakter név:</Text>
@@ -97,14 +98,16 @@ export default function CharacterScreen() {
               onChangeText={setNewName}
               placeholder="Adj meg egy nevet"
               style={character_styles.input}
+              testID="name-input"
             />
 
-            {error ? <Text style={character_styles.error}>{error}</Text> : null}
+            {error ? <Text style={character_styles.error} testID="error-text">{error}</Text> : null}
 
             <View style={character_styles.modalButtons}>
               <Pressable
                 style={character_styles.button}
                 onPress={handleChangeName}
+                testID="save-name-button"
               >
                 <Text style={character_styles.buttonText}>Mentés</Text>
               </Pressable>
@@ -112,6 +115,7 @@ export default function CharacterScreen() {
               <Pressable
                 style={[character_styles.button, character_styles.cancelButton]}
                 onPress={() => setModalVisible(false)}
+                testID="cancel-name-button"
               >
                 <Text style={character_styles.buttonText}>Mégse</Text>
               </Pressable>
