@@ -30,7 +30,7 @@ jest.mock("../../../services/character_service", () => ({
   checkCharacter: () => mockCheckCharacter(),
 }));
 
-// Mock step components (simplify UI)
+// Mock step components
 jest.mock("../../../components/charCreateSteps/stepName", () => {
   return () => null;
 });
@@ -67,17 +67,20 @@ describe("CreateCharacter Screen", () => {
   it("navigates through steps using Next and Previous", async () => {
     mockCheckCharacter.mockResolvedValueOnce(false);
 
-    const { getByText } = render(<CreateCharacter />);
+    const { getByTestId } = render(<CreateCharacter />);
+
+    const nextButton = getByTestId("next-button");
+    const prevButton = getByTestId("prev-button");
 
     // Initially at step 0
-    expect(getByText("Next ▶")).toBeTruthy();
+    expect(nextButton).toBeTruthy();
+    expect(prevButton.props.accessibilityState.disabled).toBe(true);
 
     // Go next
-    fireEvent.press(getByText("Next ▶"));
-    expect(getByText("Next ▶")).toBeTruthy();
+    fireEvent.press(nextButton);
 
     // Go back
-    fireEvent.press(getByText("◀ Previous"));
+    fireEvent.press(prevButton);
   });
 
   it("disables previous button on first step", () => {
@@ -94,15 +97,16 @@ describe("CreateCharacter Screen", () => {
     mockCheckCharacter.mockResolvedValueOnce(false);
     mockCreateChar.mockResolvedValueOnce({});
 
-    const { getByText } = render(<CreateCharacter />);
+    const { getByTestId } = render(<CreateCharacter />);
 
+    const nextButton = getByTestId("next-button");
+
+    // Move through all steps
     for (let i = 0; i < 4; i++) {
-      fireEvent.press(getByText("Next ▶"));
+      fireEvent.press(nextButton);
     }
 
-    const finishButton = getByText("⚔ Finish");
-
-    fireEvent.press(finishButton);
+    fireEvent.press(nextButton); // final submit
 
     await waitFor(() => {
       expect(mockCreateChar).toHaveBeenCalled();
@@ -114,15 +118,17 @@ describe("CreateCharacter Screen", () => {
     mockCheckCharacter.mockResolvedValueOnce(false);
     mockCreateChar.mockRejectedValueOnce(new Error("Create failed"));
 
-    const { getByText, findByText } = render(<CreateCharacter />);
+    const { getByTestId, findByTestId } = render(<CreateCharacter />);
+
+    const nextButton = getByTestId("next-button");
 
     for (let i = 0; i < 4; i++) {
-      fireEvent.press(getByText("Next ▶"));
+      fireEvent.press(nextButton);
     }
 
-    fireEvent.press(getByText("⚔ Finish"));
+    fireEvent.press(nextButton);
 
-    const error = await findByText("Create failed");
+    const error = await findByTestId("creation-error");
 
     expect(error).toBeTruthy();
   });
