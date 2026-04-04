@@ -23,7 +23,6 @@ export default function AdventureChatScreen() {
   const [error, setError] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const [newDMMessage, setNewDMMessage] = useState("");
   const [talking, setTalking] = useState(false);
 
   const { token } = useAuthContext();
@@ -34,12 +33,9 @@ export default function AdventureChatScreen() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!res.ok) {
-        throw new Error();
-      }
+      if (!res.ok) throw new Error();
 
       const data = await res.json();
-
       setMessages(data);
     } catch {
       setError("Nem elérhető a beszélgetési előzményed");
@@ -47,23 +43,26 @@ export default function AdventureChatScreen() {
   };
 
   useEffect(() => {
-    if (id) fetchMessages();
-  }, [id]);
+    if (id && token) fetchMessages();
+  }, [id, token]);
 
   const sendMessage = async () => {
     if (!newMessage.trim()) return;
 
-    try {
-      setTalking(true);
+    let tempDMId: number | null = null;
 
-      const tempDMId = Date.now();
+    setTalking(true);
+
+    try {
+      tempDMId = Date.now();
+      const messageToSend = newMessage;
+
       const userMsg: Message = {
         id: tempDMId - 1,
         session_id: -1,
         role: "user",
-        content: newMessage,
+        content: messageToSend,
       };
-      setMessages((prev) => [...prev, userMsg]);
 
       const tempDM: Message = {
         id: tempDMId,
@@ -71,51 +70,68 @@ export default function AdventureChatScreen() {
         role: "dm",
         content: "",
       };
-      setMessages((prev) => [...prev, tempDM]);
 
+      setMessages((prev) => [...prev, userMsg, tempDM]);
       setNewMessage("");
 
       const res = await fetch(
-        `${API_URL}/messages/${id}?message=${encodeURIComponent(newMessage)}`,
+        `${API_URL}/messages/${id}?message=${encodeURIComponent(messageToSend)}`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
-        },
+        }
       );
 
       if (!res.ok) {
-        throw new Error();
+        throw new Error("Request failed");
       }
 
-      const reader = res.body?.getReader();
-      if (!reader)
-        throw new Error("No reader available");
-
+      try {
+        if (res.body && typeof res.body.getReader === "function") {
+          const reader = res.body.getReader();
       const decoder = new TextDecoder("utf-8");
-
       let partialMessage = "";
 
       while (true) {
-        const result = await reader.read();
-        if (result.done)
-          break;
+            const { done, value } = await reader.read();
+            if (done) break;
 
-        const chunk = decoder.decode(result.value, { stream: true });
+            const chunk = decoder.decode(value, { stream: true });
         partialMessage += chunk;
 
-        setNewDMMessage(partialMessage);
+            if (tempDMId !== null) {
+              setMessages((prev) =>
+                prev.map((m) =>
+                  m.id === tempDMId
+                    ? { ...m, content: partialMessage }
+                    : m
+                )
+              );
+            }
+          }
+        } else {
+          const data = await res.json();
+          const fullMessage = data.content || data.message;
+
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === tempDMId ? { ...m, content: fullMessage } : m
+            )
+          );
+        }
+      } catch (streamError) {
+        console.warn("Streaming failed, falling back:", streamError);
+
+        const data = await res.json();
+        const fullMessage = data.content || data.message;
 
         setMessages((prev) =>
           prev.map((m) =>
-            m.id === tempDMId ? { ...m, content: partialMessage } : m
+            m.id === tempDMId ? { ...m, content: fullMessage } : m
           )
         );
       }
 
-      setNewDMMessage("");
-      setMessages((prev) =>
-        prev.filter((m) => m.id !== tempDMId)
-      );
       fetchMessages();
     } catch (err) {
       console.error(err);
