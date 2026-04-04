@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Exercise, ExercisePlan } from "../types/types";
+import { Exercise, ExercisePlan } from "../types";
 import { useRouter } from "expo-router";
 
 type ExercisePlanContextType = {

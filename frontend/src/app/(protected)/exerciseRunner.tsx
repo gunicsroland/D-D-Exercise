@@ -4,7 +4,7 @@ import { useExercisePlanContext } from "../../context/ExercisePlanContext";
 import { useRouter } from "expo-router";
 import { useAuthContext } from "../../context/AuthContext";
 import { finishExercise } from "../../services/quest_service";
-import { ExercisePlan } from "../../types/types";
+import { ExercisePlan } from "../../types";
 import { exerciseRunner_styles } from "../../styles/exerciseRunner";
 
 export default function ExerciseRunner() {

@@ -23,7 +23,7 @@ import {
 import { character_styles } from "../../../styles/tabs_character";
 import { CLASS_LABELS_HU } from "../../../text_labels";
 import { colors } from "../../../styles/colors";
-import { AbilityType } from "../../../types/types";
+import { AbilityType } from "../../../types";
 
 export default function CharacterScreen() {
   const { token } = useAuthContext();

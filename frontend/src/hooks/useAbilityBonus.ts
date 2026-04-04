@@ -1,4 +1,4 @@
-import { Character, AbilityType } from "../types/types";
+import { Character, AbilityType } from "../types";
 
 export const getAbilityBonus = (
   character: Character | null,

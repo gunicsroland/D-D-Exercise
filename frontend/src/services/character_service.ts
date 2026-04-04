@@ -1,5 +1,5 @@
 import { API_URL } from "../constants";
-import { CharacterUpdatePayload, Stats } from "../types/types";
+import { CharacterUpdatePayload, Stats } from "../types";
 
 export async function createChar(
   name: string,

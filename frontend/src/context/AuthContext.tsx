@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { User } from "../types/types";
+import { User } from "../types";
 import { storage } from "../services/storage_service";
 import { loginRequest, registerRequest, getMe } from "../services/auth_service";
 import { useRouter } from "expo-router";

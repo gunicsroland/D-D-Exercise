@@ -12,7 +12,7 @@ import {
   ExerciseDifficulty,
   Quest,
   QuestProgress,
-} from "../../../types/types";
+} from "../../../types";
 import {
   getDailyQuests,
   getExercises,

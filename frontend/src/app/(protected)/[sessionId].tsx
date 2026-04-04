@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { API_URL } from "../../constants";
 import { useAuthContext } from "../../context/AuthContext";
 import { router, useLocalSearchParams } from "expo-router";
-import { Message } from "../../types/types";
+import { Message } from "../../types";
 import {
   View,
   Text,

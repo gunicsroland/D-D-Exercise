@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import { Character, InventoryEntry } from "../types/types";
+import { Character, InventoryEntry } from "../types";
 import { getCharacter } from "../services/character_service";
 import { getInventory } from "../services/inventory_service";
 import { useAuthContext } from "./AuthContext";

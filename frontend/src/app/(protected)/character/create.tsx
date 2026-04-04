@@ -14,7 +14,7 @@ import {
 import React from "react";
 import { useAuthContext } from "../../../context/AuthContext";
 import { creation_styles } from "../../../styles/creation";
-import { Stats } from "../../../types/types";
+import { Stats } from "../../../types";
 
 export default function CreateCharacter() {
   const classes = Object.keys(BASE_STATS_BY_CLASS);

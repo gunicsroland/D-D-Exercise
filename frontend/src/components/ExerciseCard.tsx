@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { Exercise } from "../types/types";
+import { Exercise } from "../types";
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
 import { exerciseCard_styles } from "../styles/exerciseCard";

@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { Quest, QuestProgress } from "../types/types";
+import { Quest, QuestProgress } from "../types";
 import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
 import { exerciseCard_styles } from "../styles/exerciseCard";

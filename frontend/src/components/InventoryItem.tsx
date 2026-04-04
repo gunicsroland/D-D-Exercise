@@ -7,7 +7,7 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { InventoryEntry } from "../types/types";
+import { InventoryEntry } from "../types";
 import { ABILITY_LABELS_HU } from "../text_labels";
 import { consumeItem } from "../services/inventory_service";
 import { inventory_styles } from "../styles/tabs_inventory";

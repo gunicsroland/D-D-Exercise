@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { QUEUE_KEY } from "../constants";
-import { OfflineExercise } from "../types/types";
+import { OfflineExercise } from "../types";
 
 export async function addExerciseToQueue(exerciseId: number) {
   const existing = await AsyncStorage.getItem(QUEUE_KEY);

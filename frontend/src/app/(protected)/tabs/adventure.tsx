@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../../constants";
 import { useAuthContext } from "../../../context/AuthContext";
-import { Session } from "../../../types/types";
+import { Session } from "../../../types";
 import { useRouter } from "expo-router";
 import { adventure_styles } from "../../../styles/tabs_adventure";
 import { colors } from "../../../styles/colors";

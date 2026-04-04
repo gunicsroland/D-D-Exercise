@@ -4,7 +4,7 @@ import { CLASS_LABELS_HU } from "../../text_labels";
 import { useEffect } from "react";
 import React from "react";
 import { creation_styles } from "../../styles/creation";
-import { Stats } from "../../types/types";
+import { Stats } from "../../types";
 
 export default function StepFinal({
   finalStats,
