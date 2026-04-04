@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API_URL } from "../../constants";
 import { useAuthContext } from "../../context/AuthContext";
 import { router, useLocalSearchParams } from "expo-router";
@@ -26,6 +26,7 @@ export default function AdventureChatScreen() {
   const [talking, setTalking] = useState(false);
 
   const { token } = useAuthContext();
+  const flatListRef = useRef<FlatList>(null);
 
   const fetchMessages = async () => {
     try {
@@ -89,15 +90,15 @@ export default function AdventureChatScreen() {
       try {
         if (res.body && typeof res.body.getReader === "function") {
           const reader = res.body.getReader();
-      const decoder = new TextDecoder("utf-8");
-      let partialMessage = "";
+          const decoder = new TextDecoder("utf-8");
+          let partialMessage = "";
 
-      while (true) {
+          while (true) {
             const { done, value } = await reader.read();
             if (done) break;
 
             const chunk = decoder.decode(value, { stream: true });
-        partialMessage += chunk;
+            partialMessage += chunk;
 
             if (tempDMId !== null) {
               setMessages((prev) =>
@@ -163,11 +164,7 @@ export default function AdventureChatScreen() {
       keyboardVerticalOffset={80}
     >
       <View style={session_styles.header}>
-        <TouchableOpacity
-          onPress={() => {
-            router.back();
-          }}
-        >
+        <TouchableOpacity onPress={() => router.back()}>
           <Text style={session_styles.backText}>Vissza</Text>
         </TouchableOpacity>
       </View>
@@ -176,10 +173,14 @@ export default function AdventureChatScreen() {
         {error ? <Text style={session_styles.error}>{error}</Text> : null}
 
         <FlatList
+          ref={flatListRef}
           data={messages}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
           contentContainerStyle={{ padding: 10 }}
+          onContentSizeChange={() =>
+            flatListRef.current?.scrollToEnd({ animated: true })
+          }
           style={session_styles.container}
         />
       </View>
@@ -191,6 +192,7 @@ export default function AdventureChatScreen() {
           placeholder="Írj üzenetet..."
           style={session_styles.input}
         />
+
         <Pressable
           style={[
             session_styles.sendButton,
