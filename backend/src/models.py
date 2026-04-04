@@ -10,6 +10,7 @@ from sqlalchemy import (
     Table,
     DateTime,
     Column,
+    UniqueConstraint
 )
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from src.database import Base
@@ -145,6 +146,10 @@ class Quest(Base):
 
 class CharQuestProgress(Base):
     __tablename__ = "char_quest_progress"
+
+    __table_args__ = (
+        UniqueConstraint("char_id", "quest_id", "date"),
+    )
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
     char_id: Mapped[int] = mapped_column(ForeignKey("characters.id", ondelete="CASCADE"))

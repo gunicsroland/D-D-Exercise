@@ -217,6 +217,7 @@ class QuestUpdate(BaseSchema):
 class CharQuestProgressRead(BaseModel):
     id: int
     quest_id: int
+    char_id: int
     progress: int
     completed: bool
 
