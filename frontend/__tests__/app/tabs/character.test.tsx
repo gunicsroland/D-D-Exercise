@@ -1,10 +1,10 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import CharacterScreen from "./character";
+import CharacterScreen from "../../../src/app/(protected)/tabs/character";
 
-import { useAuthContext } from "../../../context/AuthContext";
-import { useGameContext } from "../../../context/GameContext";
-import { updateCharacter, lvlUpAbility } from "../../../services/character_service";
+import { useAuthContext } from "../../../src/context/AuthContext";
+import { useGameContext } from "../../../src/context/GameContext";
+import { lvlUpAbility, updateCharacter } from "../../../src/services/character_service";
 
 jest.mock("../../../context/AuthContext", () => ({
   useAuthContext: jest.fn(),

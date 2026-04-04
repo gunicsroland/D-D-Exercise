@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
-import Home from "./index";
-import { useAuthContext } from "../context/AuthContext";
-import { checkCharacter } from "../services/character_service";
+import Home from "../../src/app";
+import { useAuthContext } from "../../src/context/AuthContext";
+import { checkCharacter } from "../../src/services/character_service";
 import { useRouter } from "expo-router";
 import React from "react";
 

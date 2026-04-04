@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import CreateCharacter from "./create";
+import CreateCharacter from "../../../src/app/(protected)/character/create";
 
 // --- MOCKS ---
 

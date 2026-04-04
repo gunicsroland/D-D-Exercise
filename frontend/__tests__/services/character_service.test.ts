@@ -1,12 +1,7 @@
-import {
-    createChar,
-    checkCharacter,
-    getCharacter,
-    lvlUpAbility,
-    updateCharacter,
-} from "./character_service";
-import { API_URL } from "../constants";
-import { Stats } from "../types";
+import { API_URL } from "../../src/constants";
+import { createChar, checkCharacter, getCharacter, lvlUpAbility, updateCharacter } from "../../src/services/character_service";
+import { Stats } from "../../src/types";
+
 
 global.fetch = jest.fn();
 

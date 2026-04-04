@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuthContext } from "../../../context/AuthContext";
-import { useGameContext } from "../../../context/GameContext";
-import InventoryScreen from "./inventory";
+import { useAuthContext } from "../../../src/context/AuthContext";
+import { useGameContext } from "../../../src/context/GameContext";
+import InventoryScreen from "../../../src/app/(protected)/tabs/inventory";
 import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
 
 

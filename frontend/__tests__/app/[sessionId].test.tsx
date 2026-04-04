@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
-import AdventureChatScreen from "./[sessionId]";
+import AdventureChatScreen from "../../src/app/(protected)/[sessionId]";
 
 jest.mock("expo-router", () => ({
   useLocalSearchParams: () => ({ sessionId: "1" }),

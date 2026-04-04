@@ -1,7 +1,7 @@
-import { useAuthContext } from "../../../context/AuthContext";
+import { useAuthContext } from "../../../src/context/AuthContext";
 import { useRouter } from "expo-router";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import KalandScreen from "./adventure";
+import KalandScreen from "../../../src/app/(protected)/tabs/adventure";
 import React from "react";
 
 jest.mock("../../../context/AuthContext", () => ({

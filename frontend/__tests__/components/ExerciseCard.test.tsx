@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import { ExerciseCard } from "./ExerciseCard";
-import { useExercisePlanContext } from "../context/ExercisePlanContext";
-import { Exercise } from "../types";
+import { ExerciseCard } from "../../src/components/ExerciseCard";
+import { useExercisePlanContext } from "../../src/context/ExercisePlanContext";
+import { Exercise } from "../../src/types";
 
 jest.mock("../context/ExercisePlanContext", () => ({
   useExercisePlanContext: jest.fn(),

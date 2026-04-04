@@ -1,4 +1,4 @@
-import { getRemainingTime } from "./useRemainingTime";
+import { getRemainingTime } from "../src/hooks/useRemainingTime";
 
 const now = new Date("2026-01-01T12:00:00Z").getTime();
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { render, act, waitFor } from "@testing-library/react-native";
-import { AuthProvider, useAuthContext } from "./AuthContext";
-import { storage } from "../services/storage_service";
-import { loginRequest, registerRequest, getMe } from "../services/auth_service";
+import { useAuthContext, AuthProvider } from "../../src/context/AuthContext";
+import { getMe, loginRequest, registerRequest } from "../../src/services/auth_service";
+import { storage } from "../../src/services/storage_service";
 
 const mockReplace = jest.fn();
 

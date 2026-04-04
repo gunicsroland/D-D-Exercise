@@ -1,12 +1,12 @@
-import { useAuthContext } from "../../../context/AuthContext";
+import { useAuthContext } from "../../../src/context/AuthContext";
 import {
   getDailyQuests,
   getExercises,
   getQuestProgress,
-} from "../../../services/quest_service";
-import { setQuestDifficulty } from "../../../services/quest_service";
+} from "../../../src/services/quest_service";
+import { setQuestDifficulty } from "../../../src/services/quest_service";
 import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
-import ExerciseScreen from "./exercise";
+import ExerciseScreen from "../../../src/app/(protected)/tabs/exercise";
 import React from "react";
 
 

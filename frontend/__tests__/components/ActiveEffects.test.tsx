@@ -1,8 +1,8 @@
 import React from "react";
 import { render } from "@testing-library/react-native";
-import { ActiveEffects } from "./ActiveEffects";
-import { getRemainingTime } from "../../hooks/useRemainingTime";
-import { Character } from "../../types";
+import { ActiveEffects } from "../../src/components/character/ActiveEffects";
+import { getRemainingTime } from "../../src/hooks/useRemainingTime";
+import { Character } from "../../src/types";
 
 jest.mock("../../hooks/useRemainingTime", () => ({
     getRemainingTime: jest.fn(() => "5m"),

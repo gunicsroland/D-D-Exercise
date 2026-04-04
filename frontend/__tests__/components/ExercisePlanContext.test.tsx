@@ -1,9 +1,6 @@
 import React from "react";
 import { render, act } from "@testing-library/react-native";
-import {
-    ExercisePlanProvider,
-    useExercisePlanContext,
-} from "./ExercisePlanContext";
+import { ExercisePlanProvider, useExercisePlanContext } from "../../src/context/ExercisePlanContext";
 
 const mockPush = jest.fn();
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import { InventoryItem } from "./InventoryItem";
-import { consumeItem } from "../services/inventory_service";
+import { InventoryItem } from "../../src/components/InventoryItem";
+import { consumeItem } from "../../src/services/inventory_service";
 
 jest.mock("../services/inventory_service", () => ({
     consumeItem: jest.fn(),

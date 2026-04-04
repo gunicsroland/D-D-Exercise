@@ -1,5 +1,5 @@
-import { consumeItem, getInventory } from "./inventory_service";
-import { API_URL } from "../constants";
+import { API_URL } from "../../src/constants";
+import { consumeItem, getInventory } from "../../src/services/inventory_service";
 
 global.fetch = jest.fn();
 

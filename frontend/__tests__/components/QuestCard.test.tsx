@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import { QuestCard } from "./QuestCard";
-import { useExercisePlanContext } from "../context/ExercisePlanContext";
+import { QuestCard } from "../../src/components/QuestCard";
+import { useExercisePlanContext } from "../../src/context/ExercisePlanContext";
 
 // Mock context
 const mockAddExercise = jest.fn();

@@ -1,5 +1,5 @@
-import { loginRequest, registerRequest, getMe } from "./auth_service";
-import { API_URL } from "../constants";
+import { API_URL } from "../../src/constants";
+import { loginRequest, registerRequest, getMe } from "../../src/services/auth_service";
 
 global.fetch = jest.fn();
 

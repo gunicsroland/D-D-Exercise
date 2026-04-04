@@ -1,9 +1,9 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
-import { AbilityList } from "./AbilityList";
+import { AbilityList } from "../../src/components/character/AbilityList";
 
-import { getAbilityBonus } from "../../hooks/useAbilityBonus";
-import { Character } from "../../types";
+import { getAbilityBonus } from "../../src/hooks/useAbilityBonus";
+import { Character } from "../../src/types";
 
 jest.mock("../../hooks/useAbilityBonus", () => ({
   getAbilityBonus: jest.fn(),

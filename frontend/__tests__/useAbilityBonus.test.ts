@@ -1,5 +1,6 @@
-import { getAbilityBonus } from "./useAbilityBonus";
-import { Character } from "../types";
+import { getAbilityBonus } from "../src/hooks/useAbilityBonus";
+import { Character } from "../src/types";
+
 
 const mockNow = new Date("2026-01-01T12:00:00Z").getTime();
 

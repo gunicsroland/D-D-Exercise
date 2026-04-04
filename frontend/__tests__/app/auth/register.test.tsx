@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react-native";
-import Register from "./register";
+import Register from "../../../src/app/(auth)/register";
 
 // --- MOCKS ---
 

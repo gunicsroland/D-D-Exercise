@@ -1,12 +1,12 @@
 import React from "react";
 import { render, fireEvent, act } from "@testing-library/react-native";
 
-import ExerciseRunner from "./exerciseRunner";
+import ExerciseRunner from "../../src/app/(protected)/exerciseRunner";
 
-import { useExercisePlanContext } from "../../context/ExercisePlanContext";
-import { useAuthContext } from "../../context/AuthContext";
+import { useExercisePlanContext } from "../../src/context/ExercisePlanContext";
+import { useAuthContext } from "../../src/context/AuthContext";
 import { useRouter } from "expo-router";
-import { finishExercise } from "../../services/quest_service";
+import { finishExercise } from "../../src/services/quest_service";
 
 jest.mock("../../context/AuthContext", () => ({
   useAuthContext: jest.fn(),
