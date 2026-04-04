@@ -53,14 +53,22 @@ export default function CharacterScreen() {
   };
 
   if (!character || !token) {
-    return <ActivityIndicator size="large" color="#0000ff" testID="loading-indicator"/>;
+    return (
+      <ActivityIndicator
+        size="large"
+        color="#0000ff"
+        testID="loading-indicator"
+      />
+    );
   }
 
   return (
     <ScrollView style={character_styles.container}>
       <View style={character_styles.panel}>
         <View style={character_styles.nameRow}>
-          <Text style={character_styles.name} testID="character-name">{character.name}</Text>
+          <Text style={character_styles.name} testID="character-name">
+            {character.name}
+          </Text>
 
           <Pressable
             style={character_styles.editButton}
@@ -85,10 +93,19 @@ export default function CharacterScreen() {
       </View>
 
       <View style={character_styles.panel}>
-        <AbilityList character={character} handleUpgrade={handleUpgrade} now={now}/>
+        <AbilityList
+          character={character}
+          handleUpgrade={handleUpgrade}
+          now={now}
+        />
       </View>
 
-      <Modal visible={modalVisible} transparent animationType="fade" testID="name-modal">
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="fade"
+        testID="name-modal"
+      >
         <View style={character_styles.modalOverlay}>
           <View style={character_styles.modalPanel}>
             <Text style={character_styles.modalTitle}>Új karakter név:</Text>
@@ -101,7 +118,11 @@ export default function CharacterScreen() {
               testID="name-input"
             />
 
-            {error ? <Text style={character_styles.error} testID="error-text">{error}</Text> : null}
+            {error ? (
+              <Text style={character_styles.error} testID="error-text">
+                {error}
+              </Text>
+            ) : null}
 
             <View style={character_styles.modalButtons}>
               <Pressable

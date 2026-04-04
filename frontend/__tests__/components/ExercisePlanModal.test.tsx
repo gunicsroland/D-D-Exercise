@@ -23,52 +23,52 @@ jest.mock("../../src/context/ExercisePlanContext", () => ({
 const onClose = jest.fn();
 
 beforeEach(() => {
-    jest.clearAllMocks();
-  });
+  jest.clearAllMocks();
+});
 
 it("renders correctly when open", () => {
-    const { getByTestId } = render(
-      <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />
-    );
+  const { getByTestId } = render(
+    <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />,
+  );
 
-    expect(getByTestId("modal")).toBeTruthy();
-    expect(getByTestId("title")).toBeTruthy();
-    expect(getByTestId("plan-list")).toBeTruthy();
-  });
+  expect(getByTestId("modal")).toBeTruthy();
+  expect(getByTestId("title")).toBeTruthy();
+  expect(getByTestId("plan-list")).toBeTruthy();
+});
 
 it("calls onClose when close button is pressed", () => {
-    const { getByTestId } = render(
-      <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />
-    );
+  const { getByTestId } = render(
+    <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />,
+  );
 
-    fireEvent.press(getByTestId("close-button"));
-    expect(onClose).toHaveBeenCalled();
-  });
+  fireEvent.press(getByTestId("close-button"));
+  expect(onClose).toHaveBeenCalled();
+});
 
 it("calls removeExercise when remove button is pressed", () => {
-    const { getByTestId } = render(
-      <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />
-    );
+  const { getByTestId } = render(
+    <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />,
+  );
 
-    fireEvent.press(getByTestId("remove-button-1"));
-    expect(mockRemoveExercise).toHaveBeenCalledWith("1");
-  });
+  fireEvent.press(getByTestId("remove-button-1"));
+  expect(mockRemoveExercise).toHaveBeenCalledWith("1");
+});
 
 it("calls clearPlan when clear button is pressed", () => {
-    const { getByTestId } = render(
-      <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />
-    );
+  const { getByTestId } = render(
+    <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />,
+  );
 
-    fireEvent.press(getByTestId("clear-button"));
-    expect(mockClearPlan).toHaveBeenCalled();
-  });
+  fireEvent.press(getByTestId("clear-button"));
+  expect(mockClearPlan).toHaveBeenCalled();
+});
 
 it("calls startPlan and onClose when start button is pressed", () => {
-    const { getByTestId } = render(
-      <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />
-    );
+  const { getByTestId } = render(
+    <ExercisePlanModal isOpen={true} onClose={onClose} testId="modal" />,
+  );
 
-    fireEvent.press(getByTestId("start-button"));
-    expect(onClose).toHaveBeenCalled();
-    expect(mockStartPlan).toHaveBeenCalled();
-  });
+  fireEvent.press(getByTestId("start-button"));
+  expect(onClose).toHaveBeenCalled();
+  expect(mockStartPlan).toHaveBeenCalled();
+});

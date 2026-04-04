@@ -9,7 +9,6 @@ import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
 import ExerciseScreen from "../../../src/app/(protected)/tabs/exercise";
 import React from "react";
 
-
 jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));
@@ -59,7 +58,14 @@ jest.mock("@react-navigation/native", () => {
 });
 
 const mockQuests = [
-  { id: 1, name: "Quest 1", amount: 1, xp_reward: 10, exercise: null, item: null },
+  {
+    id: 1,
+    name: "Quest 1",
+    amount: 1,
+    xp_reward: 10,
+    exercise: null,
+    item: null,
+  },
 ];
 
 const mockExercises = [
@@ -83,9 +89,7 @@ const mockExercises = [
   },
 ];
 
-const mockProgress = [
-  { id: 1, quest_id: 1, progress: 0, completed: false },
-];
+const mockProgress = [{ id: 1, quest_id: 1, progress: 0, completed: false }];
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -108,17 +112,15 @@ it("renders quests and exercises", async () => {
   await waitFor(() => expect(getDailyQuests).toHaveBeenCalled());
 });
 
-
 it("opens modal when start button pressed", async () => {
   const { getByTestId, findByTestId } = render(<ExerciseScreen />);
 
   await act(async () => {
     fireEvent.press(getByTestId("start-button"));
-  })
+  });
 
   expect(await findByTestId("exercise-modal")).toBeTruthy();
 });
-
 
 it("filters exercises by category", async () => {
   const { findByTestId, queryByTestId } = render(<ExerciseScreen />);
@@ -140,7 +142,7 @@ it("filters exercises by difficulty", async () => {
 
   await act(async () => {
     fireEvent.press(await findByTestId("exercise-difficulty-easy"));
-  })
+  });
 
   expect(queryByTestId("exercise-1")).toBeTruthy();
   expect(queryByTestId("exercise-2")).toBeNull();
@@ -153,7 +155,7 @@ it("sorts exercises by category", async () => {
 
   await act(async () => {
     fireEvent.press(getByTestId("sort-category"));
-  })
+  });
 
   const items = await findAllByTestId(/exercise-\d+/);
 
@@ -167,7 +169,7 @@ it("updates quest difficulty", async () => {
 
   await act(async () => {
     fireEvent.press(button);
-  })
+  });
 
   expect(setQuestDifficulty).toHaveBeenCalledWith("token123", "easy");
 });
@@ -177,7 +179,5 @@ it("shows error when quest fetch fails", async () => {
 
   const { findByText } = render(<ExerciseScreen />);
 
-  expect(
-    await findByText(/Nem sikerült a napi küldetéseket/)
-  ).toBeTruthy();
+  expect(await findByText(/Nem sikerült a napi küldetéseket/)).toBeTruthy();
 });

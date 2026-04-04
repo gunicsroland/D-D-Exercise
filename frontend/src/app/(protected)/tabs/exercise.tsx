@@ -62,7 +62,7 @@ export default function ExerciseScreen() {
       const quests = await getDailyQuests(token);
 
       const sortedQuests = [...quests].sort((a, b) =>
-        a.name.localeCompare(b.name)
+        a.name.localeCompare(b.name),
       );
 
       setDailyQuests(sortedQuests);
@@ -231,11 +231,17 @@ export default function ExerciseScreen() {
             </View>
 
             <View style={exercise_styles.sortRow}>
-              <TouchableOpacity onPress={() => setSortBy("difficulty")} testID="sort-difficulty">
+              <TouchableOpacity
+                onPress={() => setSortBy("difficulty")}
+                testID="sort-difficulty"
+              >
                 <Text style={exercise_styles.sortText}>Nehézség szerint</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => setSortBy("category")} testID="sort-category">
+              <TouchableOpacity
+                onPress={() => setSortBy("category")}
+                testID="sort-category"
+              >
                 <Text style={exercise_styles.sortText}>Kategória szerint</Text>
               </TouchableOpacity>
             </View>

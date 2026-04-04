@@ -27,16 +27,22 @@ export function QuestCard({ quest, progress }: Props) {
         Edzés: {quest.exercise.name}
       </Text>
 
-      <View style={questCard_styles.progressContainer} testID="progress-container">
-        <View style={[
-          questCard_styles.progressBar,
-          { width: `${progressPercent}%` },
-        ]}
-          testID="progress-bar" />
+      <View
+        style={questCard_styles.progressContainer}
+        testID="progress-container"
+      >
+        <View
+          style={[
+            questCard_styles.progressBar,
+            { width: `${progressPercent}%` },
+          ]}
+          testID="progress-bar"
+        />
 
         <Text style={questCard_styles.progressText} testID="progress-text">
-  {progress?.progress}/{quest.amount} Darab {progress?.completed && "✔️"}
-</Text>
+          {progress?.progress}/{quest.amount} Darab{" "}
+          {progress?.completed && "✔️"}
+        </Text>
       </View>
 
       <Text style={questCard_styles.xpText} testID="xp-reward">
@@ -64,7 +70,8 @@ export function QuestCard({ quest, progress }: Props) {
               testID={`quest-effect-${index}`}
             >
               {effect.increase ? "+" : "-"}
-              {effect.value} {ABILITY_LABELS_HU[effect.attribute]} ({effect.duration} perc)
+              {effect.value} {ABILITY_LABELS_HU[effect.attribute]} (
+              {effect.duration} perc)
             </Text>
           ))}
         </View>

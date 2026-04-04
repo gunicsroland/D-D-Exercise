@@ -71,7 +71,7 @@ it("starts a new adventure", async () => {
       expect.stringContaining("/adventure/start"),
       expect.objectContaining({
         method: "POST",
-      })
+      }),
     );
   });
 });
@@ -104,7 +104,7 @@ it("deletes a session", async () => {
       expect.stringContaining("/adventure/1"),
       expect.objectContaining({
         method: "DELETE",
-      })
+      }),
     );
   });
 });
@@ -127,7 +127,7 @@ it("renames a session", async () => {
       expect.stringContaining("/title"),
       expect.objectContaining({
         method: "PUT",
-      })
+      }),
     );
   });
 });
@@ -144,7 +144,7 @@ it("does not rename if prompt returns null", async () => {
   await waitFor(() => {
     expect(fetch).not.toHaveBeenCalledWith(
       expect.stringContaining("/title"),
-      expect.anything()
+      expect.anything(),
     );
   });
 });

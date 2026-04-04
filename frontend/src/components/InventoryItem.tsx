@@ -29,14 +29,18 @@ export const InventoryItem = ({ entry, onInventoryChange, token }: Props) => {
         testID="inventory-item"
       >
         <Image
-          source={{uri: entry.item.image_url}}
+          source={{ uri: entry.item.image_url }}
           style={inventory_styles.image}
           resizeMode="contain"
           testID="item-image"
         />
 
-        <Text style={inventory_styles.name} testID="item-name">{entry.item.name}</Text>
-        <Text style={inventory_styles.quantity} testID="item-quantity">x{entry.quantity}</Text>
+        <Text style={inventory_styles.name} testID="item-name">
+          {entry.item.name}
+        </Text>
+        <Text style={inventory_styles.quantity} testID="item-quantity">
+          x{entry.quantity}
+        </Text>
       </TouchableOpacity>
 
       <Modal
@@ -57,15 +61,20 @@ export const InventoryItem = ({ entry, onInventoryChange, token }: Props) => {
             </Pressable>
 
             <Image
-              source={{uri: entry.item.image_url}}
+              source={{ uri: entry.item.image_url }}
               style={inventory_styles.modalImage}
               resizeMode="contain"
               testID="modal-image"
             />
 
-            <Text style={inventory_styles.modalTitle}  testID="modal-title">{entry.item.name}</Text>
+            <Text style={inventory_styles.modalTitle} testID="modal-title">
+              {entry.item.name}
+            </Text>
 
-            <Text style={inventory_styles.description} testID="modal-description">
+            <Text
+              style={inventory_styles.description}
+              testID="modal-description"
+            >
               {entry.item.description || "Leírás nem elérhető"}
             </Text>
 
@@ -74,7 +83,11 @@ export const InventoryItem = ({ entry, onInventoryChange, token }: Props) => {
                 <Text style={inventory_styles.effectsTitle}>Hatások</Text>
 
                 {entry.item.effects.map((effect, idx) => (
-                  <Text key={idx} style={inventory_styles.effectText}  testID={`effect-${idx}`}>
+                  <Text
+                    key={idx}
+                    style={inventory_styles.effectText}
+                    testID={`effect-${idx}`}
+                  >
                     • {ABILITY_LABELS_HU[effect.attribute]}:{" "}
                     {effect.increase ? "+" : "-"}
                     {effect.value} ({effect.duration} perc)

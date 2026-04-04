@@ -1,229 +1,226 @@
 import { API_URL } from "../../src/constants";
-import { createChar, checkCharacter, getCharacter, lvlUpAbility, updateCharacter } from "../../src/services/character_service";
+import {
+  createChar,
+  checkCharacter,
+  getCharacter,
+  lvlUpAbility,
+  updateCharacter,
+} from "../../src/services/character_service";
 import { Stats } from "../../src/types";
-
 
 global.fetch = jest.fn();
 
 beforeEach(() => {
-    jest.clearAllMocks();
+  jest.clearAllMocks();
 });
 
 const mockStats: Stats = {
-    strength: 10,
-    constitution: 10,
-    dexterity: 10,
-    intelligence: 10,
-    wisdom: 10,
-    charisma: 10,
+  strength: 10,
+  constitution: 10,
+  dexterity: 10,
+  intelligence: 10,
+  wisdom: 10,
+  charisma: 10,
 };
 
 // --------------------
 // CREATE CHARACTER
 // --------------------
 describe("createChar", () => {
-    const token = "token123";
+  const token = "token123";
 
-    it("creates character successfully", async () => {
-        const mockResponse = { id: 1 };
+  it("creates character successfully", async () => {
+    const mockResponse = { id: 1 };
 
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => mockResponse,
-        });
-
-        const result = await createChar(
-            "Hero",
-            "warrior",
-            mockStats,
-            1,
-            token
-        );
-
-        expect(fetch).toHaveBeenCalledWith(`${API_URL}/character/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                name: "Hero",
-                class_: "warrior",
-                abilities: mockStats,
-            }),
-        });
-
-        expect(result).toEqual(mockResponse);
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => mockResponse,
     });
 
-    it("throws error with status and text", async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: false,
-            status: 400,
-            text: async () => "Bad request",
-        });
+    const result = await createChar("Hero", "warrior", mockStats, 1, token);
 
-        await expect(
-            createChar("Hero", "warrior", {} as any, 1, token)
-        ).rejects.toThrow("Failed to create character: 400 Bad request");
+    expect(fetch).toHaveBeenCalledWith(`${API_URL}/character/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: "Hero",
+        class_: "warrior",
+        abilities: mockStats,
+      }),
     });
+
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("throws error with status and text", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      status: 400,
+      text: async () => "Bad request",
+    });
+
+    await expect(
+      createChar("Hero", "warrior", {} as any, 1, token),
+    ).rejects.toThrow("Failed to create character: 400 Bad request");
+  });
 });
 
 // --------------------
 // CHECK CHARACTER
 // --------------------
 describe("checkCharacter", () => {
-    const token = "token123";
+  const token = "token123";
 
-    it("returns true if character exists", async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => ({ has_character: true }),
-        });
-
-        const result = await checkCharacter(token);
-
-        expect(result).toBe(true);
+  it("returns true if character exists", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => ({ has_character: true }),
     });
 
-    it("returns false if character does not exist", async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => ({ has_character: false }),
-        });
+    const result = await checkCharacter(token);
 
-        const result = await checkCharacter(token);
+    expect(result).toBe(true);
+  });
 
-        expect(result).toBe(false);
+  it("returns false if character does not exist", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => ({ has_character: false }),
     });
 
-    it("returns undefined if request fails", async () => {
-        (global.fetch as jest.Mock).mockRejectedValue(new Error("Network error"));
+    const result = await checkCharacter(token);
 
-        const result = await checkCharacter(token);
+    expect(result).toBe(false);
+  });
 
-        expect(result).toBeUndefined();
-    });
+  it("returns undefined if request fails", async () => {
+    (global.fetch as jest.Mock).mockRejectedValue(new Error("Network error"));
+
+    const result = await checkCharacter(token);
+
+    expect(result).toBeUndefined();
+  });
 });
 
 // --------------------
 // GET CHARACTER
 // --------------------
 describe("getCharacter", () => {
-    const token = "token123";
+  const token = "token123";
 
-    it("returns character data", async () => {
-        const mockCharacter = { id: 1, name: "Hero" };
+  it("returns character data", async () => {
+    const mockCharacter = { id: 1, name: "Hero" };
 
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => mockCharacter,
-        });
-
-        const result = await getCharacter(token);
-
-        expect(result).toEqual(mockCharacter);
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => mockCharacter,
     });
 
-    it("throws error if request fails", async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: false,
-        });
+    const result = await getCharacter(token);
 
-        await expect(getCharacter(token)).rejects.toThrow(
-            "Failed to fetch character"
-        );
+    expect(result).toEqual(mockCharacter);
+  });
+
+  it("throws error if request fails", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
     });
+
+    await expect(getCharacter(token)).rejects.toThrow(
+      "Failed to fetch character",
+    );
+  });
 });
 
 // --------------------
 // LEVEL UP ABILITY
 // --------------------
 describe("lvlUpAbility", () => {
-    const token = "token123";
+  const token = "token123";
 
-    it("upgrades ability successfully", async () => {
-        const mockResponse = { success: true };
+  it("upgrades ability successfully", async () => {
+    const mockResponse = { success: true };
 
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => mockResponse,
-        });
-
-        const result = await lvlUpAbility(token, "strength");
-
-        expect(fetch).toHaveBeenCalledWith(
-            `${API_URL}/character/upgrade_ability?ability=strength`,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
-
-        expect(result).toEqual(mockResponse);
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => mockResponse,
     });
 
-    it("throws API error message", async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: false,
-            json: async () => ({ detail: "Not enough points" }),
-        });
+    const result = await lvlUpAbility(token, "strength");
 
-        await expect(
-            lvlUpAbility(token, "strength")
-        ).rejects.toThrow("Not enough points");
+    expect(fetch).toHaveBeenCalledWith(
+      `${API_URL}/character/upgrade_ability?ability=strength`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("throws API error message", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      json: async () => ({ detail: "Not enough points" }),
     });
 
-    it("falls back to default error", async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: false,
-            json: async () => ({}),
-        });
+    await expect(lvlUpAbility(token, "strength")).rejects.toThrow(
+      "Not enough points",
+    );
+  });
 
-        await expect(
-            lvlUpAbility(token, "strength")
-        ).rejects.toThrow("Upgrade failed");
+  it("falls back to default error", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      json: async () => ({}),
     });
+
+    await expect(lvlUpAbility(token, "strength")).rejects.toThrow(
+      "Upgrade failed",
+    );
+  });
 });
 
 // --------------------
 // UPDATE CHARACTER
 // --------------------
 describe("updateCharacter", () => {
-    const token = "token123";
+  const token = "token123";
 
-    it("returns response on success", async () => {
-        const mockResponse = { ok: true };
+  it("returns response on success", async () => {
+    const mockResponse = { ok: true };
 
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-        });
-
-        const result = await updateCharacter(token, { name: "NewName" } as any);
-
-        expect(result).toEqual({ ok: true });
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
     });
 
-    it("returns error message string on failure", async () => {
-        (global.fetch as jest.Mock).mockResolvedValue({
-            ok: false,
-        });
+    const result = await updateCharacter(token, { name: "NewName" } as any);
 
-        const result = await updateCharacter(token, { name: "NewName" } as any);
+    expect(result).toEqual({ ok: true });
+  });
 
-        expect(result).toBe("Nem sikerült a név módosítás");
+  it("returns error message string on failure", async () => {
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
     });
 
-    it("handles thrown errors", async () => {
-        (global.fetch as jest.Mock).mockRejectedValue(
-            new Error("Network error")
-        );
+    const result = await updateCharacter(token, { name: "NewName" } as any);
 
-        const result = await updateCharacter(token, { name: "NewName" } as any);
+    expect(result).toBe("Nem sikerült a név módosítás");
+  });
 
-        expect(result).toBe("Network error");
-    });
+  it("handles thrown errors", async () => {
+    (global.fetch as jest.Mock).mockRejectedValue(new Error("Network error"));
+
+    const result = await updateCharacter(token, { name: "NewName" } as any);
+
+    expect(result).toBe("Network error");
+  });
 });

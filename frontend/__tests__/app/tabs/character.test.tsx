@@ -4,7 +4,10 @@ import CharacterScreen from "../../../src/app/(protected)/tabs/character";
 
 import { useAuthContext } from "../../../src/context/AuthContext";
 import { useGameContext } from "../../../src/context/GameContext";
-import { lvlUpAbility, updateCharacter } from "../../../src/services/character_service";
+import {
+  lvlUpAbility,
+  updateCharacter,
+} from "../../../src/services/character_service";
 
 jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
@@ -29,10 +32,7 @@ jest.mock("../../../src/components/character/AbilityList", () => ({
     const { Text } = require("react-native");
 
     return (
-      <Text
-        testID="upgrade-button"
-        onPress={() => handleUpgrade("strength")}
-      >
+      <Text testID="upgrade-button" onPress={() => handleUpgrade("strength")}>
         Upgrade
       </Text>
     );
@@ -75,7 +75,6 @@ beforeEach(() => {
     refreshCharacter: mockRefresh,
   });
 });
-
 
 it("shows loading indicator when no character", () => {
   (useGameContext as jest.Mock).mockReturnValue({
@@ -132,7 +131,7 @@ it("updates character name successfully", async () => {
 
 it("shows error when update fails", async () => {
   (updateCharacter as jest.Mock).mockRejectedValueOnce(
-    new Error("Update failed")
+    new Error("Update failed"),
   );
 
   const { getByTestId, findByTestId } = render(<CharacterScreen />);

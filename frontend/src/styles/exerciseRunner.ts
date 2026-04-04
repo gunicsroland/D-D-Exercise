@@ -15,7 +15,7 @@ export const exerciseRunner_styles = StyleSheet.create({
     flex: 2,
     padding: 20,
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   title: {
@@ -23,25 +23,25 @@ export const exerciseRunner_styles = StyleSheet.create({
     color: colors.gold,
     fontFamily: "Cinzel_600SemiBold",
     marginBottom: 6,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   text: {
     color: colors.text,
     fontSize: 18,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   progress: {
     marginTop: 10,
     color: colors.textSecondary,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   controls: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "100%"
+    width: "100%",
   },
 
   buttonText: {
@@ -109,18 +109,18 @@ export const exerciseRunner_styles = StyleSheet.create({
   },
 
   descriptionBox: {
-  marginTop: 12,
-  padding: 12,
-  backgroundColor: colors.background,
-  borderRadius: 10,
-  alignItems: "center",
-  width: "100%"
-},
+    marginTop: 12,
+    padding: 12,
+    backgroundColor: colors.background,
+    borderRadius: 10,
+    alignItems: "center",
+    width: "100%",
+  },
 
-description: {
-  fontSize: 16,
-  color: colors.gold,
-  lineHeight: 22,
-  textAlign: "center"
-},
+  description: {
+    fontSize: 16,
+    color: colors.gold,
+    lineHeight: 22,
+    textAlign: "center",
+  },
 });

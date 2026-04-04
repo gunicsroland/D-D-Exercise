@@ -136,9 +136,15 @@ export default function CreateCharacter() {
 
   return (
     <View style={creation_styles.screen}>
-      <View style={creation_styles.stepCard} testID="step-container">{steps[step].element}</View>
+      <View style={creation_styles.stepCard} testID="step-container">
+        {steps[step].element}
+      </View>
 
-      {error ? <Text style={creation_styles.error} testID="creation-error">{error}</Text> : null}
+      {error ? (
+        <Text style={creation_styles.error} testID="creation-error">
+          {error}
+        </Text>
+      ) : null}
 
       <View style={creation_styles.navigation}>
         <TouchableOpacity

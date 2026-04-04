@@ -5,7 +5,7 @@ import {
   FlatList,
   TextInput,
   Pressable,
-  Modal
+  Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../../constants";
@@ -51,7 +51,7 @@ export default function KalandScreen() {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-      const data = await res.json();
+      await res.json();
       setTitle("");
       fetchSessions();
     } catch (err) {
@@ -122,8 +122,16 @@ export default function KalandScreen() {
         keyExtractor={(item) => item.id.toString()}
         testID="sessions-list"
         renderItem={({ item }) => (
-          <View style={adventure_styles.sessionCard} testID={`session-${item.id}`}>
-            <Text style={adventure_styles.sessionTitle} testID={`session-title-${item.id}`}>{item.title}</Text>
+          <View
+            style={adventure_styles.sessionCard}
+            testID={`session-${item.id}`}
+          >
+            <Text
+              style={adventure_styles.sessionTitle}
+              testID={`session-title-${item.id}`}
+            >
+              {item.title}
+            </Text>
             <View style={adventure_styles.buttonCol}>
               <Pressable
                 style={[

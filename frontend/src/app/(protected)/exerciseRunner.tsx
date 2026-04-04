@@ -10,7 +10,7 @@ import { useGameContext } from "../../context/GameContext";
 
 export default function ExerciseRunner() {
   const { plan, clearPlan } = useExercisePlanContext();
-  const {refreshAll} = useGameContext();
+  const { refreshAll } = useGameContext();
   const { token } = useAuthContext();
   const router = useRouter();
 
@@ -38,8 +38,10 @@ export default function ExerciseRunner() {
 
   if (plan.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        testID="empty-plan">
+      <View
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        testID="empty-plan"
+      >
         <Text>Nincsen edzés kiválasztva</Text>
       </View>
     );
@@ -95,13 +97,21 @@ export default function ExerciseRunner() {
     return (
       <View style={exerciseRunner_styles.screen} testID="pause-screen">
         <View style={exerciseRunner_styles.pauseContainer}>
-          <Text style={exerciseRunner_styles.pauseTimer} testID="pause-timer" >{pauseTime}s</Text>
+          <Text style={exerciseRunner_styles.pauseTimer} testID="pause-timer">
+            {pauseTime}s
+          </Text>
 
-          <Text style={exerciseRunner_styles.pauseLabel} testID="pause-next-label" >
+          <Text
+            style={exerciseRunner_styles.pauseLabel}
+            testID="pause-next-label"
+          >
             Következő feladat
           </Text>
 
-          <Text style={exerciseRunner_styles.pauseTitle} testID="pause-next-name"> 
+          <Text
+            style={exerciseRunner_styles.pauseTitle}
+            testID="pause-next-name"
+          >
             {nextExercise.name}
           </Text>
 
@@ -141,22 +151,27 @@ export default function ExerciseRunner() {
   }
 
   return (
-    <View style={exerciseRunner_styles.screen}  testID="exercise-runner-screen">
+    <View style={exerciseRunner_styles.screen} testID="exercise-runner-screen">
       <View style={exerciseRunner_styles.info}>
         <View>
-          <Text style={exerciseRunner_styles.title} testID="exercise-name">{exercise.name}</Text>
+          <Text style={exerciseRunner_styles.title} testID="exercise-name">
+            {exercise.name}
+          </Text>
 
           <Text style={exerciseRunner_styles.text} testID="exercise-quantity">
             Mennyiség: {exercise.quantity}
           </Text>
 
           <View style={exerciseRunner_styles.descriptionBox}>
-          <Text style={exerciseRunner_styles.description}>
-            {exercise.media_url}
-          </Text>
-        </View>
+            <Text style={exerciseRunner_styles.description}>
+              {exercise.media_url}
+            </Text>
+          </View>
 
-          <Text style={exerciseRunner_styles.progress} testID="exercise-progress">
+          <Text
+            style={exerciseRunner_styles.progress}
+            testID="exercise-progress"
+          >
             Feladat: {index + 1} / {plan.length}
           </Text>
         </View>

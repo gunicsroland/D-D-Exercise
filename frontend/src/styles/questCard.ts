@@ -26,13 +26,13 @@ export const questCard_styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: colors.secondary
+    borderColor: colors.secondary,
   },
   progressBar: {
     position: "absolute",
-    left:  0,
-    top:0,
-    bottom:0,
+    left: 0,
+    top: 0,
+    bottom: 0,
     height: "100%",
     backgroundColor: colors.health,
   },
@@ -50,7 +50,7 @@ export const questCard_styles = StyleSheet.create({
     backgroundColor: colors.primary,
     borderRadius: 6,
     borderWidth: 1,
-    borderColor: colors.gold
+    borderColor: colors.gold,
   },
   buttonText: {
     color: "white",

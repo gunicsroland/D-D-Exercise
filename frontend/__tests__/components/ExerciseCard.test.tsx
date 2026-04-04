@@ -15,7 +15,7 @@ const mockExercise: Exercise = {
   difficulty: "easy",
   xp_reward: 50,
   quantity: 10,
-  media_url: ""
+  media_url: "",
 };
 
 it("renders exercise info", () => {

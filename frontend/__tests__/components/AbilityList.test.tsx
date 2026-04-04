@@ -17,7 +17,7 @@ jest.mock("../../src/text_labels", () => ({
 }));
 
 beforeEach(() => {
-    jest.clearAllMocks();
+  jest.clearAllMocks();
 });
 
 const mockCharacter: Character = {
@@ -31,7 +31,7 @@ const mockCharacter: Character = {
     { ability: "strength", score: 5 },
     { ability: "dexterity", score: 3 },
   ],
-  active_effects: []
+  active_effects: [],
 };
 
 it("renders abilities", () => {
@@ -44,7 +44,7 @@ it("renders abilities", () => {
       character={mockCharacter}
       handleUpgrade={handleUpgrade}
       now={0}
-    />
+    />,
   );
 
   expect(getByTestId("ability-card-strength")).toBeTruthy();
@@ -61,7 +61,7 @@ it("calls handleUpgrade when pressed", () => {
       character={mockCharacter}
       handleUpgrade={handleUpgrade}
       now={0}
-    />
+    />,
   );
 
   fireEvent.press(getByTestId("upgrade-button-strength"));
@@ -80,11 +80,7 @@ it("disables upgrade button when no ability points", () => {
   };
 
   const { getByTestId } = render(
-    <AbilityList
-      character={character}
-      handleUpgrade={handleUpgrade}
-      now={0}
-    />
+    <AbilityList character={character} handleUpgrade={handleUpgrade} now={0} />,
   );
 
   const button = getByTestId("upgrade-button-strength");
@@ -104,7 +100,7 @@ it("shows bonus in value", () => {
       character={mockCharacter}
       handleUpgrade={handleUpgrade}
       now={0}
-    />
+    />,
   );
 
   const value = getByTestId("ability-value-strength").props.children;

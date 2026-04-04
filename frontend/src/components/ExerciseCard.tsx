@@ -14,18 +14,37 @@ export function ExerciseCard({ exercise }: { exercise: Exercise }) {
   };
 
   return (
-    <View style={exerciseCard_styles.card} testID={`exercise-card-${exercise.id}`}>
+    <View
+      style={exerciseCard_styles.card}
+      testID={`exercise-card-${exercise.id}`}
+    >
       <View style={exerciseCard_styles.info}>
-        <Text style={exerciseCard_styles.title} testID={`exercise-name-${exercise.id}`}>{exercise.name}</Text>
+        <Text
+          style={exerciseCard_styles.title}
+          testID={`exercise-name-${exercise.id}`}
+        >
+          {exercise.name}
+        </Text>
 
-        <Text style={exerciseCard_styles.meta} testID={`exercise-category-${exercise.id}`}>
+        <Text
+          style={exerciseCard_styles.meta}
+          testID={`exercise-category-${exercise.id}`}
+        >
           Kategória: {EXERCISE_TYPE_LABELS_HU[exercise.category]}
         </Text>
-        <Text style={exerciseCard_styles.meta} testID={`exercise-difficulty-${exercise.id}`}>
+        <Text
+          style={exerciseCard_styles.meta}
+          testID={`exercise-difficulty-${exercise.id}`}
+        >
           Nehézség: {DIFFICULTY_LABELS_HU[exercise.difficulty]}
         </Text>
 
-        <Text style={exerciseCard_styles.xp} testID={`exercise-xp-${exercise.id}`}>+{exercise.xp_reward} XP</Text>
+        <Text
+          style={exerciseCard_styles.xp}
+          testID={`exercise-xp-${exercise.id}`}
+        >
+          +{exercise.xp_reward} XP
+        </Text>
       </View>
 
       <View style={exerciseCard_styles.actions}>

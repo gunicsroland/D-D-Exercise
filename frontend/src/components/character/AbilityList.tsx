@@ -9,19 +9,23 @@ import { ABILITY_LABELS_HU } from "../../text_labels";
 export const AbilityList = ({
   character,
   handleUpgrade,
-  now
+  now,
 }: {
   character: Character;
   handleUpgrade: (ability: AbilityType) => void;
   now: number;
 }) => {
-  const [sortedAbilities, setSortedAbilities] = useState<CharacterAbility[]>([]);
+  const [sortedAbilities, setSortedAbilities] = useState<CharacterAbility[]>(
+    [],
+  );
 
   useEffect(() => {
-  setSortedAbilities([...(character?.abilities ?? [])].sort((a, b) =>
-    a.ability.localeCompare(b.ability),
-  ));
-  }, [character])
+    setSortedAbilities(
+      [...(character?.abilities ?? [])].sort((a, b) =>
+        a.ability.localeCompare(b.ability),
+      ),
+    );
+  }, [character]);
 
   return (
     <FlatList<CharacterAbility>
@@ -38,12 +42,21 @@ export const AbilityList = ({
           bonus > 0 ? colors.health : bonus < 0 ? colors.damage : colors.text;
 
         return (
-          <View style={character_styles.card}  testID={`ability-card-${item.ability}`}>
-            <Text style={character_styles.abilityName} testID={`ability-name-${item.ability}`}>
+          <View
+            style={character_styles.card}
+            testID={`ability-card-${item.ability}`}
+          >
+            <Text
+              style={character_styles.abilityName}
+              testID={`ability-name-${item.ability}`}
+            >
               {ABILITY_LABELS_HU[item.ability]}
             </Text>
 
-            <Text style={character_styles.value} testID={`ability-value-${item.ability}`}>
+            <Text
+              style={character_styles.value}
+              testID={`ability-value-${item.ability}`}
+            >
               <Text style={{ color: bonusColor }}>{total}</Text>
               {bonus !== 0 && (
                 <Text style={character_styles.bonus}>
@@ -56,7 +69,7 @@ export const AbilityList = ({
               style={[
                 character_styles.upgradeButton,
                 character.ability_points <= 0 &&
-                character_styles.disabledButton,
+                  character_styles.disabledButton,
               ]}
               onPress={() => handleUpgrade(item.ability)}
               disabled={character.ability_points <= 0}

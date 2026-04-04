@@ -2,11 +2,11 @@ import { renderHook } from "@testing-library/react-native";
 import { useActiveTimer } from "../src/hooks/useActiveTimer";
 
 it("clears interval on unmount", () => {
-    const clearSpy = jest.spyOn(global, "clearInterval");
+  const clearSpy = jest.spyOn(global, "clearInterval");
 
-    const { unmount } = renderHook(() => useActiveTimer(1000));
+  const { unmount } = renderHook(() => useActiveTimer(1000));
 
-    unmount();
+  unmount();
 
-    expect(clearSpy).toHaveBeenCalled();
+  expect(clearSpy).toHaveBeenCalled();
 });

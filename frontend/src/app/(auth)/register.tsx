@@ -37,9 +37,15 @@ export default function Register() {
   return (
     <ScrollView contentContainerStyle={auth_styles.container}>
       <View style={auth_styles.card}>
-        <Text style={auth_styles.title} testID="register-title">🛡 Regisztráció</Text>
+        <Text style={auth_styles.title} testID="register-title">
+          🛡 Regisztráció
+        </Text>
 
-        {error ? <Text style={auth_styles.error} testID="register-error">{error}</Text> : null}
+        {error ? (
+          <Text style={auth_styles.error} testID="register-error">
+            {error}
+          </Text>
+        ) : null}
 
         <TextInput
           testID="username-input"

@@ -80,7 +80,7 @@ export default function AdventureChatScreen() {
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
 
       if (!res.ok) {
@@ -103,10 +103,8 @@ export default function AdventureChatScreen() {
             if (tempDMId !== null) {
               setMessages((prev) =>
                 prev.map((m) =>
-                  m.id === tempDMId
-                    ? { ...m, content: partialMessage }
-                    : m
-                )
+                  m.id === tempDMId ? { ...m, content: partialMessage } : m,
+                ),
               );
             }
           }
@@ -116,8 +114,8 @@ export default function AdventureChatScreen() {
 
           setMessages((prev) =>
             prev.map((m) =>
-              m.id === tempDMId ? { ...m, content: fullMessage } : m
-            )
+              m.id === tempDMId ? { ...m, content: fullMessage } : m,
+            ),
           );
         }
       } catch (streamError) {
@@ -128,8 +126,8 @@ export default function AdventureChatScreen() {
 
         setMessages((prev) =>
           prev.map((m) =>
-            m.id === tempDMId ? { ...m, content: fullMessage } : m
-          )
+            m.id === tempDMId ? { ...m, content: fullMessage } : m,
+          ),
         );
       }
 
@@ -153,7 +151,12 @@ export default function AdventureChatScreen() {
         ]}
         testID={`message-${item.id}`}
       >
-        <Text style={session_styles.messageText} testID={`message-text-${item.id}`}>{item.content}</Text>
+        <Text
+          style={session_styles.messageText}
+          testID={`message-text-${item.id}`}
+        >
+          {item.content}
+        </Text>
       </View>
     );
   };
@@ -172,7 +175,11 @@ export default function AdventureChatScreen() {
       </View>
 
       <View style={session_styles.container}>
-        {error ? <Text style={session_styles.error} testID="error-text">{error}</Text> : null}
+        {error ? (
+          <Text style={session_styles.error} testID="error-text">
+            {error}
+          </Text>
+        ) : null}
 
         <FlatList
           ref={flatListRef}

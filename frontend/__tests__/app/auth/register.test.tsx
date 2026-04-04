@@ -53,7 +53,7 @@ describe("Register Screen", () => {
       expect(mockRegister).toHaveBeenCalledWith(
         "testuser",
         "test@example.com",
-        "password123"
+        "password123",
       );
       expect(mockReplace).toHaveBeenCalledWith("/");
     });

@@ -13,7 +13,11 @@ export default function InventoryScreen() {
   if (!token)
     return (
       <View style={inventory_styles.loader} testID="inventory-loader">
-        <ActivityIndicator size="large" color={colors.gold} testID="activity-indicator"/>
+        <ActivityIndicator
+          size="large"
+          color={colors.gold}
+          testID="activity-indicator"
+        />
       </View>
     );
 
@@ -55,7 +59,9 @@ export default function InventoryScreen() {
           )
         }
         ListEmptyComponent={
-          <Text style={inventory_styles.emptyText} testID="empty-invetory-text">Az eszköztár üres.</Text>
+          <Text style={inventory_styles.emptyText} testID="empty-invetory-text">
+            Az eszköztár üres.
+          </Text>
         }
       />
     </View>

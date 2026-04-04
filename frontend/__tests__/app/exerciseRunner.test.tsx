@@ -35,8 +35,8 @@ beforeEach(() => {
   jest.clearAllMocks();
 
   (useGameContext as jest.Mock).mockReturnValue({
-  refreshAll: jest.fn(),
-});
+    refreshAll: jest.fn(),
+  });
 });
 
 it("shows empty state when no plan", () => {
@@ -123,9 +123,7 @@ it("calls finishExercise when workout completes", async () => {
   const refreshAllMock = jest.fn();
 
   (useExercisePlanContext as jest.Mock).mockReturnValue({
-    plan: [
-      { exercise: { id: 1, name: "A", quantity: 10, media_url: "" } },
-    ],
+    plan: [{ exercise: { id: 1, name: "A", quantity: 10, media_url: "" } }],
     clearPlan: clearPlanMock,
   });
 

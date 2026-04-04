@@ -21,12 +21,12 @@ export const ActiveEffects = ({
     <View testID="active-effects-container">
       <Text style={effect_styles.title}>Aktív hatások:</Text>
       {activeEffects.length === 0 && (
-        <Text style={{ color: colors.textSecondary }}  testID="no-effects">
+        <Text style={{ color: colors.textSecondary }} testID="no-effects">
           Nincsenek aktív hatások
         </Text>
       )}
 
-      {activeEffects.map((effect, index) => {
+      {activeEffects.map((effect) => {
         const expires = new Date(effect.expires_at).getTime();
         const remainingDuration = expires - now;
 
@@ -39,17 +39,30 @@ export const ActiveEffects = ({
         const isBuff = effect.increase;
 
         return (
-          <View key={effect.id} style={effect_styles.card} testID={`effect-${effect.id}`}>
-            <Text style={effect_styles.effectText} testID={`effect-text-${effect.id}`} >
+          <View
+            key={effect.id}
+            style={effect_styles.card}
+            testID={`effect-${effect.id}`}
+          >
+            <Text
+              style={effect_styles.effectText}
+              testID={`effect-text-${effect.id}`}
+            >
               {effect.increase ? "+" : "-"}
               {effect.value} {ABILITY_LABELS_HU[effect.attribute]}
             </Text>
 
-            <Text style={effect_styles.timer} testID={`effect-timer-${effect.id}`}>
+            <Text
+              style={effect_styles.timer}
+              testID={`effect-timer-${effect.id}`}
+            >
               {getRemainingTime(effect.expires_at, now)}
             </Text>
 
-            <View style={effect_styles.barBackground} testID={`effect-bar-${effect.id}`}>
+            <View
+              style={effect_styles.barBackground}
+              testID={`effect-bar-${effect.id}`}
+            >
               <View
                 style={[
                   effect_styles.barFill,

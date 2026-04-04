@@ -4,7 +4,6 @@ import { useGameContext } from "../../../src/context/GameContext";
 import InventoryScreen from "../../../src/app/(protected)/tabs/inventory";
 import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
 
-
 jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));

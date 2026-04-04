@@ -32,9 +32,15 @@ export default function Login() {
   return (
     <ScrollView contentContainerStyle={auth_styles.container}>
       <View style={auth_styles.card}>
-        <Text style={auth_styles.title}  testID="login-title">⚔ Bejelentkezés</Text>
+        <Text style={auth_styles.title} testID="login-title">
+          ⚔ Bejelentkezés
+        </Text>
 
-        {error ? <Text style={auth_styles.error} testID="login-error">{error}</Text> : null}
+        {error ? (
+          <Text style={auth_styles.error} testID="login-error">
+            {error}
+          </Text>
+        ) : null}
 
         <TextInput
           placeholder="Felhasználónév"

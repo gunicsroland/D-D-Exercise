@@ -8,102 +8,106 @@ import { ABILITY_LABELS_HU } from "../../src/text_labels";
 const mockAddExercise = jest.fn();
 
 jest.mock("../../src/context/ExercisePlanContext", () => ({
-    useExercisePlanContext: jest.fn(),
+  useExercisePlanContext: jest.fn(),
 }));
 
 // Mock labels (optional, keeps test stable)
 jest.mock("../../src/text_labels", () => ({
-    DIFFICULTY_LABELS_HU: {
-        EASY: "Könnyű",
-        MEDIUM: "Közepes",
-        HARD: "Nehéz",
-    },
+  DIFFICULTY_LABELS_HU: {
+    EASY: "Könnyű",
+    MEDIUM: "Közepes",
+    HARD: "Nehéz",
+  },
 
-    ABILITY_LABELS_HU: {
-        strength: "erő"
-    }
+  ABILITY_LABELS_HU: {
+    strength: "erő",
+  },
 }));
 
 const quest = {
-    name: "Push Up Quest",
-    exercise: {
-        name: "Push Up",
-        difficulty: "EASY",
-    },
-    amount: 10,
-    xp_reward: 100,
-    item: {
-        name: "Health Potion",
-        effects: [
-            {
-                increase: true,
-                value: 10,
-                attribute: "strength",
-                duration: 5,
-            },
-        ],
-    },
+  name: "Push Up Quest",
+  exercise: {
+    name: "Push Up",
+    difficulty: "EASY",
+  },
+  amount: 10,
+  xp_reward: 100,
+  item: {
+    name: "Health Potion",
+    effects: [
+      {
+        increase: true,
+        value: 10,
+        attribute: "strength",
+        duration: 5,
+      },
+    ],
+  },
 };
 
 const progress = {
-    progress: 4,
+  progress: 4,
 };
 
 beforeEach(() => {
-    jest.clearAllMocks();
+  jest.clearAllMocks();
 
-    (useExercisePlanContext as jest.Mock).mockReturnValue({
-        addExercise: mockAddExercise,
-    });
+  (useExercisePlanContext as jest.Mock).mockReturnValue({
+    addExercise: mockAddExercise,
+  });
 });
 
 it("renders quest information correctly", () => {
-    const { getByTestId } = render(
-        <QuestCard quest={quest as any} progress={progress as any} />
-    );
+  const { getByTestId } = render(
+    <QuestCard quest={quest as any} progress={progress as any} />,
+  );
 
-    expect(getByTestId("quest-title").props.children).toContain("Push Up Quest");
-    expect(getByTestId("quest-exercise").props.children).toContain("Push Up");
-    expect(getByTestId("xp-reward").props.children).toEqual(["XP Jutalom: ", 100]);
+  expect(getByTestId("quest-title").props.children).toContain("Push Up Quest");
+  expect(getByTestId("quest-exercise").props.children).toContain("Push Up");
+  expect(getByTestId("xp-reward").props.children).toEqual([
+    "XP Jutalom: ",
+    100,
+  ]);
 });
 
 it("renders progress correctly", () => {
-    const { getByTestId } = render(
-        <QuestCard quest={quest as any} progress={progress as any} />
-    );
+  const { getByTestId } = render(
+    <QuestCard quest={quest as any} progress={progress as any} />,
+  );
 
-    expect(getByTestId("progress-text").props.children.join(""))
-  .toContain("4/10 Darab");
+  expect(getByTestId("progress-text").props.children.join("")).toContain(
+    "4/10 Darab",
+  );
 });
 
 it("calls addExercise when button is pressed", () => {
-    const { getByTestId } = render(
-        <QuestCard quest={quest as any} progress={progress as any} />
-    );
+  const { getByTestId } = render(
+    <QuestCard quest={quest as any} progress={progress as any} />,
+  );
 
-    fireEvent.press(getByTestId("add-to-plan-button"));
+  fireEvent.press(getByTestId("add-to-plan-button"));
 
-    expect(mockAddExercise).toHaveBeenCalledWith(quest.exercise);
+  expect(mockAddExercise).toHaveBeenCalledWith(quest.exercise);
 });
 
 it("renders item reward section when item exists", () => {
-    const { getByTestId } = render(
-        <QuestCard quest={quest as any} progress={progress as any} />
-    );
+  const { getByTestId } = render(
+    <QuestCard quest={quest as any} progress={progress as any} />,
+  );
 
-    expect(getByTestId("quest-item-section")).toBeTruthy();
-    expect(getByTestId("item-reward-name").props.children).toContain(
-        "Health Potion"
-    );
-    expect(getByTestId("quest-effect-0")).toBeTruthy();
+  expect(getByTestId("quest-item-section")).toBeTruthy();
+  expect(getByTestId("item-reward-name").props.children).toContain(
+    "Health Potion",
+  );
+  expect(getByTestId("quest-effect-0")).toBeTruthy();
 });
 
 it("does not crash when no item is provided", () => {
-    const questWithoutItem = { ...quest, item: undefined };
+  const questWithoutItem = { ...quest, item: undefined };
 
-    const { queryByTestId } = render(
-        <QuestCard quest={questWithoutItem as any} progress={progress as any} />
-    );
+  const { queryByTestId } = render(
+    <QuestCard quest={questWithoutItem as any} progress={progress as any} />,
+  );
 
-    expect(queryByTestId("quest-item-section")).toBeNull();
+  expect(queryByTestId("quest-item-section")).toBeNull();
 });

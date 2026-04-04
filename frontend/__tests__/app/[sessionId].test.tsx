@@ -11,16 +11,15 @@ jest.mock("../../src/context/AuthContext", () => ({
   useAuthContext: () => ({ token: "token-123" }),
 }));
 
-global.fetch = jest.fn();beforeEach(() => {
+global.fetch = jest.fn();
+beforeEach(() => {
   jest.clearAllMocks();
 });
 
 it("fetches messages on mount", async () => {
   (fetch as jest.Mock).mockResolvedValueOnce({
     ok: true,
-    json: async () => [
-      { id: 1, role: "user", content: "Hello" },
-    ],
+    json: async () => [{ id: 1, role: "user", content: "Hello" }],
   });
 
   const { getByTestId } = render(<AdventureChatScreen />);
@@ -53,9 +52,7 @@ it("sends message and updates UI", async () => {
       json: async () => ({ message: "AI reply" }),
     });
 
-  const { getByTestId, getByDisplayValue } = render(
-    <AdventureChatScreen />
-  );
+  const { getByTestId, getByDisplayValue } = render(<AdventureChatScreen />);
 
   const input = getByTestId("message-input");
   const button = getByTestId("send-button");
@@ -75,10 +72,10 @@ it("does not send empty message", async () => {
 
   await act(async () => {
     fireEvent.press(getByTestId("send-button"));
-  })
+  });
 
-const postCalls = (fetch as jest.Mock).mock.calls.filter(
-    (call) => call[1]?.method === "POST"
+  const postCalls = (fetch as jest.Mock).mock.calls.filter(
+    (call) => call[1]?.method === "POST",
   );
 
   expect(postCalls.length).toBe(0);
@@ -88,8 +85,8 @@ it("disables send button while talking", async () => {
   (fetch as jest.Mock).mockImplementation(
     () =>
       new Promise((resolve) =>
-        setTimeout(() => resolve({ ok: true, json: async () => ({}) }), 100)
-      )
+        setTimeout(() => resolve({ ok: true, json: async () => ({}) }), 100),
+      ),
   );
 
   const { getByTestId } = render(<AdventureChatScreen />);
@@ -100,5 +97,7 @@ it("disables send button while talking", async () => {
   fireEvent.changeText(input, "Hello");
   fireEvent.press(button);
 
-  expect(button.props.accessibilityState?.disabled ?? button.props.disabled).toBe(true);
+  expect(
+    button.props.accessibilityState?.disabled ?? button.props.disabled,
+  ).toBe(true);
 });
