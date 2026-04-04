@@ -77,6 +77,7 @@ def get_active_effects(
 def get_me(current_user: User = Depends(get_current_user)):
     return current_user
 
+
 @app.get("/", response_class=HTMLResponse)
 def read_md():
 
@@ -97,4 +98,3 @@ def read_md():
         </body>
     </html>
     """
-
