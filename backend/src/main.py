@@ -10,6 +10,8 @@ import src.schemas as schemas
 from src.models import User, ActiveEffect
 from src.dependencies import get_current_user, get_db
 
+from src.constants import ORIGINS
+
 from src.routes import (
     auth,
     users,
@@ -41,11 +43,9 @@ app.include_router(messages.app)
 def startup():
     Base.metadata.create_all(bind=engine)
 
-origins = os.getenv("CORS_ORIGINS", "").split(",")
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

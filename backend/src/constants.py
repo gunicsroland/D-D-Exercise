@@ -35,6 +35,15 @@ DAY_CATEGORY_MAP = {
     6: ExerciseCategory.Cardio,  # Sunday
 }
 
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
+
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "supersecret")
+SECRET_KEY = os.getenv("SECRET_KEY", "supersecret123456")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "10080"))
+
 MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
 SUMMARY_TRIGGER_MESSAGES = 20
 RECENT_MESSAGES_TO_KEEP = 12
