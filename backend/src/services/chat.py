@@ -6,12 +6,17 @@ from sqlalchemy.orm import Session
 
 from src.models import AdventureMessage, AdventureSession, Character, ActiveEffect, ChatRole
 import src.services.character as character_service
-from src.constants import MODEL_NAME, SUMMARY_TRIGGER_MESSAGES, RECENT_MESSAGES_TO_KEEP
+from src.constants import MODEL_NAME, SUMMARY_TRIGGER_MESSAGES, RECENT_MESSAGES_TO_KEEP, GOOGLE_API_KEY
 
 from google import genai
 from google.genai import types
 
-client = genai.Client()
+client = None
+
+if GOOGLE_API_KEY:
+    client = genai.Client(api_key=GOOGLE_API_KEY)
+else:
+    print("⚠️ GOOGLE_API_KEY not provided. GenAI features will be disabled.")
 
 def get_active_effects_for_character(db: Session, character_id: int):
     now = datetime.now(timezone.utc)
