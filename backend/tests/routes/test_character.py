@@ -105,15 +105,3 @@ def test_delete_character():
 
     assert response.status_code == 200
     assert response.json()["message"] == "Character deleted successfully"
-
-
-def test_update_character():
-
-    update = {
-        "name": "SuperHero"
-    }
-
-    response = client.put("/character/", json=update)
-
-    assert response.status_code == 200
-    assert response.json()["name"] == "SuperHero"

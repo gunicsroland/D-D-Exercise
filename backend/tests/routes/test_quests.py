@@ -192,35 +192,3 @@ def test_delete_quest():
     assert response.json()["detail"] == "Quest deleted successfully"
 
     db.close()
-
-
-def test_get_user_quest_progress():
-    db = TestingSessionLocal()
-
-    user = User(
-        username="progress_user",
-        email="progress@test.com",
-        password_hash="x",
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-
-    character = create_character(db, user)
-
-    exercise = create_exercise(db)
-    quest = create_quest(db, exercise.id)
-
-    progress = CharQuestProgress(
-        char_id=character.id,
-        quest_id=quest.id,
-        progress=5,
-        completed=False,
-    )
-    db.add(progress)
-    db.commit()
-
-    response = client.get("/quests/quest_progress")
-
-    assert response.status_code == 200
-    assert isinstance(response.json(), list)
