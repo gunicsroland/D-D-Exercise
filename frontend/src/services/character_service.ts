@@ -47,6 +47,8 @@ export async function checkCharacter(token: string) {
         return false;
       }
     }
+
+    return false;
   } catch (err) {
     console.error(err);
   }

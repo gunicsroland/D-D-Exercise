@@ -9,8 +9,8 @@ export async function consumeItem(token: string, item_id: number) {
         Authorization: `Bearer ${token}`,
       },
     });
-  } catch {
-    return;
+  } catch (err){
+    throw err;
   }
 }
 
