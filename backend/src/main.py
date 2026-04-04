@@ -1,9 +1,12 @@
 from datetime import datetime, timezone
+from pathlib import Path
 import os
+import markdown
 
 from sqlalchemy.orm import Session
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 from src.database import Base, engine
 import src.schemas as schemas
@@ -71,3 +74,25 @@ def get_me(
     current_user: User = Depends(get_current_user)
 ):
     return current_user
+
+@app.get("/", response_class=HTMLResponse)
+def read_md():
+
+    notes = Path("/app/bip.md")
+
+    with open(notes, "r", encoding="utf-8") as f:
+        md_content = f.read()
+
+    html = markdown.markdown(md_content)
+
+    return f"""
+    <html>
+        <head>
+            <title>Markdown Page</title>
+        </head>
+        <body>
+            {html}
+        </body>
+    </html>
+    """
+

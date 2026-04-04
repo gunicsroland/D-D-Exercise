@@ -24,6 +24,7 @@ idna==3.11
 iniconfig==2.3.0
 isort==8.0.1
 librt==0.8.1
+markdown==3.9
 Mako==1.3.10
 MarkupSafe==3.0.3
 mccabe==0.7.0
