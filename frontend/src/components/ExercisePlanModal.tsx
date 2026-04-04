@@ -6,9 +6,11 @@ import { exerciseModal_styles } from "../styles/exerciseModal";
 export default function ExercisePlanModal({
   isOpen,
   onClose,
+  testId,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  testId: string;
 }) {
   const { plan, removeExercise, clearPlan, startPlan } =
     useExercisePlanContext();
@@ -19,6 +21,7 @@ export default function ExercisePlanModal({
       animationType="fade"
       transparent
       onRequestClose={onClose}
+      testID={testId}
     >
       <View style={exerciseModal_styles.overlay}>
         <View style={exerciseModal_styles.modal}>
