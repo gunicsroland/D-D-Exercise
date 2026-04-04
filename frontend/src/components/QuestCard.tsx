@@ -1,84 +1,60 @@
+import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Quest, QuestProgress } from "../types";
-import React from "react";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
-import { exerciseCard_styles } from "../styles/exerciseCard";
+import { questCard_styles } from "../styles/questCard";
 import { DIFFICULTY_LABELS_HU } from "../text_labels";
 
-export function QuestCard({
-  quest,
-  progress,
-}: {
+type Props = {
   quest: Quest;
   progress: QuestProgress | undefined;
-}) {
+};
+
+export function QuestCard({ quest, progress }: Props) {
   const { addExercise } = useExercisePlanContext();
 
   return (
-    <View
-      style={{
-        backgroundColor: "#2c2c2c",
-        padding: 16,
-        borderRadius: 10,
-        marginBottom: 12,
-      }}
-    >
-      <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
+    <View style={questCard_styles.card} testID="quest-card">
+      <Text style={questCard_styles.title} testID="quest-title">
         {quest.name} ({DIFFICULTY_LABELS_HU[quest.exercise.difficulty]})
       </Text>
 
-      <Text style={{ color: "#ddd" }}>Edzés: {quest.exercise.name}</Text>
+      <Text style={questCard_styles.subText} testID="quest-exercise">
+        Edzés: {quest.exercise.name}
+      </Text>
 
-      <View>
-        <Text style={{ color: "#ddd" }}></Text>
-        <View
-          style={{
-            height: 24,
-            width: "100%",
-            backgroundColor: "#ddd",
-            borderRadius: 10,
-            overflow: "hidden",
-            marginVertical: 5,
-          }}
-        >
-          <View
-            style={{
-              height: "100%",
-              width: `${((progress?.progress ?? 0) / quest.amount) * 100}%`,
-              backgroundColor: "#4caf50",
-              position: "absolute",
-            }}
-          />
-          <Text
-            style={{
-              color: "#000",
-              fontWeight: "bold",
-              alignSelf: "center",
-              zIndex: 1,
-            }}
-          >
-            {progress?.progress}/{quest.amount} Darab
-          </Text>
-        </View>
+      <View style={questCard_styles.progressContainer} testID="progress-container">
+        <View style={questCard_styles.progressBar} testID="progress-bar" />
+
+        <Text style={questCard_styles.progressText} testID="progress-text">
+          {progress?.progress}/{quest.amount} Darab
+        </Text>
       </View>
 
-      <Text style={{ color: "#ffd700" }}>XP Jutalom: {quest.xp_reward}</Text>
+      <Text style={questCard_styles.xpText} testID="xp-reward">
+        XP Jutalom: {quest.xp_reward}
+      </Text>
 
       <TouchableOpacity
         onPress={() => addExercise(quest.exercise)}
-        style={[exerciseCard_styles.addButton, { width: "50%", marginTop: 5 }]}
+        style={questCard_styles.addButton}
+        testID="add-to-plan-button"
       >
-        <Text style={exerciseCard_styles.buttonText}>+ Tervhez</Text>
+        <Text style={questCard_styles.buttonText}>+ Tervhez</Text>
       </TouchableOpacity>
 
       {quest.item && (
-        <View style={{ marginTop: 10 }}>
-          <Text style={{ color: "#7dd3fc" }}>
+        <View style={questCard_styles.itemSection} testID="quest-item-section">
+          <Text style={questCard_styles.itemTitle} testID="item-reward-name">
             Tárgy Jutalom: {quest.item.name}
           </Text>
 
           {quest.item.effects.map((effect, index) => (
-            <Text key={index} style={{ color: "#bbb" }}>
+            <Text
+              key={index}
+              style={questCard_styles.effectText}
+              testID={`quest-effect-${index}`}
+            >
               {effect.increase ? "+" : "-"}
               {effect.value} {effect.attribute} ({effect.duration} perc)
             </Text>
