@@ -1,5 +1,5 @@
 import { View, Text, FlatList, Pressable } from "react-native";
-import { Character, CharacterAbility, AbilityType } from "../../types/types";
+import { Character, CharacterAbility, AbilityType } from "../../types";
 import { getAbilityBonus } from "../../hooks/useAbilityBonus";
 import React, { useEffect, useState } from "react";
 import { character_styles } from "../../styles/tabs_character";
@@ -29,6 +29,7 @@ export const AbilityList = ({
       keyExtractor={(item) => item.ability}
       scrollEnabled={false}
       numColumns={2}
+      testID="ability-list"
       renderItem={({ item }) => {
         const bonus = getAbilityBonus(character, item.ability, now);
         const total = item.score + bonus;
@@ -37,12 +38,12 @@ export const AbilityList = ({
           bonus > 0 ? colors.health : bonus < 0 ? colors.damage : colors.text;
 
         return (
-          <View style={character_styles.card}>
-            <Text style={character_styles.abilityName}>
+          <View style={character_styles.card}  testID={`ability-card-${item.ability}`}>
+            <Text style={character_styles.abilityName} testID={`ability-name-${item.ability}`}>
               {ABILITY_LABELS_HU[item.ability]}
             </Text>
 
-            <Text style={character_styles.value}>
+            <Text style={character_styles.value} testID={`ability-value-${item.ability}`}>
               <Text style={{ color: bonusColor }}>{total}</Text>
               {bonus !== 0 && (
                 <Text style={character_styles.bonus}>
@@ -59,6 +60,7 @@ export const AbilityList = ({
               ]}
               onPress={() => handleUpgrade(item.ability)}
               disabled={character.ability_points <= 0}
+              testID={`upgrade-button-${item.ability}`}
             >
               <Text style={character_styles.buttonText}>+</Text>
             </Pressable>
