@@ -5,15 +5,15 @@ import InventoryScreen from "../../../src/app/(protected)/tabs/inventory";
 import { render, fireEvent, waitFor, act } from "@testing-library/react-native";
 
 
-jest.mock("../../../context/AuthContext", () => ({
+jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));
 
-jest.mock("../../../context/GameContext", () => ({
+jest.mock("../../../src/context/GameContext", () => ({
   useGameContext: jest.fn(),
 }));
 
-jest.mock("../../../components/InventoryItem", () => ({
+jest.mock("../../../src/components/InventoryItem", () => ({
   InventoryItem: ({ entry }: any) => {
     const React = require("react");
     const { View, Text } = require("react-native");

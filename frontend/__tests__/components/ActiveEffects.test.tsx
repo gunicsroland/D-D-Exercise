@@ -4,11 +4,11 @@ import { ActiveEffects } from "../../src/components/character/ActiveEffects";
 import { getRemainingTime } from "../../src/hooks/useRemainingTime";
 import { Character } from "../../src/types";
 
-jest.mock("../../hooks/useRemainingTime", () => ({
+jest.mock("../../src/hooks/useRemainingTime", () => ({
     getRemainingTime: jest.fn(() => "5m"),
 }));
 
-jest.mock("../../text_labels", () => ({
+jest.mock("../../src/text_labels", () => ({
     ABILITY_LABELS_HU: {
         strength: "Erő",
         agility: "Ügyesség",

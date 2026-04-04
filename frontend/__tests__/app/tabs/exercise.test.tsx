@@ -10,18 +10,18 @@ import ExerciseScreen from "../../../src/app/(protected)/tabs/exercise";
 import React from "react";
 
 
-jest.mock("../../../context/AuthContext", () => ({
+jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));
 
-jest.mock("../../../services/quest_service", () => ({
+jest.mock("../../../src/services/quest_service", () => ({
   getDailyQuests: jest.fn(),
   getExercises: jest.fn(),
   getQuestProgress: jest.fn(),
   setQuestDifficulty: jest.fn(),
 }));
 
-jest.mock("../../../components/QuestCard", () => ({
+jest.mock("../../../src/components/QuestCard", () => ({
   QuestCard: ({ quest }: any) => {
     const React = require("react");
     const { Text } = require("react-native");
@@ -29,7 +29,7 @@ jest.mock("../../../components/QuestCard", () => ({
   },
 }));
 
-jest.mock("../../../components/ExerciseCard", () => ({
+jest.mock("../../../src/components/ExerciseCard", () => ({
   ExerciseCard: ({ exercise }: any) => {
     const React = require("react");
     const { Text } = require("react-native");
@@ -37,7 +37,7 @@ jest.mock("../../../components/ExerciseCard", () => ({
   },
 }));
 
-jest.mock("../../../components/ExercisePlanModal", () => {
+jest.mock("../../../src/components/ExercisePlanModal", () => {
   const React = require("react");
   const { Text } = require("react-native");
 
@@ -45,9 +45,18 @@ jest.mock("../../../components/ExercisePlanModal", () => {
     props.isOpen ? <Text testID="exercise-modal">Modal</Text> : null;
 });
 
-jest.mock("@react-navigation/native", () => ({
-  useFocusEffect: (cb: any) => cb(),
-}));
+jest.mock("@react-navigation/native", () => {
+  const React = require("react");
+
+  return {
+    useFocusEffect: (cb: any) => {
+      React.useEffect(() => {
+        const cleanup = cb();
+        return cleanup;
+      }, [cb]);
+    },
+  };
+});
 
 const mockQuests = [
   { id: 1, name: "Quest 1", amount: 1, xp_reward: 10, exercise: null, item: null },

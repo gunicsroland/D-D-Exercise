@@ -5,11 +5,11 @@ import { checkCharacter } from "../../src/services/character_service";
 import { useRouter } from "expo-router";
 import React from "react";
 
-jest.mock("../context/AuthContext", () => ({
+jest.mock("../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));
 
-jest.mock("../services/character_service", () => ({
+jest.mock("../../src/services/character_service", () => ({
   checkCharacter: jest.fn(),
 }));
 

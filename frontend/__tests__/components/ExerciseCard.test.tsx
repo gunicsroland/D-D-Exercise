@@ -4,7 +4,7 @@ import { ExerciseCard } from "../../src/components/ExerciseCard";
 import { useExercisePlanContext } from "../../src/context/ExercisePlanContext";
 import { Exercise } from "../../src/types";
 
-jest.mock("../context/ExercisePlanContext", () => ({
+jest.mock("../../src/context/ExercisePlanContext", () => ({
   useExercisePlanContext: jest.fn(),
 }));
 

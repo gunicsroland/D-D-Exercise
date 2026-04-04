@@ -12,7 +12,7 @@ jest.mock("expo-router", () => ({
     }),
 }));
 
-jest.mock("../services/storage_service", () => ({
+jest.mock("../../src/services/storage_service", () => ({
     storage: {
         getToken: jest.fn(),
         setToken: jest.fn(),
@@ -20,7 +20,7 @@ jest.mock("../services/storage_service", () => ({
     },
 }));
 
-jest.mock("../services/auth_service", () => ({
+jest.mock("../../src/services/auth_service", () => ({
     loginRequest: jest.fn(),
     registerRequest: jest.fn(),
     getMe: jest.fn(),

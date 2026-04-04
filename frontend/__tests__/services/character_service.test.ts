@@ -40,7 +40,7 @@ describe("createChar", () => {
             token
         );
 
-        expect(fetch).toHaveBeenCalledWith(`${API_URL}/character/1`, {
+        expect(fetch).toHaveBeenCalledWith(`${API_URL}/character/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

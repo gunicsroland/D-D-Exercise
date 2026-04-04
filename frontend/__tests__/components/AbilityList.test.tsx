@@ -5,11 +5,11 @@ import { AbilityList } from "../../src/components/character/AbilityList";
 import { getAbilityBonus } from "../../src/hooks/useAbilityBonus";
 import { Character } from "../../src/types";
 
-jest.mock("../../hooks/useAbilityBonus", () => ({
+jest.mock("../../src/hooks/useAbilityBonus", () => ({
   getAbilityBonus: jest.fn(),
 }));
 
-jest.mock("../../text_labels", () => ({
+jest.mock("../../src/text_labels", () => ({
   ABILITY_LABELS_HU: {
     strength: "Erő",
     agility: "Ügyesség",

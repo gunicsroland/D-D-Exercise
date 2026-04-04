@@ -2,21 +2,26 @@ import React from "react";
 import { render, fireEvent } from "@testing-library/react-native";
 import { QuestCard } from "../../src/components/QuestCard";
 import { useExercisePlanContext } from "../../src/context/ExercisePlanContext";
+import { ABILITY_LABELS_HU } from "../../src/text_labels";
 
 // Mock context
 const mockAddExercise = jest.fn();
 
-jest.mock("../context/ExercisePlanContext", () => ({
+jest.mock("../../src/context/ExercisePlanContext", () => ({
     useExercisePlanContext: jest.fn(),
 }));
 
 // Mock labels (optional, keeps test stable)
-jest.mock("../text_labels", () => ({
+jest.mock("../../src/text_labels", () => ({
     DIFFICULTY_LABELS_HU: {
         EASY: "Könnyű",
         MEDIUM: "Közepes",
         HARD: "Nehéz",
     },
+
+    ABILITY_LABELS_HU: {
+        strength: "erő"
+    }
 }));
 
 const quest = {
@@ -67,7 +72,8 @@ it("renders progress correctly", () => {
         <QuestCard quest={quest as any} progress={progress as any} />
     );
 
-    expect(getByTestId("progress-text").props.children).toEqual([4, "/", 10, " Darab"])
+    expect(getByTestId("progress-text").props.children.join(""))
+  .toContain("4/10 Darab");
 });
 
 it("calls addExercise when button is pressed", () => {

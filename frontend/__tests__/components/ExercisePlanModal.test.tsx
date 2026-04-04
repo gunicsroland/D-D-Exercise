@@ -6,7 +6,7 @@ const mockRemoveExercise = jest.fn();
 const mockClearPlan = jest.fn();
 const mockStartPlan = jest.fn();
 
-jest.mock("../context/ExercisePlanContext", () => ({
+jest.mock("../../src/context/ExercisePlanContext", () => ({
   useExercisePlanContext: () => ({
     plan: [
       {

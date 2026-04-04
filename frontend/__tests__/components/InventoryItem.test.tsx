@@ -3,7 +3,7 @@ import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import { InventoryItem } from "../../src/components/InventoryItem";
 import { consumeItem } from "../../src/services/inventory_service";
 
-jest.mock("../services/inventory_service", () => ({
+jest.mock("../../src/services/inventory_service", () => ({
     consumeItem: jest.fn(),
 }));
 

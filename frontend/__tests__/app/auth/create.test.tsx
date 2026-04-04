@@ -14,38 +14,38 @@ jest.mock("expo-router", () => ({
 }));
 
 // Mock auth context
-jest.mock("../../../context/AuthContext", () => ({
+jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: () => ({
     user: { id: "user-1" },
     token: "token-123",
   }),
 }));
 
-// Mock services
-const mockCreateChar = jest.fn();
-const mockCheckCharacter = jest.fn();
-
-jest.mock("../../../services/character_service", () => ({
+jest.mock("../../../src/services/character_service", () => ({
   createChar: (...args: any[]) => mockCreateChar(...args),
   checkCharacter: () => mockCheckCharacter(),
 }));
 
 // Mock step components
-jest.mock("../../../components/charCreateSteps/stepName", () => {
+jest.mock("../../../src/components/charCreateSteps/stepName", () => {
   return () => null;
 });
-jest.mock("../../../components/charCreateSteps/stepPushups", () => {
+jest.mock("../../../src/components/charCreateSteps/stepPushups", () => {
   return () => null;
 });
-jest.mock("../../../components/charCreateSteps/stepRun", () => {
+jest.mock("../../../src/components/charCreateSteps/stepRun", () => {
   return () => null;
 });
-jest.mock("../../../components/charCreateSteps/stepAgility", () => {
+jest.mock("../../../src/components/charCreateSteps/stepAgility", () => {
   return () => null;
 });
-jest.mock("../../../components/charCreateSteps/stepFinal", () => {
+jest.mock("../../../src/components/charCreateSteps/stepFinal", () => {
   return () => null;
 });
+
+// Mock services
+const mockCreateChar = jest.fn();
+const mockCheckCharacter = jest.fn();
 
 // --- TESTS ---
 

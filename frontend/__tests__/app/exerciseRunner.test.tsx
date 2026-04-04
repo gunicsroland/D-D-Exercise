@@ -7,20 +7,25 @@ import { useExercisePlanContext } from "../../src/context/ExercisePlanContext";
 import { useAuthContext } from "../../src/context/AuthContext";
 import { useRouter } from "expo-router";
 import { finishExercise } from "../../src/services/quest_service";
+import { useGameContext } from "../../src/context/GameContext";
 
-jest.mock("../../context/AuthContext", () => ({
+jest.mock("../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));
 
-jest.mock("../../context/ExercisePlanContext", () => ({
+jest.mock("../../src/context/ExercisePlanContext", () => ({
   useExercisePlanContext: jest.fn(),
+}));
+
+jest.mock("../../src/context/GameContext", () => ({
+  useGameContext: jest.fn(),
 }));
 
 jest.mock("expo-router", () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock("../../services/quest_service", () => ({
+jest.mock("../../src/services/quest_service", () => ({
   finishExercise: jest.fn(),
 }));
 
@@ -28,6 +33,10 @@ jest.useFakeTimers();
 
 beforeEach(() => {
   jest.clearAllMocks();
+
+  (useGameContext as jest.Mock).mockReturnValue({
+  refreshAll: jest.fn(),
+});
 });
 
 it("shows empty state when no plan", () => {
@@ -111,6 +120,7 @@ it("counts down pause timer", () => {
 it("calls finishExercise when workout completes", async () => {
   const clearPlanMock = jest.fn();
   const routerBackMock = jest.fn();
+  const refreshAllMock = jest.fn();
 
   (useExercisePlanContext as jest.Mock).mockReturnValue({
     plan: [
@@ -121,19 +131,22 @@ it("calls finishExercise when workout completes", async () => {
 
   (useAuthContext as jest.Mock).mockReturnValue({ token: "token" });
 
+  (useGameContext as jest.Mock).mockReturnValue({
+    refreshAll: refreshAllMock,
+  });
+
   (useRouter as jest.Mock).mockReturnValue({
     back: routerBackMock,
   });
 
   const { getByTestId } = render(<ExerciseRunner />);
 
-  fireEvent.press(getByTestId("complete-button"));
-
   await act(async () => {
-    // flush async finishWorkout
+    fireEvent.press(getByTestId("complete-button"));
   });
 
   expect(finishExercise).toHaveBeenCalledWith("token", 1);
   expect(clearPlanMock).toHaveBeenCalled();
+  expect(refreshAllMock).toHaveBeenCalled();
   expect(routerBackMock).toHaveBeenCalled();
 });

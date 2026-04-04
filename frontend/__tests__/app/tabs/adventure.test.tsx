@@ -4,7 +4,7 @@ import { render, fireEvent, waitFor } from "@testing-library/react-native";
 import KalandScreen from "../../../src/app/(protected)/tabs/adventure";
 import React from "react";
 
-jest.mock("../../../context/AuthContext", () => ({
+jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));
 

@@ -7,7 +7,7 @@ jest.mock("expo-router", () => ({
   router: { back: jest.fn() },
 }));
 
-jest.mock("../../context/AuthContext", () => ({
+jest.mock("../../src/context/AuthContext", () => ({
   useAuthContext: () => ({ token: "token-123" }),
 }));
 

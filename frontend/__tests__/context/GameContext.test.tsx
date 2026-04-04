@@ -5,17 +5,17 @@ import { useGameContext, GameProvider } from "../../src/context/GameContext";
 import { getCharacter } from "../../src/services/character_service";
 import { getInventory } from "../../src/services/inventory_service";
 
-jest.mock("./AuthContext", () => ({
+jest.mock("../../src/context/AuthContext", () => ({
     useAuthContext: () => ({
         token: "token123",
     }),
 }));
 
-jest.mock("../services/character_service", () => ({
+jest.mock("../../src/services/character_service", () => ({
     getCharacter: jest.fn(),
 }));
 
-jest.mock("../services/inventory_service", () => ({
+jest.mock("../../src/services/inventory_service", () => ({
     getInventory: jest.fn(),
 }));
 

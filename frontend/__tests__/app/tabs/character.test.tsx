@@ -6,35 +6,24 @@ import { useAuthContext } from "../../../src/context/AuthContext";
 import { useGameContext } from "../../../src/context/GameContext";
 import { lvlUpAbility, updateCharacter } from "../../../src/services/character_service";
 
-jest.mock("../../../context/AuthContext", () => ({
+jest.mock("../../../src/context/AuthContext", () => ({
   useAuthContext: jest.fn(),
 }));
 
-jest.mock("../../../context/GameContext", () => ({
+jest.mock("../../../src/context/GameContext", () => ({
   useGameContext: jest.fn(),
 }));
 
-jest.mock("../../../hooks/useActiveTimer", () => ({
+jest.mock("../../../src/hooks/useActiveTimer", () => ({
   useActiveTimer: jest.fn(),
 }));
 
-jest.mock("../../../services/character_service", () => ({
+jest.mock("../../../src/services/character_service", () => ({
   lvlUpAbility: jest.fn(),
   updateCharacter: jest.fn(),
 }));
 
-jest.mock("@expo/vector-icons", () => {
-  const React = require("react");
-  const { Text } = require("react-native");
-
-  return {
-    Ionicons: (props: any) => {
-      return <Text testID="mock-icon">{props.name}</Text>;
-    },
-  };
-});
-
-jest.mock("../../../components/character/AbilityList", () => ({
+jest.mock("../../../src/components/character/AbilityList", () => ({
   AbilityList: ({ handleUpgrade }: any) => {
     const React = require("react");
     const { Text } = require("react-native");
@@ -49,6 +38,17 @@ jest.mock("../../../components/character/AbilityList", () => ({
     );
   },
 }));
+
+jest.mock("@expo/vector-icons", () => {
+  const React = require("react");
+  const { Text } = require("react-native");
+
+  return {
+    Ionicons: (props: any) => {
+      return <Text testID="mock-icon">{props.name}</Text>;
+    },
+  };
+});
 
 const mockRefresh = jest.fn();
 
