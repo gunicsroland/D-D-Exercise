@@ -1,5 +1,4 @@
 import os
-from src.models import ExerciseCategory
 
 XP_LEVELS = {
     1: 0,
@@ -24,16 +23,6 @@ XP_LEVELS = {
     20: 355000,
 }
 MAX_LEVEL = 20
-
-DAY_CATEGORY_MAP = {
-    0: ExerciseCategory.Strength,  # Monday
-    1: ExerciseCategory.Strength,  # Tuesday
-    2: ExerciseCategory.Flexibility,  # Wednesday
-    3: ExerciseCategory.Flexibility,  # Thursday
-    4: ExerciseCategory.Core,  # Friday
-    5: ExerciseCategory.Core,  # Saturday
-    6: ExerciseCategory.Cardio,  # Sunday
-}
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
 ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")

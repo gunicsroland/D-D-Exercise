@@ -7,7 +7,8 @@ from sqlalchemy.orm import Session
 from src.models import ExerciseCategory, Quest, CharQuestProgress, Character, Exercise
 from src.services import character as character_service
 from src.services import inventory as inventory_service
-from src.constants import DAILY_QUEST_COUNT, DAY_CATEGORY_MAP
+from src.constants import DAILY_QUEST_COUNT
+from src.utils import DAY_CATEGORY_MAP
 
 
 def get_or_create_progress(char_id: int, quest_id: int, db: Session):
