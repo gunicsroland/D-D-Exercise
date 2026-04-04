@@ -12,7 +12,7 @@ from src.models import (
     ItemEffect,
     Item,
     ItemType,
-    Quest
+    Quest,
 )
 from src.services import item as item_service
 
@@ -244,7 +244,7 @@ def seed_quests(db: Session):
             if exists:
                 exists.name = q["name"]
                 exists.exercise_id = q["exercise_id"]
-                exists.amount=q["amount"]
+                exists.amount = q["amount"]
                 exists.xp_reward = q["xp_reward"]
                 exists.item_reward = q["item_reward"]
                 updated += 1

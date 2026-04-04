@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API_URL } from "../../constants";
 import { useAuthContext } from "../../context/AuthContext";
 import { router, useLocalSearchParams } from "expo-router";
-import { Message } from "../../types/types";
+import { Message } from "../../types";
 import {
   View,
   Text,
@@ -23,10 +23,10 @@ export default function AdventureChatScreen() {
   const [error, setError] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
-  const [newDMMessage, setNewDMMessage] = useState("");
   const [talking, setTalking] = useState(false);
 
   const { token } = useAuthContext();
+  const flatListRef = useRef<FlatList>(null);
 
   const fetchMessages = async () => {
     try {
@@ -34,12 +34,9 @@ export default function AdventureChatScreen() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      if (!res.ok) {
-        throw new Error();
-      }
+      if (!res.ok) throw new Error();
 
       const data = await res.json();
-
       setMessages(data);
     } catch {
       setError("Nem elérhető a beszélgetési előzményed");
@@ -47,23 +44,26 @@ export default function AdventureChatScreen() {
   };
 
   useEffect(() => {
-    if (id) fetchMessages();
-  }, [id]);
+    if (id && token) fetchMessages();
+  }, [id, token]);
 
   const sendMessage = async () => {
     if (!newMessage.trim()) return;
 
-    try {
-      setTalking(true);
+    let tempDMId: number | null = null;
 
-      const tempDMId = Date.now();
+    setTalking(true);
+
+    try {
+      tempDMId = Date.now();
+      const messageToSend = newMessage;
+
       const userMsg: Message = {
         id: tempDMId - 1,
         session_id: -1,
         role: "user",
-        content: newMessage,
+        content: messageToSend,
       };
-      setMessages((prev) => [...prev, userMsg]);
 
       const tempDM: Message = {
         id: tempDMId,
@@ -71,12 +71,12 @@ export default function AdventureChatScreen() {
         role: "dm",
         content: "",
       };
-      setMessages((prev) => [...prev, tempDM]);
 
+      setMessages((prev) => [...prev, userMsg, tempDM]);
       setNewMessage("");
 
       const res = await fetch(
-        `${API_URL}/messages/${id}?message=${encodeURIComponent(newMessage)}`,
+        `${API_URL}/messages/${id}?message=${encodeURIComponent(messageToSend)}`,
         {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
@@ -84,38 +84,53 @@ export default function AdventureChatScreen() {
       );
 
       if (!res.ok) {
-        throw new Error();
+        throw new Error("Request failed");
       }
 
-      const reader = res.body?.getReader();
-      if (!reader)
-        throw new Error("No reader available");
+      try {
+        if (res.body && typeof res.body.getReader === "function") {
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder("utf-8");
+          let partialMessage = "";
 
-      const decoder = new TextDecoder("utf-8");
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
 
-      let partialMessage = "";
+            const chunk = decoder.decode(value, { stream: true });
+            partialMessage += chunk;
 
-      while (true) {
-        const result = await reader.read();
-        if (result.done)
-          break;
+            if (tempDMId !== null) {
+              setMessages((prev) =>
+                prev.map((m) =>
+                  m.id === tempDMId ? { ...m, content: partialMessage } : m,
+                ),
+              );
+            }
+          }
+        } else {
+          const data = await res.json();
+          const fullMessage = data.content || data.message;
 
-        const chunk = decoder.decode(result.value, { stream: true });
-        partialMessage += chunk;
+          setMessages((prev) =>
+            prev.map((m) =>
+              m.id === tempDMId ? { ...m, content: fullMessage } : m,
+            ),
+          );
+        }
+      } catch (streamError) {
+        console.warn("Streaming failed, falling back:", streamError);
 
-        setNewDMMessage(partialMessage);
+        const data = await res.json();
+        const fullMessage = data.content || data.message;
 
         setMessages((prev) =>
           prev.map((m) =>
-            m.id === tempDMId ? { ...m, content: partialMessage } : m
-          )
+            m.id === tempDMId ? { ...m, content: fullMessage } : m,
+          ),
         );
       }
 
-      setNewDMMessage("");
-      setMessages((prev) =>
-        prev.filter((m) => m.id !== tempDMId)
-      );
       fetchMessages();
     } catch (err) {
       console.error(err);
@@ -134,8 +149,14 @@ export default function AdventureChatScreen() {
           session_styles.messageContainer,
           isUser ? session_styles.userContainer : session_styles.dmContainer,
         ]}
+        testID={`message-${item.id}`}
       >
-        <Text style={session_styles.messageText}>{item.content}</Text>
+        <Text
+          style={session_styles.messageText}
+          testID={`message-text-${item.id}`}
+        >
+          {item.content}
+        </Text>
       </View>
     );
   };
@@ -145,26 +166,32 @@ export default function AdventureChatScreen() {
       style={{ flex: 1, backgroundColor: colors.background }}
       behavior={"padding"}
       keyboardVerticalOffset={80}
+      testID="chat-screen"
     >
       <View style={session_styles.header}>
-        <TouchableOpacity
-          onPress={() => {
-            router.back();
-          }}
-        >
+        <TouchableOpacity onPress={() => router.back()} testID="back-button">
           <Text style={session_styles.backText}>Vissza</Text>
         </TouchableOpacity>
       </View>
 
       <View style={session_styles.container}>
-        {error ? <Text style={session_styles.error}>{error}</Text> : null}
+        {error ? (
+          <Text style={session_styles.error} testID="error-text">
+            {error}
+          </Text>
+        ) : null}
 
         <FlatList
+          ref={flatListRef}
           data={messages}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
           contentContainerStyle={{ padding: 10 }}
+          onContentSizeChange={() =>
+            flatListRef.current?.scrollToEnd({ animated: true })
+          }
           style={session_styles.container}
+          testID="messages-list"
         />
       </View>
 
@@ -174,7 +201,9 @@ export default function AdventureChatScreen() {
           onChangeText={setNewMessage}
           placeholder="Írj üzenetet..."
           style={session_styles.input}
+          testID="message-input"
         />
+
         <Pressable
           style={[
             session_styles.sendButton,
@@ -182,6 +211,7 @@ export default function AdventureChatScreen() {
           ]}
           onPress={sendMessage}
           disabled={talking}
+          testID="send-button"
         >
           <Text style={session_styles.sendText}>Küldés</Text>
         </Pressable>

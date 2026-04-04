@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
-import { Character } from "../../types/types";
-import { getRemainingTime } from "../../hooks/useRemainngTime";
+import { Character } from "../../types";
+import { getRemainingTime } from "../../hooks/useRemainingTime";
 import React from "react";
 import { effect_styles } from "../../styles/active_effect";
 import { colors } from "../../styles/colors";
@@ -18,15 +18,15 @@ export const ActiveEffects = ({
   );
 
   return (
-    <View>
+    <View testID="active-effects-container">
       <Text style={effect_styles.title}>Aktív hatások:</Text>
       {activeEffects.length === 0 && (
-        <Text style={{ color: colors.textSecondary }}>
+        <Text style={{ color: colors.textSecondary }} testID="no-effects">
           Nincsenek aktív hatások
         </Text>
       )}
 
-      {activeEffects.map((effect, index) => {
+      {activeEffects.map((effect) => {
         const expires = new Date(effect.expires_at).getTime();
         const remainingDuration = expires - now;
 
@@ -39,17 +39,30 @@ export const ActiveEffects = ({
         const isBuff = effect.increase;
 
         return (
-          <View key={effect.id} style={effect_styles.card}>
-            <Text style={effect_styles.effectText}>
+          <View
+            key={effect.id}
+            style={effect_styles.card}
+            testID={`effect-${effect.id}`}
+          >
+            <Text
+              style={effect_styles.effectText}
+              testID={`effect-text-${effect.id}`}
+            >
               {effect.increase ? "+" : "-"}
               {effect.value} {ABILITY_LABELS_HU[effect.attribute]}
             </Text>
 
-            <Text style={effect_styles.timer}>
+            <Text
+              style={effect_styles.timer}
+              testID={`effect-timer-${effect.id}`}
+            >
               {getRemainingTime(effect.expires_at, now)}
             </Text>
 
-            <View style={effect_styles.barBackground}>
+            <View
+              style={effect_styles.barBackground}
+              testID={`effect-bar-${effect.id}`}
+            >
               <View
                 style={[
                   effect_styles.barFill,
@@ -58,6 +71,7 @@ export const ActiveEffects = ({
                     backgroundColor: isBuff ? colors.health : colors.damage,
                   },
                 ]}
+                testID={`effect-bar-fill-${effect.id}`}
               />
             </View>
           </View>

@@ -9,6 +9,7 @@ ios/
 web-build/
 dist/
 build/
+coverage/
 
 # Logs
 npm-debug.log*

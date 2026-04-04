@@ -9,13 +9,14 @@ from jose import JWTError
 from src.database import get_db
 from src.models import User
 from src.services.auth import decode_access_token
+from src.constants import ADMIN_API_KEY
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/form_login")
 api_key_header = APIKeyHeader(name="X-Admin-Key")
 
 
 def require_admin_key(api_key: str = Security(api_key_header)):
-    if not secrets.compare_digest(api_key, os.environ["ADMIN_API_KEY"]):
+    if not secrets.compare_digest(api_key, ADMIN_API_KEY):
         raise HTTPException(status_code=403)
 
 

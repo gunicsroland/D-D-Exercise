@@ -1,7 +1,7 @@
-from fastapi import HTTPException, Depends, APIRouter
-from sqlalchemy.orm import Session
 import logging
 from typing import List
+from fastapi import HTTPException, Depends, APIRouter
+from sqlalchemy.orm import Session
 from datetime import datetime
 
 from src.database import get_db
@@ -13,7 +13,7 @@ from src.services import character as character_service
 app = APIRouter(prefix="/character", tags=["character"])
 
 
-@app.get("/has_character/{user_id}")
+@app.get("/has_character/")
 def user_has_character(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
@@ -25,7 +25,7 @@ def user_has_character(
     return {"has_character": bool(character)}
 
 
-@app.get("/{user_id}", response_model=schemas.CharacterRead)
+@app.get("/", response_model=schemas.CharacterRead)
 def get_user_character(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
@@ -85,7 +85,7 @@ def get_all_characters(db: Session = Depends(get_db)):
     return db.query(Character).all()
 
 
-@app.post("/{user_id}")
+@app.post("/")
 def create_character(
     character_data: schemas.CharacterCreate,
     current_user: User = Depends(get_current_user),
@@ -127,7 +127,7 @@ def create_character(
     return {"message": "Character created successfully", "character_id": character.id}
 
 
-@app.delete("/{user_id}")
+@app.delete("/")
 def delete_character(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
@@ -185,16 +185,16 @@ def upgrade_ability(
     return character_service.upgrade_ability(current_user.id, ability.value, db)
 
 
-@app.put("/me")
+@app.put("/")
 def update_charecter(
     data: schemas.CharacterUpdate,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    character = db.query(Character).filter(Character.user_id == current_user.id).first()
-
-    if not character:
+    if not current_user.characters:
         raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
 
     update_data = data.dict(exclude_unset=True)
     for key, value in update_data.items():
@@ -205,3 +205,20 @@ def update_charecter(
     db.refresh(character)
 
     return character
+
+
+@app.put("/quest_difficulty", response_model=schemas.UserRead)
+def update_char_quest_difficulty(
+    update: schemas.CharacterUpdate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
+    character.quest_difficulty = update.quest_difficulty
+    db.commit()
+    db.refresh(current_user)
+    return current_user

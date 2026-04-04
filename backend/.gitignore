@@ -57,3 +57,5 @@ dmypy.json
 # Environment
 .env
 .env.local
+
+test.db

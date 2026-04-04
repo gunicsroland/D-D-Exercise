@@ -24,7 +24,7 @@ def get_adventure_messages(
         db.query(AdventureSession)
         .filter(
             AdventureSession.id == session_id,
-            AdventureSession.user_id == current_user.id,
+            AdventureSession.character_id == current_user.characters[0].id,
         )
         .first()
     )
@@ -50,7 +50,7 @@ def send_adventure_message(
         db.query(AdventureSession)
         .filter(
             AdventureSession.id == session_id,
-            AdventureSession.user_id == current_user.id,
+            AdventureSession.user_id == current_user.characters[0].id,
         )
         .first()
     )

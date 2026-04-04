@@ -12,8 +12,12 @@ export default function InventoryScreen() {
 
   if (!token)
     return (
-      <View style={inventory_styles.loader}>
-        <ActivityIndicator size="large" color={colors.gold} />
+      <View style={inventory_styles.loader} testID="inventory-loader">
+        <ActivityIndicator
+          size="large"
+          color={colors.gold}
+          testID="activity-indicator"
+        />
       </View>
     );
 
@@ -42,6 +46,7 @@ export default function InventoryScreen() {
         numColumns={3}
         columnWrapperStyle={inventory_styles.row}
         contentContainerStyle={inventory_styles.grid}
+        testID="inventory-list"
         renderItem={({ item }) =>
           item.id < 0 ? (
             <View style={inventory_styles.emptySlot} />
@@ -54,7 +59,9 @@ export default function InventoryScreen() {
           )
         }
         ListEmptyComponent={
-          <Text style={inventory_styles.emptyText}>Az eszköztár üres.</Text>
+          <Text style={inventory_styles.emptyText} testID="empty-invetory-text">
+            Az eszköztár üres.
+          </Text>
         }
       />
     </View>

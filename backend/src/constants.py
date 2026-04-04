@@ -1,5 +1,4 @@
 import os
-from src.models import ExerciseCategory
 
 XP_LEVELS = {
     1: 0,
@@ -25,17 +24,17 @@ XP_LEVELS = {
 }
 MAX_LEVEL = 20
 
-DAY_CATEGORY_MAP = {
-    0: ExerciseCategory.Strength,  # Monday
-    1: ExerciseCategory.Strength,  # Tuesday
-    2: ExerciseCategory.Flexibility,  # Wednesday
-    3: ExerciseCategory.Flexibility,  # Thursday
-    4: ExerciseCategory.Core,  # Friday
-    5: ExerciseCategory.Core,  # Saturday
-    6: ExerciseCategory.Cardio,  # Sunday
-}
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
+
+ADMIN_API_KEY = os.getenv("ADMIN_API_KEY", "supersecret")
+SECRET_KEY = os.getenv("SECRET_KEY", "supersecret123456")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "10080"))
 
 MODEL_NAME = os.getenv("MODEL_NAME", "gemini-2.5-flash")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 SUMMARY_TRIGGER_MESSAGES = 20
 RECENT_MESSAGES_TO_KEEP = 12
 

@@ -94,4 +94,18 @@ export const adventure_styles = StyleSheet.create({
     color: colors.text,
     fontFamily: "Cinzel_600SemiBold",
   },
+
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.background,
+  },
+
+  modalPanel: {
+    width: "80%",
+    backgroundColor: colors.backgroun_light,
+    padding: 20,
+    borderRadius: 10,
+  },
 });

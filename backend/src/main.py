@@ -13,6 +13,8 @@ import src.schemas as schemas
 from src.models import User, ActiveEffect
 from src.dependencies import get_current_user, get_db
 
+from src.constants import ORIGINS
+
 from src.routes import (
     auth,
     users,
@@ -39,13 +41,15 @@ app.include_router(quests.app)
 app.include_router(adventures.app)
 app.include_router(messages.app)
 
-Base.metadata.create_all(bind=engine)
 
-origins = os.getenv("CORS_ORIGINS", "").split(",")
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
+
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -69,10 +73,8 @@ def get_active_effects(
     return own_effects
 
 
-@app.get("/me",  response_model=schemas.UserRead)
-def get_me(
-    current_user: User = Depends(get_current_user)
-):
+@app.get("/me", response_model=schemas.UserRead)
+def get_me(current_user: User = Depends(get_current_user)):
     return current_user
 
 @app.get("/", response_class=HTMLResponse)

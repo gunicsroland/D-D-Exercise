@@ -37,11 +37,18 @@ export default function Register() {
   return (
     <ScrollView contentContainerStyle={auth_styles.container}>
       <View style={auth_styles.card}>
-        <Text style={auth_styles.title}>🛡 Regisztráció</Text>
+        <Text style={auth_styles.title} testID="register-title">
+          🛡 Regisztráció
+        </Text>
 
-        {error ? <Text style={auth_styles.error}>{error}</Text> : null}
+        {error ? (
+          <Text style={auth_styles.error} testID="register-error">
+            {error}
+          </Text>
+        ) : null}
 
         <TextInput
+          testID="username-input"
           placeholder="Felhasználónév"
           placeholderTextColor={colors.textSecondary}
           value={username}
@@ -50,6 +57,7 @@ export default function Register() {
         />
 
         <TextInput
+          testID="email-input"
           placeholder="Email"
           placeholderTextColor={colors.textSecondary}
           value={email}
@@ -58,6 +66,7 @@ export default function Register() {
         />
 
         <TextInput
+          testID="password-input"
           placeholder="Jelszó"
           placeholderTextColor={colors.textSecondary}
           value={password}
@@ -67,6 +76,7 @@ export default function Register() {
         />
 
         <TouchableOpacity
+          testID="register-submit-button"
           style={auth_styles.submitButton}
           onPress={handleSubmit}
         >
@@ -74,6 +84,7 @@ export default function Register() {
         </TouchableOpacity>
 
         <TouchableOpacity
+          testID="go-to-login-button"
           style={auth_styles.subButton}
           onPress={() => router.push("login")}
         >

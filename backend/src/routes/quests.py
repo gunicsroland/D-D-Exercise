@@ -4,7 +4,7 @@ import logging
 from typing import cast
 
 from src.database import get_db
-from src.models import Quest, User, Item, UserQuestProgress, Exercise
+from src.models import Quest, User, Item, CharQuestProgress, Exercise
 import src.schemas as schemas
 from src.dependencies import get_admin_user, get_current_user
 from src.services import quests as quest_service
@@ -30,20 +30,30 @@ def get_quests(db: Session = Depends(get_db)):
 def get_daily_quests(
     db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
 ):
-    logging.info(f"Fetching daily quests for user {current_user.id}")
-    daily_quests = quest_service.get_daily_quests(db, current_user.id)
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
 
-    logging.info(f"Found {len(daily_quests)} daily quests for user {current_user.id}")
+    character = current_user.characters[0]
+
+    logging.info(f"Fetching daily quests for user {character.id}")
+    daily_quests = quest_service.get_daily_quests(db, character.id)
+
+    logging.info(f"Found {len(daily_quests)} daily quests for user {character.id}")
     return daily_quests
 
 
-@app.get("/quest_progress", response_model=list[schemas.UserQuestProgressRead])
+@app.get("/quest_progress", response_model=list[schemas.CharQuestProgressRead])
 def get_user_quest_progress(
     db: Session = Depends(get_db), current_user: User = Depends(get_current_user)
 ):
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
     return (
-        db.query(UserQuestProgress)
-        .filter(UserQuestProgress.user_id == current_user.id)
+        db.query(CharQuestProgress)
+        .filter(CharQuestProgress.char_id == character.id)
         .all()
     )
 
@@ -57,6 +67,7 @@ def get_quest(quest_id: int, db: Session = Depends(get_db)):
             joinedload(Quest.exercise),
             joinedload(cast("Item", Quest.item)).joinedload(Item.effects),
         )
+        .filter(Quest.id == quest_id)
         .first()
     )
     if not quest:
@@ -117,11 +128,16 @@ def complete_quest(
     current_user: User = Depends(get_admin_user),
     db: Session = Depends(get_db),
 ):
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
     quest = db.query(Quest).filter(Quest.id == quest_id).first()
     if not quest:
         raise HTTPException(status_code=404, detail="Quest not found")
 
-    return quest_service.complete_quest(current_user.id, quest, db)
+    return quest_service.complete_quest(current_user.characters[0].id, quest, db)
 
 
 @app.delete("/{quest_id}")

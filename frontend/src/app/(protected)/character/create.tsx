@@ -14,7 +14,7 @@ import {
 import React from "react";
 import { useAuthContext } from "../../../context/AuthContext";
 import { creation_styles } from "../../../styles/creation";
-import { Stats } from "../../../types/types";
+import { Stats } from "../../../types";
 
 export default function CreateCharacter() {
   const classes = Object.keys(BASE_STATS_BY_CLASS);
@@ -136,9 +136,15 @@ export default function CreateCharacter() {
 
   return (
     <View style={creation_styles.screen}>
-      <View style={creation_styles.stepCard}>{steps[step].element}</View>
+      <View style={creation_styles.stepCard} testID="step-container">
+        {steps[step].element}
+      </View>
 
-      {error ? <Text style={creation_styles.error}>{error}</Text> : null}
+      {error ? (
+        <Text style={creation_styles.error} testID="creation-error">
+          {error}
+        </Text>
+      ) : null}
 
       <View style={creation_styles.navigation}>
         <TouchableOpacity
@@ -149,16 +155,18 @@ export default function CreateCharacter() {
             creation_styles.secondaryButton,
             step === 0 && creation_styles.disabledButton,
           ]}
+          testID="prev-button"
         >
-          <Text style={creation_styles.buttonText}>◀ Previous</Text>
+          <Text style={creation_styles.buttonText}>◀ Előző</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={goNext}
           style={[creation_styles.button, creation_styles.primaryButton]}
+          testID="next-button"
         >
           <Text style={creation_styles.buttonText}>
-            {step === steps.length - 1 ? "⚔ Finish" : "Next ▶"}
+            {step === steps.length - 1 ? "⚔ Befejezés" : "Következő ▶"}
           </Text>
         </TouchableOpacity>
       </View>

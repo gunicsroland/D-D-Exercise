@@ -1,5 +1,5 @@
 import { API_URL } from "../constants";
-import { CharacterUpdatePayload, Stats } from "../types/types";
+import { CharacterUpdatePayload, Stats } from "../types";
 
 export async function createChar(
   name: string,
@@ -8,7 +8,7 @@ export async function createChar(
   id: number,
   token: string,
 ) {
-  const res = await fetch(`${API_URL}/character/${id}`, {
+  const res = await fetch(`${API_URL}/character/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export async function createChar(
 
 export async function checkCharacter(token: string) {
   try {
-    const res = await fetch(`${API_URL}/character/has_character/0`, {
+    const res = await fetch(`${API_URL}/character/has_character/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -47,6 +47,8 @@ export async function checkCharacter(token: string) {
         return false;
       }
     }
+
+    return false;
   } catch (err) {
     console.error(err);
   }

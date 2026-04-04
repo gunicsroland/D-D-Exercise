@@ -4,14 +4,31 @@ from collections import defaultdict
 
 from sqlalchemy.orm import Session
 
-from src.models import AdventureMessage, AdventureSession, Character, ActiveEffect, ChatRole
+from src.models import (
+    AdventureMessage,
+    AdventureSession,
+    Character,
+    ActiveEffect,
+    ChatRole,
+)
 import src.services.character as character_service
-from src.constants import MODEL_NAME, SUMMARY_TRIGGER_MESSAGES, RECENT_MESSAGES_TO_KEEP
+from src.constants import (
+    MODEL_NAME,
+    SUMMARY_TRIGGER_MESSAGES,
+    RECENT_MESSAGES_TO_KEEP,
+    GEMINI_API_KEY,
+)
 
 from google import genai
 from google.genai import types
 
-client = genai.Client()
+client = None
+
+if GEMINI_API_KEY:
+    client = genai.Client(api_key=GEMINI_API_KEY)
+else:
+    print("GEMINI_API_KEY not provided. GenAI features will be disabled.")
+
 
 def get_active_effects_for_character(db: Session, character_id: int):
     now = datetime.now(timezone.utc)
@@ -23,6 +40,7 @@ def get_active_effects_for_character(db: Session, character_id: int):
         )
         .all()
     )
+
 
 def build_effective_ability_lines(character: Character, db: Session):
     deltas = defaultdict(int)
@@ -40,11 +58,16 @@ def build_effective_ability_lines(character: Character, db: Session):
         if delta == 0:
             lines.append(f"{ability.ability.value}: {effective_score}")
         else:
-            lines.append(f"{ability.ability.name}: {ability.score} ({delta:+d} aktív hatás) → {effective_score}")
+            lines.append(
+                f"{ability.ability.name}: {ability.score} ({delta:+d} aktív hatás) → {effective_score}"
+            )
 
     return lines
 
-def summarize_messages_with_model(messages: list[AdventureMessage], existing_summary: str = ""):
+
+def summarize_messages_with_model(
+    messages: list[AdventureMessage], existing_summary: str = ""
+):
     summary_prompt = f"""
     Összefoglaló készítése egy D&D-szerű kalandhoz.
 
@@ -80,6 +103,7 @@ def summarize_messages_with_model(messages: list[AdventureMessage], existing_sum
     response = call_chat_model(contents)
     return (response.text or "").strip()
 
+
 def compact_session_history(db: Session, session: AdventureSession):
     messages = (
         db.query(AdventureMessage)
@@ -92,7 +116,6 @@ def compact_session_history(db: Session, session: AdventureSession):
     if len(messages) <= SUMMARY_TRIGGER_MESSAGES:
         return
 
-
     session.summary = summarize_messages_with_model(
         messages,
         existing_summary=getattr(session, "summary", "") or "",
@@ -103,7 +126,10 @@ def compact_session_history(db: Session, session: AdventureSession):
 
     db.commit()
 
-def generate_dm_response_stream(session: AdventureSession, user_message: str, db: Session):
+
+def generate_dm_response_stream(
+    session: AdventureSession, user_message: str, db: Session
+):
     character = session.character
 
     compact_session_history(db, session)
@@ -136,7 +162,9 @@ def generate_dm_response_stream(session: AdventureSession, user_message: str, db
         contents.append(
             types.Content(
                 role="user",
-                parts=[types.Part(text=f"Eddigi rövid összefoglaló:\n{session.summary}")],
+                parts=[
+                    types.Part(text=f"Eddigi rövid összefoglaló:\n{session.summary}")
+                ],
             )
         )
 
@@ -164,18 +192,15 @@ def generate_dm_response_stream(session: AdventureSession, user_message: str, db
     except Exception:
         return
 
-    db.add(AdventureMessage(
-        session_id=session.id,
-        role=ChatRole.User,
-        content=user_message
-    ))
+    db.add(
+        AdventureMessage(
+            session_id=session.id, role=ChatRole.User, content=user_message
+        )
+    )
 
-    db.add(AdventureMessage(
-        session_id=session.id,
-        role=ChatRole.DM,
-        content=full_response
-    ))
-
+    db.add(
+        AdventureMessage(session_id=session.id, role=ChatRole.DM, content=full_response)
+    )
 
     db.commit()
 

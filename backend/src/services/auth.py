@@ -1,11 +1,11 @@
 import os
+from datetime import datetime, timedelta
 import bcrypt
 from jose import jwt
-from datetime import datetime, timedelta
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "10080"))
+from src.constants import ACCESS_TOKEN_EXPIRE_MINUTES
+from src.constants import ALGORITHM
+from src.constants import SECRET_KEY
 
 
 def create_access_token(data: dict):

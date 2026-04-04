@@ -12,7 +12,7 @@ import {
   ExerciseDifficulty,
   Quest,
   QuestProgress,
-} from "../../../types/types";
+} from "../../../types";
 import {
   getDailyQuests,
   getExercises,
@@ -60,7 +60,12 @@ export default function ExerciseScreen() {
 
     try {
       const quests = await getDailyQuests(token);
-      setDailyQuests(quests);
+
+      const sortedQuests = [...quests].sort((a, b) =>
+        a.name.localeCompare(b.name),
+      );
+
+      setDailyQuests(sortedQuests);
     } catch {
       setQuestError(
         "Nem sikerült a napi küldetéseket lekérni, ellenőrizd a kapcsolatod!",
@@ -149,6 +154,7 @@ export default function ExerciseScreen() {
                     exercise_styles.filterButton,
                     questDifficulty === diff && exercise_styles.filterActive,
                   ]}
+                  testID={`quest-difficulty-${diff}`}
                 >
                   <Text style={exercise_styles.filterText}>
                     {DIFFICULTY_LABELS_HU[diff]}
@@ -168,6 +174,7 @@ export default function ExerciseScreen() {
               data={dailyQuests}
               scrollEnabled={false}
               keyExtractor={(item) => item.id.toString()}
+              testID="quest-list"
               renderItem={({ item }) => (
                 <QuestCard
                   quest={item}
@@ -192,6 +199,7 @@ export default function ExerciseScreen() {
                     exercise_styles.filterButton,
                     selectedCategory === cat && exercise_styles.filterActive,
                   ]}
+                  testID={`category-filter-${cat}`}
                 >
                   <Text style={exercise_styles.filterText}>
                     {EXERCISE_TYPE_LABELS_HU[cat]}
@@ -213,6 +221,7 @@ export default function ExerciseScreen() {
                     exercise_styles.filterButton,
                     selectedDifficulty === diff && exercise_styles.filterActive,
                   ]}
+                  testID={`exercise-difficulty-${diff}`}
                 >
                   <Text style={exercise_styles.filterText}>
                     {DIFFICULTY_LABELS_HU[diff]}
@@ -222,11 +231,17 @@ export default function ExerciseScreen() {
             </View>
 
             <View style={exercise_styles.sortRow}>
-              <TouchableOpacity onPress={() => setSortBy("difficulty")}>
+              <TouchableOpacity
+                onPress={() => setSortBy("difficulty")}
+                testID="sort-difficulty"
+              >
                 <Text style={exercise_styles.sortText}>Nehézség szerint</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => setSortBy("category")}>
+              <TouchableOpacity
+                onPress={() => setSortBy("category")}
+                testID="sort-category"
+              >
                 <Text style={exercise_styles.sortText}>Kategória szerint</Text>
               </TouchableOpacity>
             </View>
@@ -240,6 +255,7 @@ export default function ExerciseScreen() {
             data={filteredExercises}
             keyExtractor={(item) => item.id.toString()}
             scrollEnabled={false}
+            testID="exercise-list"
             renderItem={({ item }) => <ExerciseCard exercise={item} />}
           />
         </ScrollView>
@@ -247,13 +263,15 @@ export default function ExerciseScreen() {
         <TouchableOpacity
           onPress={() => setModalVisible(true)}
           style={exercise_styles.startButton}
+          testID="start-button"
         >
-          <Text style={exercise_styles.startText}>⚔ Start</Text>
+          <Text style={exercise_styles.startText}>⚔ Kezdés</Text>
         </TouchableOpacity>
 
         <ExercisePlanModal
           isOpen={modalVisible}
           onClose={() => setModalVisible(false)}
+          testId="exercise-modal"
         />
       </>
     )

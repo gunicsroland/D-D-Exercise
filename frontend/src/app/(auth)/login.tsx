@@ -32,9 +32,15 @@ export default function Login() {
   return (
     <ScrollView contentContainerStyle={auth_styles.container}>
       <View style={auth_styles.card}>
-        <Text style={auth_styles.title}>⚔ Bejelentkezés</Text>
+        <Text style={auth_styles.title} testID="login-title">
+          ⚔ Bejelentkezés
+        </Text>
 
-        {error ? <Text style={auth_styles.error}>{error}</Text> : null}
+        {error ? (
+          <Text style={auth_styles.error} testID="login-error">
+            {error}
+          </Text>
+        ) : null}
 
         <TextInput
           placeholder="Felhasználónév"
@@ -42,6 +48,7 @@ export default function Login() {
           value={username}
           onChangeText={setUsername}
           style={auth_styles.input}
+          testID="username-input"
         />
 
         <TextInput
@@ -51,9 +58,11 @@ export default function Login() {
           onChangeText={setPassword}
           secureTextEntry
           style={auth_styles.input}
+          testID="password-input"
         />
 
         <TouchableOpacity
+          testID="login-button"
           style={auth_styles.submitButton}
           onPress={handleSubmit}
         >
@@ -61,6 +70,7 @@ export default function Login() {
         </TouchableOpacity>
 
         <TouchableOpacity
+          testID="register-button"
           style={auth_styles.subButton}
           onPress={() => router.push("register")}
         >

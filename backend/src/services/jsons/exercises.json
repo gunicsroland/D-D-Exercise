@@ -5,7 +5,7 @@
     "difficulty": "very_easy",
     "quantity": 10,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Állj a fal elé, tedd a tenyereidet vállszélességben a falra, hajlítsd a könyöködet, majd told vissza magad kontrolláltan."
   },
   {
     "name": "Saját testsúlyú guggolás",
@@ -13,7 +13,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Állj vállszélességű terpeszben, told hátra a csípőt, ereszkedj le mélyen, majd állj fel."
   },
   {
     "name": "Plank",
@@ -21,7 +21,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Támaszkodj alkarra vagy tenyérre, tartsd egyenesben a tested, és feszítsd a törzsed."
   },
   {
     "name": "Húzodzkodás",
@@ -29,7 +29,7 @@
     "difficulty": "hard",
     "quantity": 8,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Fogd meg a húzódzkodó rudat vállszélességben, húzd fel a mellkasod a rúdhoz, majd ereszkedj vissza kontrolláltan."
   },
   {
     "name": "Planche",
@@ -37,7 +37,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Dőlj előre karfeszítésben, emeld el a lábaidat a talajtól, és tartsd a testet vízszinthez közeli, feszes helyzetben."
   },
   {
     "name": "Térdelő fekvőtámasz",
@@ -45,7 +45,7 @@
     "difficulty": "very_easy",
     "quantity": 10,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Támaszkodj térden, tedd a kezeidet a vállad alatt a talajra, majd engedd le a mellkast és nyomd vissza magad."
   },
   {
     "name": "Guggolva sétálás",
@@ -53,7 +53,7 @@
     "difficulty": "easy",
     "quantity": 10,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Maradj mély guggoló helyzetben, és apró lépésekkel haladj előre vagy oldalra."
   },
   {
     "name": "Kitörés állva (támogatva)",
@@ -61,7 +61,7 @@
     "difficulty": "very_easy",
     "quantity": 10,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Lépj előre vagy hátra, hajlítsd mindkét térded, majd a sarkadon és a combodon át told vissza magad."
   },
   {
     "name": "Csípőemelés háton fekve",
@@ -69,7 +69,7 @@
     "difficulty": "very_easy",
     "quantity": 10,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Feküdj hanyatt, talpak a talajon, emeld meg a csípőt, feszítsd meg a farizmot, majd engedd vissza."
   },
   {
     "name": "Fekvő lábemelés",
@@ -77,7 +77,7 @@
     "difficulty": "very_easy",
     "quantity": 10,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Feküdj hanyatt vagy kapaszkodj felhúzódzkodó rúdra, és emeld a lábaidat kontrolláltan."
   },
   {
     "name": "Klasszikus fekvőtámasz",
@@ -85,7 +85,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Támaszkodj a kezeidre, tartsd egyenesen a tested, engedd le a mellkast, majd nyomd vissza magad."
   },
   {
     "name": "Álló kitörés",
@@ -93,7 +93,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Lépj előre vagy hátra, hajlítsd mindkét térded, majd a sarkadon és a combodon át told vissza magad."
   },
   {
     "name": "Csípőhid (egy lábbal könnyített)",
@@ -101,7 +101,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Feküdj hanyatt, talpak a talajon, emeld meg a csípőt, feszítsd meg a farizmot, majd engedd vissza."
   },
   {
     "name": "Tricepsz tolás hátul széken",
@@ -109,7 +109,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "A tricepsz tolás hátul széken során tartsd stabilan a törzsed, és végezd a mozgást kontrollált, biztonságos tempóban."
   },
   {
     "name": "Széles guggolás",
@@ -117,7 +117,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Állj széles terpeszben, told hátra a csípőt, engedd le a combokat, majd emelkedj vissza."
   },
   {
     "name": "Széles fekvőtámasz",
@@ -125,7 +125,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Tedd a kezeidet a vállszélességnél szélesebbre, tartsd feszesen a törzsed, majd süllyeszd le és nyomd fel magad."
   },
   {
     "name": "Egy lábas guggolás (asszisztált)",
@@ -133,7 +133,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Egyik lábadat terheld, a másikat tartsd megemelve vagy megtámasztva, és végezd a guggolást lassan."
   },
   {
     "name": "Hegy mászó gyors",
@@ -141,7 +141,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Támaszkodj plank helyzetben, és gyors váltással húzd a térdeidet a mellkasod alá."
   },
   {
     "name": "Tolódzkodás padon",
@@ -149,7 +149,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Támaszkodj padon, széken vagy korláton, hajlítsd a könyököd lefelé, majd nyomd vissza magad."
   },
   {
     "name": "Hajlított törzsű jó reggel",
@@ -157,7 +157,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Enyhén hajlított térddel döntsd a törzsed előre csípőből, a hátad maradjon egyenes, majd emelkedj vissza."
   },
   {
     "name": "Diamant fekvőtámasz",
@@ -165,7 +165,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Helyezd a kezeidet gyémánt alakban a mellkas alatt, engedd le a törzsed, majd nyomd vissza magad."
   },
   {
     "name": "Pisztoly guggolás (asszisztált)",
@@ -173,7 +173,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Egy lábon ereszkedj le mély guggolásba, a másik lábat előre nyújtva, majd állj vissza kontrolláltan."
   },
   {
     "name": "Egykaros tolódzkodás",
@@ -181,7 +181,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Támaszkodj padon, széken vagy korláton, hajlítsd a könyököd lefelé, majd nyomd vissza magad."
   },
   {
     "name": "Egy lábas csípőemelés súly nélküli",
@@ -189,7 +189,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Feküdj hanyatt, talpak a talajon, emeld meg a csípőt, feszítsd meg a farizmot, majd engedd vissza."
   },
   {
     "name": "Ugró guggolás",
@@ -197,7 +197,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Guggolj le, majd robbanékonyan ugorj fel, és puha térdhajlítással érkezz vissza."
   },
   {
     "name": "Egykaros fekvőtámasz",
@@ -205,7 +205,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Széles alapból, egy kézzel támaszkodva engedd le a mellkast, majd préseld vissza magad egyenletes tempóban."
   },
   {
     "name": "Pisztoly guggolás teljes",
@@ -213,7 +213,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Egy lábon ereszkedj le mély guggolásba, a másik lábat előre nyújtva, majd állj vissza kontrolláltan."
   },
   {
     "name": "T-hídból tolás",
@@ -221,7 +221,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Feküdj hanyatt, talpak a talajon, emeld meg a csípőt, feszítsd meg a farizmot, majd engedd vissza."
   },
   {
     "name": "Fejenállásból fekvőtámasz",
@@ -229,7 +229,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Támaszkodj a kezeidre, tartsd egyenesen a tested, engedd le a mellkast, majd nyomd vissza magad."
   },
   {
     "name": "Egykaros tolódzkodás",
@@ -237,7 +237,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Támaszkodj padon, széken vagy korláton, hajlítsd a könyököd lefelé, majd nyomd vissza magad."
   },
   {
     "name": "Egykezes egy lábas pisztoly",
@@ -245,7 +245,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "A egykezes egy lábas pisztoly során tartsd stabilan a törzsed, és végezd a mozgást kontrollált, biztonságos tempóban."
   },
   {
     "name": "Kézenállva fekvőtámasz (szabad)",
@@ -253,7 +253,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Falnál vagy szabadon megtámasztott kézenállásban engedd le a fejed a talaj felé, majd nyomd vissza magad erőből."
   },
   {
     "name": "Azonnali 360° ugró pisztoly guggolás",
@@ -261,7 +261,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Egy lábon ereszkedj le mély guggolásba, a másik lábat előre nyújtva, majd állj vissza kontrolláltan."
   },
   {
     "name": "Emberi zászló asszisztálatlan",
@@ -269,7 +269,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "A emberi zászló asszisztálatlan során tartsd stabilan a törzsed, és végezd a mozgást kontrollált, biztonságos tempóban."
   },
   {
     "name": "Egykezes húzodzkodás",
@@ -277,7 +277,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Fogd meg a húzódzkodó rudat vállszélességben, húzd fel a mellkasod a rúdhoz, majd ereszkedj vissza kontrolláltan."
   },
   {
     "name": "Séta helyben",
@@ -285,7 +285,7 @@
     "difficulty": "very_easy",
     "quantity": 30,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Emeld váltott lábbal a térdeidet helyben, könnyű, ritmusos lépésekkel."
   },
   {
     "name": "Lassú térdemelés",
@@ -293,7 +293,7 @@
     "difficulty": "very_easy",
     "quantity": 30,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Helyben futó vagy lépegető ritmusban emeld a térdeidet a törzs előtt."
   },
   {
     "name": "Alacsony intenzitású jumping jack",
@@ -301,7 +301,7 @@
     "difficulty": "very_easy",
     "quantity": 30,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Ugorj terpeszbe a karok fej fölé emelésével, majd ugorj vissza zárt alapállásba."
   },
   {
     "name": "Könnyített lépcsőzés",
@@ -309,7 +309,7 @@
     "difficulty": "very_easy",
     "quantity": 30,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Lépj fel és le egy stabil emelvényre vagy lépcsőre, egyenletes ritmusban."
   },
   {
     "name": "Lassú sarok-emelés",
@@ -317,7 +317,7 @@
     "difficulty": "very_easy",
     "quantity": 30,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Állva emelkedj a lábujjaidra, majd engedd vissza a sarkaidat kontrolláltan."
   },
   {
     "name": "Jumping jack",
@@ -325,7 +325,7 @@
     "difficulty": "easy",
     "quantity": 40,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Ugorj terpeszbe a karok fej fölé emelésével, majd ugorj vissza zárt alapállásba."
   },
   {
     "name": "Magas térdemelés",
@@ -333,7 +333,7 @@
     "difficulty": "easy",
     "quantity": 40,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Helyben futó vagy lépegető ritmusban emeld a térdeidet a törzs előtt."
   },
   {
     "name": "Könnyű burpee (fekvőtámasz nélkül)",
@@ -341,7 +341,7 @@
     "difficulty": "easy",
     "quantity": 40,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Guggolj le, tedd le a kezed, ugorj plankbe, végezz fekvőtámaszt, majd ugorj vissza és fel."
   },
   {
     "name": "Gyors lépcsőzés",
@@ -349,7 +349,7 @@
     "difficulty": "easy",
     "quantity": 40,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Lépj fel és le egy stabil emelvényre vagy lépcsőre, egyenletes ritmusban."
   },
   {
     "name": "Stacionárius futás helyben",
@@ -357,7 +357,7 @@
     "difficulty": "easy",
     "quantity": 40,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Fuss helyben vagy rövid intervallumokban, magas térd- és karmunkával."
   },
   {
     "name": "Burpee",
@@ -365,7 +365,7 @@
     "difficulty": "medium",
     "quantity": 60,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Guggolj le, tedd le a kezeidet, ugorj hátra plankbe, majd ugorj vissza és állj fel."
   },
   {
     "name": "Hegymászó",
@@ -373,7 +373,7 @@
     "difficulty": "medium",
     "quantity": 60,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Plank helyzetben váltott lábbal húzd előre a térdeidet gyors, folyamatos tempóban."
   },
   {
     "name": "Heveder (skater hops)",
@@ -381,7 +381,7 @@
     "difficulty": "medium",
     "quantity": 60,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Ugorj oldalra egyik lábról a másikra, enyhén előredőlve és karokat kísérve."
   },
   {
     "name": "Váltott tempojú futás",
@@ -389,7 +389,7 @@
     "difficulty": "medium",
     "quantity": 60,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Fuss helyben vagy rövid intervallumokban, magas térd- és karmunkával."
   },
   {
     "name": "Kombinált ugrálás",
@@ -397,7 +397,7 @@
     "difficulty": "medium",
     "quantity": 60,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "A kombinált ugrálás során tarts folyamatos, ritmusos mozgást, és figyelj a légzésre."
   },
   {
     "name": "Burpee fekvőtámaszzal",
@@ -405,7 +405,7 @@
     "difficulty": "hard",
     "quantity": 90,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Guggolj le, tedd le a kezed, ugorj plankbe, végezz fekvőtámaszt, majd ugorj vissza és fel."
   },
   {
     "name": "Többszörös hegymászó",
@@ -413,7 +413,7 @@
     "difficulty": "hard",
     "quantity": 90,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Plank helyzetben váltott lábbal húzd előre a térdeidet gyors, folyamatos tempóban."
   },
   {
     "name": "Sprint helyben 30s",
@@ -421,7 +421,7 @@
     "difficulty": "hard",
     "quantity": 90,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Helyben vagy rövid szakaszon maximális tempóra gyorsíts, majd tartsd a ritmust."
   },
   {
     "name": "Dobozugrás helyben",
@@ -429,7 +429,7 @@
     "difficulty": "hard",
     "quantity": 90,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Ugorj fel egy stabil pontra vagy képzelt célra, majd puhán érkezz vissza."
   },
   {
     "name": "Tabata jumping jack",
@@ -437,7 +437,7 @@
     "difficulty": "hard",
     "quantity": 90,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Ugorj terpeszbe a karok fej fölé emelésével, majd ugorj vissza zárt alapállásba."
   },
   {
     "name": "Burpee + felugrás",
@@ -445,7 +445,7 @@
     "difficulty": "very_hard",
     "quantity": 120,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Végezz burpee-t, majd a végén robbanékonyan ugorj fel magasra."
   },
   {
     "name": "Gyors hegyi futás 60s",
@@ -453,7 +453,7 @@
     "difficulty": "very_hard",
     "quantity": 120,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Fuss helyben vagy rövid intervallumokban, magas térd- és karmunkával."
   },
   {
     "name": "Plyometrikus ugrások sorozata",
@@ -461,7 +461,7 @@
     "difficulty": "very_hard",
     "quantity": 120,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Végezz robbanékony, dinamikus ugró mozgásokat rövid, folyamatos sorozatban."
   },
   {
     "name": "Skater burst",
@@ -469,7 +469,7 @@
     "difficulty": "very_hard",
     "quantity": 120,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Ugorj oldalra egyik lábról a másikra, enyhén előredőlve és karokat kísérve."
   },
   {
     "name": "Burpee + tuck jump",
@@ -477,7 +477,7 @@
     "difficulty": "very_hard",
     "quantity": 120,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Burpee után húzd fel a térdeidet a mellkasodhoz a felugrásnál."
   },
   {
     "name": "100 jumping jack sorozat",
@@ -485,7 +485,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 180,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Ugorj terpeszbe a karok fej fölé emelésével, majd ugorj vissza zárt alapállásba."
   },
   {
     "name": "60 másodperc nonstop burpee",
@@ -493,7 +493,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 180,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Guggolj le, tedd le a kezeidet, ugorj hátra plankbe, majd ugorj vissza és állj fel."
   },
   {
     "name": "Futóintervallum max 2 perc",
@@ -501,7 +501,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 180,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Váltogasd a gyors és mérsékelt tempót a megadott intervallum szerint."
   },
   {
     "name": "300 mountain climber sorozat",
@@ -509,7 +509,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 180,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "A 300 mountain climber sorozat során tarts folyamatos, ritmusos mozgást, és figyelj a légzésre."
   },
   {
     "name": "Nonstop plyo 3 perc",
@@ -517,7 +517,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 180,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Végezz robbanékony, dinamikus ugró mozgásokat rövid, folyamatos sorozatban."
   },
   {
     "name": "Nyak körzés ülve",
@@ -525,7 +525,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Ülj vagy állj egyenesen, és lassan körözz a nyakaddal fájdalommentes tartományban."
   },
   {
     "name": "Vállkörzés állva",
@@ -533,7 +533,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Lazán emeld és körözd a vállaidat előre, majd hátra."
   },
   {
     "name": "Lábszár nyújtás falnál",
@@ -541,7 +541,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Támaszd a lábszárad falhoz, és finoman told a testsúlyodat előre a nyújtáshoz."
   },
   {
     "name": "Csípő nyitás egyszerű",
@@ -549,7 +549,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Nyisd a csípődet lassú, kontrollált mozdulatokkal, a légzésre figyelve."
   },
   {
     "name": "Könnyű macska-tehén",
@@ -557,7 +557,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Négykézláb váltogasd a hát domborítását és homorítását, lassú légzéssel."
   },
   {
     "name": "Elülső comb nyújtás állva",
@@ -565,7 +565,7 @@
     "difficulty": "easy",
     "quantity": 30,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Fogd meg a bokád, húzd a sarkad a farizomhoz, és tartsd meg az első comb nyújtást."
   },
   {
     "name": "Lunge csípőnyújtás",
@@ -573,7 +573,7 @@
     "difficulty": "easy",
     "quantity": 30,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Kitörő helyzetben told előre a csípőt, miközben a hátulsó láb csípőhajlítója nyúlik."
   },
   {
     "name": "Oldalsó törzsnyújtás",
@@ -581,7 +581,7 @@
     "difficulty": "easy",
     "quantity": 30,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Emeld az egyik kart a fej fölé, és hajolj oldalra a törzs mentén."
   },
   {
     "name": "Lábujj érintés ülve",
@@ -589,7 +589,7 @@
     "difficulty": "easy",
     "quantity": 30,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Ülj nyújtott lábbal, és lassan hajolj előre a lábujjak felé."
   },
   {
     "name": "Könnyített előrehajlás",
@@ -597,7 +597,7 @@
     "difficulty": "easy",
     "quantity": 30,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Csípőből hajolj előre egyenes háttal, és tartsd a combhajlító nyújtását."
   },
   {
     "name": "Mély csípőnyújtás",
@@ -605,7 +605,7 @@
     "difficulty": "medium",
     "quantity": 45,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "A mély csípőnyújtás során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Fél híd",
@@ -613,7 +613,7 @@
     "difficulty": "medium",
     "quantity": 45,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Fekvő vagy hátrahajló helyzetben nyisd a mellkast és a vállövet, fokozatosan mélyítve a tartást."
   },
   {
     "name": "Dinamikus hamstring nyújtás",
@@ -621,7 +621,7 @@
     "difficulty": "medium",
     "quantity": 45,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Csípőből hajolj előre egyenes háttal, és tartsd a combhajlító nyújtását."
   },
   {
     "name": "Butterfly tartás",
@@ -629,7 +629,7 @@
     "difficulty": "medium",
     "quantity": 45,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Ülj összezárt talpakkal, engedd a térdeidet oldalra, és finoman dőlj előre."
   },
   {
     "name": "Felülő törzscsavar",
@@ -637,7 +637,7 @@
     "difficulty": "medium",
     "quantity": 45,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Ülve csavard át a törzsed egyik oldalról a másikra, lassú, kontrollált mozgással."
   },
   {
     "name": "Teljes híd",
@@ -645,7 +645,7 @@
     "difficulty": "hard",
     "quantity": 60,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Fekvő vagy hátrahajló helyzetben nyisd a mellkast és a vállövet, fokozatosan mélyítve a tartást."
   },
   {
     "name": "Gyakori egyensúly nyújtás",
@@ -653,7 +653,7 @@
     "difficulty": "hard",
     "quantity": 60,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "A gyakori egyensúly nyújtás során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Izomcsoport-specifikus dinamikus nyújtás",
@@ -661,7 +661,7 @@
     "difficulty": "hard",
     "quantity": 60,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "A izomcsoport-specifikus dinamikus nyújtás során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Egylábas előrehajlás mélyen",
@@ -669,7 +669,7 @@
     "difficulty": "hard",
     "quantity": 60,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Csípőből hajolj előre egyenes háttal, és tartsd a combhajlító nyújtását."
   },
   {
     "name": "Tartós hamstring tartás 60s",
@@ -677,7 +677,7 @@
     "difficulty": "hard",
     "quantity": 60,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Csípőből hajolj előre egyenes háttal, és tartsd a combhajlító nyújtását."
   },
   {
     "name": "Szűk combhajlító mobilitás 90s",
@@ -685,7 +685,7 @@
     "difficulty": "very_hard",
     "quantity": 90,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "A szűk combhajlító mobilitás 90s során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Teljes előrehajlás lábtartásban",
@@ -693,7 +693,7 @@
     "difficulty": "very_hard",
     "quantity": 90,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Csípőből hajolj előre egyenes háttal, és tartsd a combhajlító nyújtását."
   },
   {
     "name": "Fejtől talpig mély nyújtás",
@@ -701,7 +701,7 @@
     "difficulty": "very_hard",
     "quantity": 90,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "A fejtől talpig mély nyújtás során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Mély csípőnyújtás kitartással",
@@ -709,7 +709,7 @@
     "difficulty": "very_hard",
     "quantity": 90,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "A mély csípőnyújtás kitartással során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Egyensúlyos mély guggolás mobilitás",
@@ -717,7 +717,7 @@
     "difficulty": "very_hard",
     "quantity": 90,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "A egyensúlyos mély guggolás mobilitás során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Spárga megtartása 60s",
@@ -725,7 +725,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 120,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Lassan ereszkedj a spárgába, és tartsd a testet stabilan, fájdalommentes tartományban."
   },
   {
     "name": "Előre spárga mély tartás",
@@ -733,7 +733,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 120,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Lassan ereszkedj a spárgába, és tartsd a testet stabilan, fájdalommentes tartományban."
   },
   {
     "name": "Hátsó híd tartás 60s",
@@ -741,7 +741,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 120,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Fekvő vagy hátrahajló helyzetben nyisd a mellkast és a vállövet, fokozatosan mélyítve a tartást."
   },
   {
     "name": "Fekvő forgatás teljes mozgástartomány",
@@ -749,7 +749,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 120,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "A fekvő forgatás teljes mozgástartomány során lélegezz nyugodtan, és tartsd a mozdulatot lassan, kontrolláltan."
   },
   {
     "name": "Sortartás extremo",
@@ -757,7 +757,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 120,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Hason fekve vagy nyújtott helyzetben tartsd meg a testet feszesen, nyújtott vonalban."
   },
   {
     "name": "Hasi légzés fekve",
@@ -765,7 +765,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Feküdj hanyatt, tedd a kezed a hasadra, és mélyen lélegezz úgy, hogy a hasad emelkedjen."
   },
   {
     "name": "Farizom bekapcsolás",
@@ -773,7 +773,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Feszítsd meg tudatosan a farizmaidat, tartsd néhány másodpercig, majd lazíts."
   },
   {
     "name": "Könnyített plank térdelve",
@@ -781,7 +781,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Támaszkodj alkarra vagy tenyérre, tartsd egyenesben a tested, és feszítsd a törzsed."
   },
   {
     "name": "Dead bug könnyített",
@@ -789,7 +789,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Feküdj hanyatt, emeld a karokat és lábakat, majd ellentétes kart és lábat lassan nyújtsd."
   },
   {
     "name": "Oldal plank térdelve",
@@ -797,7 +797,7 @@
     "difficulty": "very_easy",
     "quantity": 20,
     "xp_reward": 25,
-    "media_url": null
+    "media_url": "Támaszkodj alkarra vagy tenyérre, tartsd egyenesben a tested, és feszítsd a törzsed."
   },
   {
     "name": "Plank (térdelve hosszabb)",
@@ -805,7 +805,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Támaszkodj alkarra vagy tenyérre, tartsd egyenesben a tested, és feszítsd a törzsed."
   },
   {
     "name": "Hajlított térdes hasprés",
@@ -813,7 +813,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Emeld meg a vállövet vagy a térdeket a törzs munkájával, a nyakat nem húzva."
   },
   {
     "name": "Lábemelés hajlított térddel",
@@ -821,7 +821,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Fekve vagy függeszkedve emeld a lábaidat kontrolláltan, a derekat stabilan tartva."
   },
   {
     "name": "Reverse crunch könnyített",
@@ -829,7 +829,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Emeld meg a vállövet vagy a térdeket a törzs munkájával, a nyakat nem húzva."
   },
   {
     "name": "Könnyített V-up",
@@ -837,7 +837,7 @@
     "difficulty": "easy",
     "quantity": 15,
     "xp_reward": 50,
-    "media_url": null
+    "media_url": "Hanyatt fekvésből egyszerre emeld a felsőtested és a lábaidat V alakba."
   },
   {
     "name": "Plank teljes",
@@ -845,7 +845,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Támaszkodj alkarra vagy tenyérre, tartsd egyenesben a tested, és feszítsd a törzsed."
   },
   {
     "name": "Bicycle crunch",
@@ -853,7 +853,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Emeld meg a vállövet vagy a térdeket a törzs munkájával, a nyakat nem húzva."
   },
   {
     "name": "Lábemelés egyenes",
@@ -861,7 +861,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Fekve vagy függeszkedve emeld a lábaidat kontrolláltan, a derekat stabilan tartva."
   },
   {
     "name": "Hanging knee raise (asszisztált)",
@@ -869,7 +869,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Függeszkedve húzd fel a térdeidet a hasad felé, majd engedd vissza lassan."
   },
   {
     "name": "Russian twist",
@@ -877,7 +877,7 @@
     "difficulty": "medium",
     "quantity": 30,
     "xp_reward": 100,
-    "media_url": null
+    "media_url": "Ülj enyhén hátradőlve, és fordítsd a törzsed egyik oldalról a másikra."
   },
   {
     "name": "Plank 1 lábbal",
@@ -885,7 +885,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Támaszkodj alkarra vagy tenyérre, tartsd egyenesben a tested, és feszítsd a törzsed."
   },
   {
     "name": "Dragon flag progresszió",
@@ -893,7 +893,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Támaszkodj stabilan, a törzset feszesen tartva emeld és engedd a tested egyenes vonalban."
   },
   {
     "name": "L-sit (asszisztált)",
@@ -901,7 +901,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Támaszkodj két kézzel, emeld a lábaidat nyújtva előre, és tartsd a csípőt megemelve."
   },
   {
     "name": "V-up sorozat",
@@ -909,7 +909,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "Hanyatt fekvésből egyszerre emeld a felsőtested és a lábaidat V alakba."
   },
   {
     "name": "Hanging leg raise",
@@ -917,7 +917,7 @@
     "difficulty": "hard",
     "quantity": 12,
     "xp_reward": 200,
-    "media_url": null
+    "media_url": "A hanging leg raise során a törzs legyen feszes, a mozgás pedig lassú és kontrollált."
   },
   {
     "name": "Dragon flag teljes",
@@ -925,7 +925,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Támaszkodj stabilan, a törzset feszesen tartva emeld és engedd a tested egyenes vonalban."
   },
   {
     "name": "L-sit teljes",
@@ -933,7 +933,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Támaszkodj két kézzel, emeld a lábaidat nyújtva előre, és tartsd a csípőt megemelve."
   },
   {
     "name": "Front lever progresszió",
@@ -941,7 +941,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Függeszkedve tartsd a tested vízszint közelében, a lapockákat és törzset feszesen."
   },
   {
     "name": "One-arm plank körök",
@@ -949,7 +949,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "Támaszkodj alkarra vagy tenyérre, tartsd egyenesben a tested, és feszítsd a törzsed."
   },
   {
     "name": "Komplex core circuit 60s",
@@ -957,7 +957,7 @@
     "difficulty": "very_hard",
     "quantity": 6,
     "xp_reward": 300,
-    "media_url": null
+    "media_url": "A komplex core circuit 60s során a törzs legyen feszes, a mozgás pedig lassú és kontrollált."
   },
   {
     "name": "Full front lever",
@@ -965,7 +965,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Függeszkedve tartsd a tested vízszint közelében, a lapockákat és törzset feszesen."
   },
   {
     "name": "Full planche push",
@@ -973,7 +973,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Planche helyzetből, a tested előre döntve végezz nyomó mozdulatot a törzs teljes feszítésével."
   },
   {
     "name": "Human flag core hold",
@@ -981,7 +981,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Egy függőleges rúdon vagy oszlopon támaszkodva tartsd a tested oldalt kifeszítve."
   },
   {
     "name": "30s dragon flag hold",
@@ -989,7 +989,7 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Támaszkodj stabilan, a törzset feszesen tartva emeld és engedd a tested egyenes vonalban."
   },
   {
     "name": "One-arm L-sit",
@@ -997,6 +997,6 @@
     "difficulty": "nearly_impossible",
     "quantity": 1,
     "xp_reward": 500,
-    "media_url": null
+    "media_url": "Támaszkodj két kézzel, emeld a lábaidat nyújtva előre, és tartsd a csípőt megemelve."
   }
 ]

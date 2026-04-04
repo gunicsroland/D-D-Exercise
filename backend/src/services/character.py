@@ -19,11 +19,11 @@ def calculate_level(xp: int) -> int:
     return min(level, constants.MAX_LEVEL)
 
 
-def add_xp(user_id: int, xp_gain: int, db: Session):
-    character = db.query(Character).filter(Character.user_id == user_id).first()
+def add_xp(char_id: int, xp_gain: int, db: Session):
+    character = db.query(Character).filter(Character.id == char_id).first()
     if not character:
         logging.warning(
-            f"No character found for user_id={user_id} when trying to add XP"
+            f"No character found for user_id={char_id} when trying to add XP"
         )
         raise HTTPException(status_code=404, detail="Character not found")
 
@@ -35,7 +35,7 @@ def add_xp(user_id: int, xp_gain: int, db: Session):
 
     if levels_gained > 0:
         logging.info(
-            f"Character leveled up from {old_level} to {new_level} for user_id={user_id}"
+            f"Character leveled up from {old_level} to {new_level} for user_id={char_id}"
         )
         character.level = new_level
         character.ability_points += levels_gained * 2
@@ -54,35 +54,35 @@ def add_xp(user_id: int, xp_gain: int, db: Session):
     }
 
 
-def upgrade_ability(user_id: int, ability: str, db: Session):
-    character = db.query(Character).filter(Character.user_id == user_id).first()
+def upgrade_ability(char_id: int, ability: str, db: Session):
+    character = db.query(Character).filter(Character.id == char_id).first()
     if not character:
         logging.warning(
-            f"No character found for user_id={user_id} when trying to upgrade ability"
+            f"No character found for char_id={char_id} when trying to upgrade ability"
         )
         raise HTTPException(status_code=404, detail="Character not found")
 
     if character.ability_points <= 0:
         logging.warning(
-            f"User {user_id} does not have enough ability points to upgrade {ability}"
+            f"Character {char_id} does not have enough ability points to upgrade {ability}"
         )
         raise HTTPException(status_code=400, detail="Not enough ability points")
 
     char_ability = (
         db.query(CharacterAbility)
         .filter(
-            CharacterAbility.character_id == character.id,
+            CharacterAbility.character_id == char_id,
             CharacterAbility.ability == ability,
         )
         .first()
     )
     if not char_ability:
-        logging.warning(f"Ability {ability} not found for character_id={character.id}")
+        logging.warning(f"Ability {ability} not found for character_id={char_id}")
         raise HTTPException(status_code=404, detail="Ability not found")
 
     if char_ability.score >= 20:
         logging.warning(
-            f"Ability {ability} is already at max score for character_id={character.id}"
+            f"Ability {ability} is already at max score for character_id={char_id}"
         )
         raise HTTPException(
             status_code=400, detail="Ability score is already at maximum"
@@ -95,7 +95,7 @@ def upgrade_ability(user_id: int, ability: str, db: Session):
     db.refresh(character)
 
     logging.info(
-        f"Ability {ability} upgraded successfully for character_id={character.id}. New score: {char_ability.score}, Remaining ability points: {character.ability_points}"
+        f"Ability {ability} upgraded successfully for character_id={char_id}. New score: {char_ability.score}, Remaining ability points: {character.ability_points}"
     )
 
     return {

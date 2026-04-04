@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_URL, QUEUE_KEY } from "../constants";
-import { ExerciseDifficulty } from "../types/types";
+import { ExerciseDifficulty } from "../types";
 import { addExerciseToQueue, getOfflineCompletions } from "./offlineStorage";
 
 export async function getExercises(token: string) {

@@ -25,8 +25,13 @@ def get_inventory(
 ):
     logging.info(f"Fetching inventory for user_id={current_user.id}")
 
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
     inventory_items = (
-        db.query(Inventory).filter(Inventory.user_id == current_user.id).all()
+        db.query(Inventory).filter(Inventory.char_id == character.id).all()
     )
 
     logging.info(
@@ -47,7 +52,12 @@ def add_item(
         f"Adding item_id={item_id} (quantity={quantity}) to inventory for user_id={current_user.id}"
     )
 
-    inventory_service.add_item(current_user.id, item_id, quantity, db)
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
+    inventory_service.add_item(character.id, item_id, quantity, db)
 
     return {"message": "Item added to inventory"}
 
@@ -63,9 +73,14 @@ def consume_item(
         f"Consumin item_id={item_id} (quantity={quantity}) from inventory for user_id={current_user.id}"
     )
 
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
     inventory_item = (
         db.query(Inventory)
-        .filter(Inventory.user_id == current_user.id, Inventory.item_id == item_id)
+        .filter(Inventory.char_id == character.id, Inventory.item_id == item_id)
         .first()
     )
 
@@ -82,7 +97,7 @@ def consume_item(
         expires = datetime.now(timezone.utc) + timedelta(minutes=effect.duration)
 
         active_effect = ActiveEffect(
-            character_id=current_user.characters[0].id,
+            character_id=character.id,
             attribute=effect.attribute,
             value=effect.value,
             increase=effect.increase,
@@ -112,9 +127,14 @@ def remove_item(
         f"Removing item_id={item_id} (quantity={quantity}) from inventory for user_id={current_user.id}"
     )
 
+    if not current_user.characters:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    character = current_user.characters[0]
+
     inventory_item = (
         db.query(Inventory)
-        .filter(Inventory.user_id == current_user.id, Inventory.item_id == item_id)
+        .filter(Inventory.char_id == character.id, Inventory.item_id == item_id)
         .first()
     )
 
