@@ -5,6 +5,7 @@ import {
   FlatList,
   TextInput,
   Pressable,
+  Modal
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../../constants";
@@ -17,6 +18,10 @@ import { colors } from "../../../styles/colors";
 export default function KalandScreen() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [title, setTitle] = useState("");
+
+  const [renameVisible, setRenameVisible] = useState(false);
+  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [newTitle, setNewTitle] = useState("");
 
   const { token } = useAuthContext();
   const router = useRouter();
@@ -96,6 +101,7 @@ export default function KalandScreen() {
           value={title}
           onChangeText={setTitle}
           style={adventure_styles.input}
+          testID="title-input"
         />
         <Pressable
           style={[
@@ -104,6 +110,7 @@ export default function KalandScreen() {
           ]}
           onPress={startAdventure}
           disabled={title === ""}
+          testID="start-adventure-button"
         >
           <Text style={adventure_styles.buttonText}>Kaland indítása</Text>
         </Pressable>
@@ -113,9 +120,10 @@ export default function KalandScreen() {
       <FlatList
         data={sessions}
         keyExtractor={(item) => item.id.toString()}
+        testID="sessions-list"
         renderItem={({ item }) => (
-          <View style={adventure_styles.sessionCard}>
-            <Text style={adventure_styles.sessionTitle}>{item.title}</Text>
+          <View style={adventure_styles.sessionCard} testID={`session-${item.id}`}>
+            <Text style={adventure_styles.sessionTitle} testID={`session-title-${item.id}`}>{item.title}</Text>
             <View style={adventure_styles.buttonCol}>
               <Pressable
                 style={[
@@ -131,6 +139,7 @@ export default function KalandScreen() {
                     },
                   })
                 }
+                testID={`select-session-${item.id}`}
               >
                 <Text style={adventure_styles.buttonText}>Kiválasztás</Text>
               </Pressable>
@@ -141,9 +150,11 @@ export default function KalandScreen() {
                   adventure_styles.renameButton,
                 ]}
                 onPress={() => {
-                  const newTitle = prompt("Add meg az új címet:", item.title);
-                  if (newTitle) updateTitle(item.id, newTitle);
+                  setSelectedSession(item);
+                  setNewTitle(item.title);
+                  setRenameVisible(true);
                 }}
+                testID={`rename-session-${item.id}`}
               >
                 <Text style={adventure_styles.buttonText}>Átnevezés</Text>
               </Pressable>
@@ -154,6 +165,7 @@ export default function KalandScreen() {
                   adventure_styles.deleteButton,
                 ]}
                 onPress={() => deleteSession(item.id)}
+                testID={`delete-session-${item.id}`}
               >
                 <Text style={adventure_styles.buttonText}>Törlés</Text>
               </Pressable>
@@ -161,6 +173,48 @@ export default function KalandScreen() {
           </View>
         )}
       />
+
+      <Modal visible={renameVisible} transparent animationType="fade">
+        <View style={adventure_styles.modalOverlay} testID="rename-modal">
+          <View style={adventure_styles.modalPanel}>
+            <Text style={adventure_styles.title}>Új cím megadása</Text>
+
+            <TextInput
+              testID="rename-input"
+              value={newTitle}
+              onChangeText={setNewTitle}
+              style={adventure_styles.input}
+            />
+
+            <View style={adventure_styles.buttonCol}>
+              <Pressable
+                testID="rename-save-button"
+                style={adventure_styles.button}
+                onPress={async () => {
+                  if (selectedSession && newTitle.trim()) {
+                    await updateTitle(selectedSession.id, newTitle);
+                    setRenameVisible(false);
+                    setSelectedSession(null);
+                  }
+                }}
+              >
+                <Text style={adventure_styles.buttonText}>Mentés</Text>
+              </Pressable>
+
+              <Pressable
+                testID="rename-cancel-button"
+                style={adventure_styles.button}
+                onPress={() => {
+                  setRenameVisible(false);
+                  setSelectedSession(null);
+                }}
+              >
+                <Text style={adventure_styles.buttonText}>Mégse</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
