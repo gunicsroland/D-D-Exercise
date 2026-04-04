@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Quest, QuestProgress } from "../types";
 import { useExercisePlanContext } from "../context/ExercisePlanContext";
 import { questCard_styles } from "../styles/questCard";
-import { DIFFICULTY_LABELS_HU } from "../text_labels";
+import { ABILITY_LABELS_HU, DIFFICULTY_LABELS_HU } from "../text_labels";
 
 type Props = {
   quest: Quest;
@@ -12,6 +12,10 @@ type Props = {
 
 export function QuestCard({ quest, progress }: Props) {
   const { addExercise } = useExercisePlanContext();
+
+  const progressValue = progress?.progress ?? 0;
+  const total = quest.amount;
+  const progressPercent = total > 0 ? (progressValue / total) * 100 : 0;
 
   return (
     <View style={questCard_styles.card} testID="quest-card">
@@ -24,11 +28,15 @@ export function QuestCard({ quest, progress }: Props) {
       </Text>
 
       <View style={questCard_styles.progressContainer} testID="progress-container">
-        <View style={questCard_styles.progressBar} testID="progress-bar" />
+        <View style={[
+          questCard_styles.progressBar,
+          { width: `${progressPercent}%` },
+        ]}
+          testID="progress-bar" />
 
         <Text style={questCard_styles.progressText} testID="progress-text">
-          {progress?.progress}/{quest.amount} Darab
-        </Text>
+  {progress?.progress}/{quest.amount} Darab {progress?.completed && "✔️"}
+</Text>
       </View>
 
       <Text style={questCard_styles.xpText} testID="xp-reward">
@@ -56,7 +64,7 @@ export function QuestCard({ quest, progress }: Props) {
               testID={`quest-effect-${index}`}
             >
               {effect.increase ? "+" : "-"}
-              {effect.value} {effect.attribute} ({effect.duration} perc)
+              {effect.value} {ABILITY_LABELS_HU[effect.attribute]} ({effect.duration} perc)
             </Text>
           ))}
         </View>

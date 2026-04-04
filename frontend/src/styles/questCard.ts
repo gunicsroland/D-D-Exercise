@@ -1,8 +1,9 @@
 import { StyleSheet } from "react-native";
+import { colors } from "./colors";
 
 export const questCard_styles = StyleSheet.create({
   card: {
-    backgroundColor: "#2c2c2c",
+    backgroundColor: colors.surface,
     padding: 16,
     borderRadius: 10,
     marginBottom: 12,
@@ -10,40 +11,46 @@ export const questCard_styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white",
+    color: colors.gold,
   },
   subText: {
-    color: "#ddd",
+    color: colors.text,
   },
   progressContainer: {
     height: 24,
     width: "100%",
-    backgroundColor: "#ddd",
+    backgroundColor: "#3A3535",
     borderRadius: 10,
     overflow: "hidden",
     marginVertical: 5,
     justifyContent: "center",
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.secondary
   },
   progressBar: {
     position: "absolute",
+    left:  0,
+    top:0,
+    bottom:0,
     height: "100%",
-    width: "100%",
-    backgroundColor: "#4caf50",
+    backgroundColor: colors.health,
   },
   progressText: {
-    color: "#000",
+    color: colors.text,
     fontWeight: "bold",
   },
   xpText: {
-    color: "#ffd700",
+    color: colors.gold,
   },
   addButton: {
     marginTop: 5,
-    width: "50%",
+    width: "10%",
     padding: 8,
-    backgroundColor: "#4caf50",
+    backgroundColor: colors.primary,
     borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.gold
   },
   buttonText: {
     color: "white",

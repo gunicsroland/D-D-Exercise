@@ -15,28 +15,33 @@ export const exerciseRunner_styles = StyleSheet.create({
     flex: 2,
     padding: 20,
     justifyContent: "space-between",
+    alignItems: "center"
   },
 
   title: {
-    fontSize: 24,
+    fontSize: 28,
     color: colors.gold,
     fontFamily: "Cinzel_600SemiBold",
     marginBottom: 6,
+    textAlign: "center"
   },
 
   text: {
     color: colors.text,
-    fontSize: 16,
+    fontSize: 18,
+    textAlign: "center"
   },
 
   progress: {
-    marginTop: 6,
+    marginTop: 10,
     color: colors.textSecondary,
+    textAlign: "center"
   },
 
   controls: {
     flexDirection: "row",
     justifyContent: "space-between",
+    width: "100%"
   },
 
   buttonText: {
@@ -108,11 +113,14 @@ export const exerciseRunner_styles = StyleSheet.create({
   padding: 12,
   backgroundColor: colors.background,
   borderRadius: 10,
+  alignItems: "center",
+  width: "100%"
 },
 
 description: {
-  fontSize: 14,
+  fontSize: 16,
   color: colors.gold,
-  lineHeight: 20,
+  lineHeight: 22,
+  textAlign: "center"
 },
 });

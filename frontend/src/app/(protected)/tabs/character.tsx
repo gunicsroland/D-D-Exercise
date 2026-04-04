@@ -76,7 +76,7 @@ export default function CharacterScreen() {
 
         <XPBar level={character.level} xp={character.xp} />
         <Text style={character_styles.abilityPoints} testID="ability-points">
-          Ability Points: {character.ability_points}
+          Képesség pontok: {character.ability_points}
         </Text>
       </View>
 

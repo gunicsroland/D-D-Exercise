@@ -60,7 +60,12 @@ export default function ExerciseScreen() {
 
     try {
       const quests = await getDailyQuests(token);
-      setDailyQuests(quests);
+
+      const sortedQuests = [...dailyQuests].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+
+      setDailyQuests(sortedQuests);
     } catch {
       setQuestError(
         "Nem sikerült a napi küldetéseket lekérni, ellenőrizd a kapcsolatod!",
@@ -254,7 +259,7 @@ export default function ExerciseScreen() {
           style={exercise_styles.startButton}
           testID="start-button"
         >
-          <Text style={exercise_styles.startText}>⚔ Start</Text>
+          <Text style={exercise_styles.startText}>⚔ Kezdés</Text>
         </TouchableOpacity>
 
         <ExercisePlanModal

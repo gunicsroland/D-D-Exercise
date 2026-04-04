@@ -151,7 +151,7 @@ export default function CreateCharacter() {
           ]}
           testID="prev-button"
         >
-          <Text style={creation_styles.buttonText}>◀ Previous</Text>
+          <Text style={creation_styles.buttonText}>◀ Előző</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -160,7 +160,7 @@ export default function CreateCharacter() {
           testID="next-button"
         >
           <Text style={creation_styles.buttonText}>
-            {step === steps.length - 1 ? "⚔ Finish" : "Next ▶"}
+            {step === steps.length - 1 ? "⚔ Befejezés" : "Következő ▶"}
           </Text>
         </TouchableOpacity>
       </View>

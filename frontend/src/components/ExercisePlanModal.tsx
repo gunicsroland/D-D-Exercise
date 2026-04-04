@@ -57,7 +57,7 @@ export default function ExercisePlanModal({
                     style={exerciseModal_styles.removeButton}
                     testID={`remove-button-${item.uuid}`}
                   >
-                    <Text style={exerciseModal_styles.removeText}>Remove</Text>
+                    <Text style={exerciseModal_styles.removeText}>Eltávolítás</Text>
                   </TouchableOpacity>
                 </View>
               )}
