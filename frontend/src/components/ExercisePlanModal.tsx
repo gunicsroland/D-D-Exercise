@@ -23,36 +23,39 @@ export default function ExercisePlanModal({
       onRequestClose={onClose}
       testID={testId}
     >
-      <View style={exerciseModal_styles.overlay}>
-        <View style={exerciseModal_styles.modal}>
-          <View style={exerciseModal_styles.header}>
-            <Text style={exerciseModal_styles.title}>⚔ Edzés Terv</Text>
+      <View style={exerciseModal_styles.overlay} testID="overlay">
+        <View style={exerciseModal_styles.modal} testID="modal-container">
+          <View style={exerciseModal_styles.header} testID="header">
+            <Text style={exerciseModal_styles.title} testID="title">⚔ Edzés Terv</Text>
 
             <TouchableOpacity
               onPress={onClose}
               style={exerciseModal_styles.closeButton}
+              testID="close-button"
             >
               <Text style={exerciseModal_styles.closeText}>✕</Text>
             </TouchableOpacity>
           </View>
 
           {plan.length === 0 ? (
-            <Text style={exerciseModal_styles.empty}>
+            <Text style={exerciseModal_styles.empty} testID="empty-text">
               Nincs még gyakorlat a tervben
             </Text>
           ) : (
             <FlatList
               data={plan}
               keyExtractor={(item) => item.uuid.toString()}
+              testID="plan-list"
               renderItem={({ item }) => (
-                <View style={exerciseModal_styles.exerciseRow}>
-                  <Text style={exerciseModal_styles.exerciseText}>
+                <View style={exerciseModal_styles.exerciseRow} testID={`exercise-row-${item.uuid}`}>
+                  <Text style={exerciseModal_styles.exerciseText} testID={`exercise-text-${item.uuid}`}>
                     {item.exercise.name} x {item.exercise.quantity}
                   </Text>
 
                   <TouchableOpacity
                     onPress={() => removeExercise(item.uuid)}
                     style={exerciseModal_styles.removeButton}
+                    testID={`remove-button-${item.uuid}`}
                   >
                     <Text style={exerciseModal_styles.removeText}>Remove</Text>
                   </TouchableOpacity>
@@ -61,7 +64,7 @@ export default function ExercisePlanModal({
             />
           )}
 
-          <View style={exerciseModal_styles.buttons}>
+          <View style={exerciseModal_styles.buttons} testID="footer">
             <TouchableOpacity
               onPress={() => {
                 onClose();
@@ -72,6 +75,7 @@ export default function ExercisePlanModal({
                 plan.length === 0 && exerciseModal_styles.disabledButton,
               ]}
               disabled={plan.length === 0}
+              testID="start-button"
             >
               <Text style={exerciseModal_styles.startText}>
                 ▶ Edzés Kezdése
@@ -81,6 +85,7 @@ export default function ExercisePlanModal({
             <TouchableOpacity
               onPress={clearPlan}
               style={exerciseModal_styles.clearButton}
+              testID="clear-button"
             >
               <Text style={exerciseModal_styles.clearText}>✖ Terv Ürítése</Text>
             </TouchableOpacity>
