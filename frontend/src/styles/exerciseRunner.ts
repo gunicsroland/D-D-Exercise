@@ -106,13 +106,13 @@ export const exerciseRunner_styles = StyleSheet.create({
   descriptionBox: {
   marginTop: 12,
   padding: 12,
-  backgroundColor: "#f5f5f5",
+  backgroundColor: colors.background,
   borderRadius: 10,
 },
 
 description: {
   fontSize: 14,
-  color: "#444",
+  color: colors.gold,
   lineHeight: 20,
 },
 });
