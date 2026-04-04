@@ -10,7 +10,15 @@
     "test": "jest --watchAll"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/*.d.ts",
+      "!src/**/types.ts",
+      "!**/node_modules/**",
+      "!**/vendor/**"
+    ]
   },
   "dependencies": {
     "@expo-google-fonts/cinzel": "^0.4.2",
