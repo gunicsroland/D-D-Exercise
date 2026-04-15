@@ -1,6 +1,5 @@
 import React from "react";
 import { render, act, waitFor } from "@testing-library/react-native";
-import { AppState } from "react-native";
 import { useGameContext, GameProvider } from "../../src/context/GameContext";
 import { getCharacter } from "../../src/services/character_service";
 import { getInventory } from "../../src/services/inventory_service";

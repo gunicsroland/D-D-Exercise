@@ -6,6 +6,34 @@ import React from "react";
 import { creation_styles } from "../../styles/creation";
 import { Stats } from "../../types";
 
+const clamp = (value: number, min = 1, max = 20) =>
+  Math.max(min, Math.min(max, value));
+
+const calculateStats = ({
+  baseStats,
+  pushups,
+  runTime,
+  agility,
+}: {
+  baseStats: Stats;
+  pushups: number;
+  runTime: number;
+  agility: number;
+}): Stats => {
+  const strengthBonus = Math.floor(pushups / 15);
+  const constitutionBonus = Math.floor(runTime / 60);
+  const dexterityBonus = Math.floor(agility / 5);
+
+  return {
+    strength: clamp(baseStats.strength + strengthBonus),
+    constitution: clamp(baseStats.constitution + constitutionBonus),
+    dexterity: clamp(baseStats.dexterity + dexterityBonus),
+    intelligence: clamp(baseStats.intelligence),
+    wisdom: clamp(baseStats.wisdom),
+    charisma: clamp(baseStats.charisma),
+  };
+};
+
 export default function StepFinal({
   finalStats,
   setFinalStats,
@@ -27,16 +55,7 @@ export default function StepFinal({
     const baseStats =
       BASE_STATS_BY_CLASS[selectedClass as keyof typeof BASE_STATS_BY_CLASS];
 
-    const finalStats = { ...baseStats };
-
-    finalStats.strength =
-      baseStats.strength + (pushups ? Math.floor(pushups / 10) : 0);
-    finalStats.constitution = baseStats.constitution; //+ (runTime ? Math.floor((300 - runTime) / 30) : 0);
-    finalStats.dexterity =
-      baseStats.dexterity + (agility ? Math.floor(agility / 5) : 0);
-    finalStats.intelligence = baseStats.intelligence;
-    finalStats.wisdom = baseStats.wisdom;
-    finalStats.charisma = baseStats.charisma;
+    const finalStats = calculateStats({baseStats, pushups, runTime, agility});
 
     setFinalStats(finalStats);
     console.log("Final stats updated:", finalStats);

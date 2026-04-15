@@ -33,7 +33,7 @@ export default function TabsLayout() {
         headerStyle: {
           backgroundColor: colors.surface,
           borderColor: colors.secondary,
-          height: 40,
+          height: 60,
         },
         headerTitleStyle: {
           color: colors.gold,

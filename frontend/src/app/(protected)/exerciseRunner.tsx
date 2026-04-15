@@ -65,7 +65,7 @@ export default function ExerciseRunner() {
   };
 
   const completeCurrentExercise = () => {
-    setCompleted((prevCompleted) => prevCompleted.add(plan[index]));
+    setCompleted((prevCompleted) => new Set(prevCompleted).add(plan[index]));
 
     if (index < plan.length - 1) {
       setPauseTime(20);
