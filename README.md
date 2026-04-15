@@ -26,19 +26,21 @@ A file in /backend/ for backend
 
 ```
 DATABASE_URL=postgresql://dndne_admin:admin@db:5432/dndne
-BACKEND_PORT=8000
+CORS_ORIGINS=*
+ADMIN_API_KEY=supersecret
 SECRET_KEY=supersecret123456
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MIN=10080 # a week in minutes
-GEMINI_API_KEY=API_KEY
-ADMIN_API_KEY=supersecret
-CORS_ORIGINS=http://localhost:8081,
 MODEL_NAME=gemini-2.5-flash
+
+GEMINI_API_KEY=api_key
+BACKEND_PORT=8000
+
 ```
 
 ### frontend .env
 
-A file in /fronend/ fro the frontend
+A file in /frontend/ folder the frontend
 
 ```
 EXPO_PUBLIC_API_URL=http://localhost:8000
